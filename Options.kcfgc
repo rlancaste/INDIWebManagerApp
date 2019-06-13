@@ -1,0 +1,5 @@
+File=INDIWebManagerApp.kcfg
+ClassName=Options
+Singleton=yes
+Mutators=true
+#GenerateProperties=true

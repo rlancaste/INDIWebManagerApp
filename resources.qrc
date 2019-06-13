@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/media">
+        <file>images/indi_logo.png</file>
+        <file>icons/media-playback-start.svg</file>
+        <file>icons/media-playback-stop.svg</file>
+        <file>icons/configure.svg</file>
+        <file>icons/media-playback-stop-dark.svg</file>
+        <file>icons/media-playback-start-dark.svg</file>
+        <file>icons/configure-dark.svg</file>
+    </qresource>
+</RCC>
