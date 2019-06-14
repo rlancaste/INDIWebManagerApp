@@ -111,4 +111,4 @@ target_link_libraries(INDIWebManagerApp
 install(TARGETS INDIWebManagerApp ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############
 #install(PROGRAMS org.kde.kstars.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES kstars.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES INDIWebManagerApp.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
