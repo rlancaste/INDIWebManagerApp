@@ -265,14 +265,21 @@ void OpsConfiguration::slotInstallGSC()
         location = location.left(location.length()-3);
     if(!QDir(location).exists())
     {
-        QMessageBox::information(nullptr, "Message", i18n("Folder does not exist."));
-        return;
+        bool created = false;
+        if(ui->kcfg_GSCPathDefault->isChecked())
+            created = QDir().mkpath(location);
+        else
+            if(QMessageBox::question(nullptr, "Message", i18n("The folder:\n %1 \ndoes not exist.  Would you like to create it?").arg(location)) == QMessageBox::Yes)
+                created = QDir().mkpath(location);
+        if(!created)
+        {
+            QMessageBox::information(nullptr, "Message", i18n("Please select another installation location."));
+            return;
+        }
     }
     QString gscZipPath = location + "/gsc.zip";
 
     QNetworkAccessManager *manager= new QNetworkAccessManager();
-
-
 
     ui->downloadProgress->setVisible(true);
     ui->downloadProgress->setEnabled(true);
@@ -396,8 +403,8 @@ void OpsConfiguration::slotGSCInstallerFinished()
         location = location.left(location.length()-3);
     else
         ui->kcfg_GSCPath->setText(location + "/gsc");
-    updateGSCInstallationStatus();
     QString gscZipPath = location + "/gsc.zip";
     if (QFile(gscZipPath).exists())
         QFile(gscZipPath).remove();
+    updateGSCInstallationStatus();
 }

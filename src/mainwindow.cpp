@@ -117,7 +117,10 @@ MainWindow::MainWindow(QWidget *parent) :
             startWebManager();
     }
     else
-        QMessageBox::information(nullptr, "message", i18n("Cannot start the INDI Web Manager, please check/configure your settings."));
+    {
+        QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \nBoth Python and indiweb need to be installed and configured to use this program."));
+        showPreferences();
+    }
 }
 
 //This deletes the ui variable on shutdown
@@ -330,7 +333,6 @@ void MainWindow::showPreferences()
         page2->setIcon(QIcon(":/media/icons/configure-dark.svg"));
     else
         page2->setIcon(QIcon(":/media/images/configure.svg"));
-
     preferencesDialog->show();
 }
 
