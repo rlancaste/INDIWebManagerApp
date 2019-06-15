@@ -432,7 +432,7 @@
     <property name="title">
      <string>INDIWebMangerApp</string>
     </property>
-    <addaction name="actionAboput"/>
+    <addaction name="actionAbout"/>
     <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -450,7 +450,7 @@
     <string>Show Window</string>
    </property>
   </action>
-  <action name="actionAboput">
+  <action name="actionAbout">
    <property name="text">
     <string>About</string>
    </property>

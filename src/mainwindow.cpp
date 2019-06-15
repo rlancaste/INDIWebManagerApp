@@ -69,6 +69,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->restartWebManager, &QPushButton::clicked, this, &MainWindow::startWebManager);
     connect(ui->stopWebManager, &QPushButton::clicked, this, &MainWindow::stopWebManager);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
+    connect(ui->actionAbout,&QAction::triggered, this, [this]()
+    {
+        QMessageBox about;
+        about.setIconPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
+        about.setText("<html>INDI Web Manager App<br> © 2019 Robert Lancaster<br> Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>href=https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>");
+        about.exec();
+    });
 
     //This sets up the Web Manager to launch in your favorite browser using either the host name or IP Address
     connect(ui->openWebManager, &QPushButton::clicked, this, [this]()
@@ -81,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QPixmap pix(":/media/images/indi_logo.png");
     int w = 100;
     int h = 100;
-    ui->INDILogo->setPixmap(pix.scaled (w,h,Qt::KeepAspectRatio));
+    ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
 
     //This sets up a timer to check the status of the INDI Server at 1 second intervals when it is running.
     serverMonitor.setInterval(1000);
