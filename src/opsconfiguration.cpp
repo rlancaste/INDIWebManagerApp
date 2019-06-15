@@ -17,6 +17,7 @@
 #include <QStandardPaths>
 #include <QNetworkReply>
 #include <QDialogButtonBox>
+#include <KLocalizedString>
 
 
 OpsConfiguration::OpsConfiguration(MainWindow *parent)
@@ -56,6 +57,7 @@ OpsConfiguration::~OpsConfiguration()
 void OpsConfiguration::updateFromCheckBoxes()
 {
     ui->kcfg_PythonExecFolder->setReadOnly(ui->kcfg_PythonExecFolderDefault->isChecked());
+    ui->kcfg_indiwebPath->setReadOnly(ui->kcfg_indiwebPathDefault->isChecked());
     ui->kcfg_GSCPath->setReadOnly(ui->kcfg_GSCPathDefault->isChecked());
     ui->kcfg_INDIPrefix->setReadOnly(ui->kcfg_INDIPrefixDefault->isChecked());
     ui->kcfg_INDIServerPath->setReadOnly(ui->kcfg_INDIServerDefault->isChecked());
@@ -68,6 +70,11 @@ void OpsConfiguration::updateFromCheckBoxes()
          ui->kcfg_PythonExecFolder->setText(parent->getDefault("PythonExecFolder"));
     else
          ui->kcfg_PythonExecFolder->setText(Options::pythonExecFolder());
+
+    if(ui->kcfg_indiwebPathDefault->isChecked())
+         ui->kcfg_indiwebPath->setText(parent->getDefault("indiwebPath"));
+    else
+         ui->kcfg_indiwebPath->setText(Options::indiwebPath());
 
     if(ui->kcfg_GSCPathDefault->isChecked())
          ui->kcfg_GSCPath->setText(parent->getDefault("GSCPath"));
@@ -85,7 +92,7 @@ void OpsConfiguration::updateFromCheckBoxes()
          ui->kcfg_INDIServerPath->setText(Options::iNDIServerPath());
 
     if(ui->kcfg_INDIDriversDefault->isChecked())
-         ui->kcfg_INDIServerPath->setText(parent->getDefault("INDIDriversPath"));
+         ui->kcfg_INDIDriversPath->setText(parent->getDefault("INDIDriversPath"));
     else
          ui->kcfg_INDIDriversPath->setText(Options::iNDIDriversPath());
 
@@ -171,7 +178,7 @@ bool OpsConfiguration::brewInstalled()
 bool OpsConfiguration::gscInstalled()
 {
     QString gsc = ui->kcfg_GSCPath->text();
-    if(!gsc.endsWith("gsc"))
+    if(!(gsc.endsWith("gsc") || gsc.endsWith("GSC")))
         return false;
     return QDir(ui->kcfg_GSCPath->text()).exists();
 }
@@ -261,7 +268,7 @@ void OpsConfiguration::slotInstallGSC()
         return;
     }
     QString location = ui->kcfg_GSCPath->text();
-    if(location.endsWith("gsc"))
+    if(location.endsWith("gsc") || location.endsWith("GSC"))
         location = location.left(location.length()-3);
     if(!QDir(location).exists())
     {
@@ -380,7 +387,7 @@ void OpsConfiguration::slotInstallGSC()
 void OpsConfiguration::slotExtractGSC()
 {
     QString location = ui->kcfg_GSCPath->text();
-    if(location.endsWith("gsc"))
+    if(location.endsWith("gsc") || location.endsWith("GSC"))
         location = location.left(location.length()-3);
     QProcess *gscExtractor = new QProcess();
     connect(gscExtractor, SIGNAL(finished(int)), this, SLOT(slotGSCInstallerFinished()));

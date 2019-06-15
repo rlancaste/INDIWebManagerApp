@@ -15,6 +15,16 @@
             <whatsthis>This is the path to the python executables, it will be added to the PATH.</whatsthis>
             <default code="true">MainWindow::getDefault("PythonExecFolder")</default>
         </entry>
+        <entry name="indiwebPathDefault" type="Bool">
+            <label>Use the default path to the indiweb executable.</label>
+            <whatsthis>This option determines whether to use the default path to INDIWeb on your system or a custom path.</whatsthis>
+            <default>true</default>
+        </entry>
+        <entry name="indiwebPath" type="String">
+            <label>Path to the indiweb executable.</label>
+            <whatsthis>This is the path to the indi-web executable, which is typically installed in the Python User Base Directory.</whatsthis>
+            <default code="true">MainWindow::getDefault("indiwebPath")</default>
+        </entry>
         <entry name="GSCPathDefault" type="Bool">
             <label>Use the default path to the GSC Data Folder.</label>
             <whatsthis>This option determines whether to use the default path to the GSC Data folder for your system or use a user specified path.</whatsthis>

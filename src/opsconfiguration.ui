@@ -16,8 +16,25 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="4" column="2">
-      <widget class="QCheckBox" name="kcfg_INDIPrefixDefault">
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>GSC Path</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="kcfg_INDIPrefix">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="gscStatusDisplay"/>
+     </item>
+     <item row="7" column="2">
+      <widget class="QCheckBox" name="kcfg_INDIDriversDefault">
        <property name="text">
         <string>Default</string>
        </property>
@@ -26,7 +43,90 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="2">
+     <item row="11" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>GPhoto CAMLIBS</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>GSC (optional)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QPushButton" name="gscInstallCancel">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLineEdit" name="kcfg_GPhotoCAMLIBS">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLineEdit" name="kcfg_INDIConfigPath">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>INDI Config Path</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>INDI Drivers Dir</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QCheckBox" name="kcfg_GSCPathDefault">
+       <property name="text">
+        <string>Default</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QProgressBar" name="downloadProgress">
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="2">
+      <widget class="QCheckBox" name="kcfg_GPhotoCAMLIBSDefault">
+       <property name="text">
+        <string>Default</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Python and indi-web</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="2">
       <widget class="QCheckBox" name="kcfg_GPhotoIOLIBSDefault">
        <property name="text">
         <string>Default</string>
@@ -36,29 +136,29 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>GPhoto IOLIBS</string>
-       </property>
-      </widget>
-     </item>
      <item row="6" column="0">
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="label_11">
        <property name="text">
-        <string>INDI Drivers Dir</string>
+        <string>INDI Server Dir</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
-      <widget class="QLineEdit" name="kcfg_GPhotoIOLIBS">
-       <property name="readOnly">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Python Exec Folder</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QCheckBox" name="kcfg_INDIConfigPathDefault">
+       <property name="text">
+        <string>Default</string>
+       </property>
+       <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="gscStatusDisplay"/>
      </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="kcfg_PythonExecFolderDefault">
@@ -70,36 +170,39 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="installRequirements">
+       <property name="text">
+        <string>Install</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
       <widget class="QPushButton" name="installGSC">
        <property name="text">
         <string>Install</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_10">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="installationStatusDisplay"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>GSC Path</string>
+        <string>INDI Prefix</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="4">
-      <widget class="QPushButton" name="gscInstallCancel">
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>GSC (optional)</string>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="kcfg_GSCPath">
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item row="6" column="2">
-      <widget class="QCheckBox" name="kcfg_INDIDriversDefault">
+      <widget class="QCheckBox" name="kcfg_INDIServerDefault">
        <property name="text">
         <string>Default</string>
        </property>
@@ -108,48 +211,10 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>INDI Server </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="installRequirements">
-       <property name="text">
-        <string>Install</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="3">
-      <widget class="QProgressBar" name="downloadProgress">
-       <property name="value">
-        <number>24</number>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="installationStatusDisplay"/>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>INDI Config Path</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="kcfg_INDIServerPath">
+     <item row="10" column="1">
+      <widget class="QLineEdit" name="kcfg_GPhotoIOLIBS">
        <property name="readOnly">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Python Exec Folder</string>
        </property>
       </widget>
      </item>
@@ -163,46 +228,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Python and indi-web</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="kcfg_GSCPath">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="kcfg_INDIPrefix">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>INDI Prefix</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QCheckBox" name="kcfg_GSCPathDefault">
-       <property name="text">
-        <string>Default</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="2">
-      <widget class="QCheckBox" name="kcfg_INDIServerDefault">
+      <widget class="QCheckBox" name="kcfg_INDIPrefixDefault">
        <property name="text">
         <string>Default</string>
        </property>
@@ -211,50 +238,50 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="2">
-      <widget class="QCheckBox" name="kcfg_GPhotoCAMLIBSDefault">
-       <property name="text">
-        <string>Default</string>
-       </property>
-       <property name="checked">
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="kcfg_INDIServerPath">
+       <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item row="10" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>GPhoto CAMLIBS</string>
+        <string>GPhoto IOLIBS</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QLineEdit" name="kcfg_INDIDriversPath">
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
-      <widget class="QLineEdit" name="kcfg_GPhotoCAMLIBS">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>indi-web Path</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="kcfg_indiwebPath">
+       <property name="text">
+        <string/>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="8" column="2">
-      <widget class="QCheckBox" name="kcfg_INDIConfigPathDefault">
+     <item row="2" column="2">
+      <widget class="QCheckBox" name="kcfg_indiwebPathDefault">
        <property name="text">
         <string>Default</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QLineEdit" name="kcfg_INDIConfigPath">
-       <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>

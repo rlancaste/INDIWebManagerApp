@@ -48,7 +48,7 @@ find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
-find_package(Qt5 5.7 REQUIRED COMPONENTS Widgets Network)
+find_package(Qt5 5.5.1 REQUIRED COMPONENTS Widgets Network)
 
 find_package(KF5 REQUIRED COMPONENTS
       Config

@@ -26,6 +26,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <KConfigDialog>
+#include <KLocalizedString>
+#include <QHostInfo>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -87,6 +89,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //This shows the main window.  For some reason if you don't do this before the check on the next line, it changes the window layout.
     this->show();
+
+    //This will initially set the status displays to false.
+    displayServerStatusOnline(false);
+    displayManagerStatusOnline(false);
+
     //This will check if another Web Manager is running on this computer, and kill it if desired.
     if(isWebManagerOnline())
     {
@@ -94,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             QProcess killWebManager;
             QStringList killParams;
-            killParams<<"Python";
+            killParams << "Python" << "indi-web" << "indiserver";
             killWebManager.start("/usr/bin/killall", killParams);
             killWebManager.waitForFinished(300);
         }
@@ -149,6 +156,15 @@ QString MainWindow::getDefault(QString option)
             return flat + "/bin/";
         else
             return snap + "/usr/bin/";
+    }
+
+    //This is the Path to the indiweb executable.  It is where indi-web is installed, typically in the Python Base User Directory.
+    else if (option == "indiwebPath")
+    {
+    #ifdef Q_OS_OSX
+        return "/usr/local/bin/indi-web";
+    #endif
+        return QDir::homePath() + "/.local/bin/indi-web";
     }
 
     //This is the Path to the GSC data folder.  It includes gsc at the end.
@@ -237,7 +253,7 @@ QString MainWindow::getDefault(QString option)
 
     //This is the name of the computer on the local network.
     else if (option == "ComputerHostName")
-        return QSysInfo::machineHostName();
+        return QHostInfo::localHostName();
 
     //This is the IP of the computer on the local network.
     else if (option == "ComputerIPAddress")
@@ -305,7 +321,12 @@ bool MainWindow::indiWebInstalled()
     testindiweb.start(getDefault("PythonExecFolder") +"/pip", argsList);
     testindiweb.waitForFinished();
     QString listPip(testindiweb.readAllStandardOutput());
-    bool exists = listPip.contains("indiweb", Qt::CaseInsensitive);
+
+    testindiweb.start(getDefault("PythonExecFolder") +"/pip3", argsList);
+    testindiweb.waitForFinished();
+    QString listPip3(testindiweb.readAllStandardOutput());
+
+    bool exists = listPip.contains("indiweb", Qt::CaseInsensitive) || listPip3.contains("indiweb", Qt::CaseInsensitive);
     if(!exists)
         QMessageBox::information(nullptr, "message", i18n("indiweb is not installed."));
     return exists;
@@ -441,8 +462,8 @@ void MainWindow::startWebManager()
         processArguments << "--port" << Options::managerPortNumber();
     if(!Options::iNDIConfigDefault())
         processArguments << "--conf" << Options::iNDIConfigPath();
-    appendLogEntry("/usr/local/bin/indi-web " + processArguments.join(" "));
-    webManager->start("/usr/local/bin/indi-web", processArguments);
+    appendLogEntry(Options::indiwebPath() + " " + processArguments.join(" "));
+    webManager->start(Options::indiwebPath(), processArguments);
     displayManagerStatusOnline(true);
 
     serverMonitor.start();
