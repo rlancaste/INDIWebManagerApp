@@ -186,10 +186,7 @@ QString MainWindow::getDefault(QString option)
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../../").absolutePath();
     #endif
-        if (flat.isEmpty() == false)
-            return flat + "/bin/";
-        else
-            return snap + "/usr/bin/";
+        return "";
     }
 
     //This is the path to the folder indiserver is present in, not the indiserver itself.
@@ -232,10 +229,7 @@ QString MainWindow::getDefault(QString option)
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../Resources/DriverSupport/gphoto/IOLIBS").absolutePath();
     #endif
-        if (flat.isEmpty() == false)
-            return flat + "/bin/";
-        else
-            return snap + "/usr/bin/";
+        return "";
     }
 
     //This is the path to the folder indiserver is present in, not the indiserver itself.
@@ -245,10 +239,7 @@ QString MainWindow::getDefault(QString option)
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../Resources/DriverSupport/gphoto/CAMLIBS").absolutePath();
     #endif
-        if (flat.isEmpty() == false)
-            return flat + "/bin/";
-        else
-            return snap + "/usr/bin/";
+        return "";
     }
 
     //This is the name of the computer on the local network.
@@ -406,9 +397,11 @@ void MainWindow::configureEnvironmentVariables()
     QString newPATH = Options::pythonExecFolder() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
     insertEnvironmentVariable("PATH", newPATH);
 
-    insertEnvironmentPath("INDIPREFIX", Options::iNDIPrefix());
-    insertEnvironmentPath("IOLIBS", Options::gPhotoIOLIBS());
-    insertEnvironmentPath("CAMLIBS", Options::gPhotoCAMLIBS());
+    #ifdef Q_OS_OSX
+        insertEnvironmentPath("INDIPREFIX", Options::iNDIPrefix());
+        insertEnvironmentPath("IOLIBS", Options::gPhotoIOLIBS());
+        insertEnvironmentPath("CAMLIBS", Options::gPhotoCAMLIBS());
+    #endif
     insertEnvironmentPath("GSCDAT", Options::gSCPath());
 }
 

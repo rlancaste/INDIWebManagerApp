@@ -34,6 +34,16 @@ OpsConfiguration::OpsConfiguration(MainWindow *parent)
     ui->gscInstallCancel->setVisible(false);
     ui->downloadProgress->setVisible(false);
 
+    //This Disables some setting Controls on Linux
+    #if defined(Q_OS_LINUX)
+        ui->kcfg_INDIPrefix->setEnabled(false);
+        ui->kcfg_INDIPrefixDefault->setEnabled(false);
+        ui->kcfg_GPhotoIOLIBSDefault->setEnabled(false);
+        ui->kcfg_GPhotoCAMLIBSDefault->setEnabled(false);
+        ui->kcfg_GPhotoIOLIBS->setEnabled(false);
+        ui->kcfg_GPhotoCAMLIBS->setEnabled(false);
+    #endif
+
     //Note that all the checkboxes here are "default" ones and should run the update method when changed.
     QList<QCheckBox *> qCheckBoxes = findChildren<QCheckBox *>();
     for (auto &checkbox : qCheckBoxes)
@@ -262,6 +272,7 @@ void OpsConfiguration::slotInstallRequirements()
  */
 void OpsConfiguration::slotInstallGSC()
 {
+#ifdef Q_OS_OSX
     if(gscInstalled())
     {
         QMessageBox::information(nullptr, "Message", i18n("GSC is already installed."));
@@ -378,6 +389,9 @@ void OpsConfiguration::slotInstallGSC()
             }
         }
     });
+#else
+    QMessageBox::information(nullptr, "Message", i18n("On Linux, please install from the Terminal."));
+#endif
 }
 
 /*
