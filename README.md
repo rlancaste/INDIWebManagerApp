@@ -11,6 +11,7 @@ An INDI Server can be compiled and run on Linux and OS X, and clients can access
 This program is entirely run from the command line, but can also be managed and run by client programs like KStars.
 
 ![INDI Web Manager](images/webManager.png "INDI Web Manager")
+
 #About INDI Web Manager
 
 https://github.com/knro/indiwebmanager
@@ -20,6 +21,7 @@ On Linux this is fairly easy to configure and use, but on OS X it can be pretty 
 dependencies are not installed automatically.
 
 ![INDI Web Manager App](images/macImage.png "INDI Web Manager App")
+
 #About INDI Web Manager App
 
 This program provides a GUI and many options for configuring, monitoring, launching, and managing an INDI Web Manger on 
@@ -40,11 +42,13 @@ be good to go.  Another thing you might want to do is install GSC to get stars i
 There is also an installer fo that in the Preferences Dialog.
 
 ![INDI Web Manager App Linux](images/linuxImage.png "INDI Web Manager App Linux")
+
 #Installing INDI Web Manager App on Linux
 
 This section of the Readme needs work.  Right now you can build it and run it if the dependencies are met.
 
 ![Configuration Paths](images/configPage2.png "Configuration Paths")
+
 #Configuring the paths in the INDI Web Manager on OS X
 
 There are many configuration options for the program.  The INDI Server is embedded in the app bundle on OS X along with all of its dependencies 
@@ -58,6 +62,7 @@ version of python or a different Python base user directory.  For many users, th
  can just start it up.
 
 ![Preferences](images/configPage1.png "Preferences")
+
 #INDI Web Manager App Options/Preferences
 
 There are a number of settings for INDI Web Manager.  One nice way to use INDI Web Manager app, would be to configure all the settings
