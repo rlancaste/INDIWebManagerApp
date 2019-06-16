@@ -302,10 +302,7 @@ QString MainWindow::getINDIServerURL()
 bool MainWindow::pythonInstalled()
 {
 
-    bool exists = QFileInfo(getDefault("PythonExecFolder") + "/python").exists();
-    if(!exists)
-        QMessageBox::information(nullptr, "message", i18n("Python is not installed at the specified path."));
-    return exists;
+    return QFileInfo(getDefault("PythonExecFolder") + "/python").exists();
 }
 
 /*
@@ -324,10 +321,7 @@ bool MainWindow::indiWebInstalled()
     testindiweb.waitForFinished();
     QString listPip3(testindiweb.readAllStandardOutput());
 
-    bool exists = listPip.contains("indiweb", Qt::CaseInsensitive) || listPip3.contains("indiweb", Qt::CaseInsensitive);
-    if(!exists)
-        QMessageBox::information(nullptr, "message", i18n("indiweb is not installed."));
-    return exists;
+    return listPip.contains("indiweb", Qt::CaseInsensitive) || listPip3.contains("indiweb", Qt::CaseInsensitive);
 }
 
 /*

@@ -260,6 +260,7 @@ void OpsConfiguration::slotInstallRequirements()
             }
         }
         QMessageBox::information(nullptr, "Message", i18n("All installations are complete and ready to use."));
+        updatePythonInstallationStatus();
     }
 #else
         QMessageBox::information(nullptr, "Message", "The installer only works on OS X.  On Linux, please install python and indiweb from the command line.");
