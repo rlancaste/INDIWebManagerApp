@@ -15,6 +15,7 @@ This program is entirely run from the command line, but can also be managed and 
 
 ### About INDI Web Manager
 ![INDI Web Manager](images/webManager.png "INDI Web Manager")
+
 [https://github.com/knro/indiwebmanager](https://github.com/knro/indiwebmanager)
 
 A python program called INDI Web Manager was developed by Jasem Mutlaq and Juan Menendez for launching, managing, and remotely starting indiservers.
