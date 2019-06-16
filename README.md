@@ -2,8 +2,9 @@
 A Graphical program to Manage, Configure, Launch, and Monitor an INDI WebManager on OS X and Linux
 
 ![INDI Logo](images/indi_logo.png "INDI Logo")
+
 #About INDI
-http://www.indilib.org
+[http://www.indilib.org](http://www.indilib.org)
 
 INDI is a protocol for hosting and communicating with astronomical devices on the same computer or on computers on the same network.
 It has some similarities to ASCOM on Windows, but can run on more operating systems and over local networks.
@@ -14,7 +15,7 @@ This program is entirely run from the command line, but can also be managed and 
 
 #About INDI Web Manager
 
-https://github.com/knro/indiwebmanager
+[https://github.com/knro/indiwebmanager](https://github.com/knro/indiwebmanager)
 
 A python program called INDI Web Manager was developed by Jasem Mutlaq and Juan Menendez for launching, managing, and remotely starting indiservers.
 On Linux this is fairly easy to configure and use, but on OS X it can be pretty complex because there is no package manager and the required 
@@ -73,7 +74,7 @@ to automatically launch using customized settings and provides a nice way to vis
 
 #Building INDI Web Manager App on OS X
 
-https://github.com/rlancaste/kstars-on-osx-craft
+[https://github.com/rlancaste/kstars-on-osx-craft](https://github.com/rlancaste/kstars-on-osx-craft)
 
 I have written a script that builds and packages INDI Web Manager App using Craft.  This is in the same repository as my script that
 builds and packages up KStars.  Just run the script and follow the directions and it should get all set up.
