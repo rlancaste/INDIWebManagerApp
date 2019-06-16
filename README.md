@@ -1,9 +1,10 @@
-### INDIWebManagerApp
+## INDIWebManagerApp
 A Graphical program to Manage, Configure, Launch, and Monitor an INDI WebManager on OS X and Linux
 
 ![INDI Logo](images/indi_logo.png "INDI Logo")
 
-##About INDI
+### About INDI
+
 [http://www.indilib.org](http://www.indilib.org)
 
 INDI is a protocol for hosting and communicating with astronomical devices on the same computer or on computers on the same network.
@@ -13,7 +14,7 @@ This program is entirely run from the command line, but can also be managed and 
 
 ![INDI Web Manager](images/webManager.png "INDI Web Manager")
 
-##About INDI Web Manager
+### About INDI Web Manager
 
 [https://github.com/knro/indiwebmanager](https://github.com/knro/indiwebmanager)
 
@@ -23,7 +24,7 @@ dependencies are not installed automatically.
 
 ![INDI Web Manager App](images/macImage.png "INDI Web Manager App")
 
-##About INDI Web Manager App
+### About INDI Web Manager App
 
 This program provides a GUI and many options for configuring, monitoring, launching, and managing an INDI Web Manger on 
 both Linux and OS X.  While it is primarily geared toward facilitating the use of an INDI Web Manager on OS X, it also
@@ -31,7 +32,7 @@ works well on Linux.  It provides a nice GUI interface to manage the many option
 Web Manager and INDI Server.  So it is pretty essential on OS X and can make things more convenient and configurable on Linux.
 
 
-##Installing INDI Web Manager App on OS X
+### Installing INDI Web Manager App on OS X
 
 On OS X, installing the prebuilt INDI Web Manager App is fairly easy.  Just download the DMG, mount it, and drag it to your 
 Computer, probably in the Applications folder, but can be put just about anywhere.  The quick start guide runs through many details 
@@ -44,13 +45,13 @@ There is also an installer fo that in the Preferences Dialog.
 
 ![INDI Web Manager App Linux](images/linuxImage.png "INDI Web Manager App Linux")
 
-##Installing INDI Web Manager App on Linux
+### Installing INDI Web Manager App on Linux
 
 This section of the Readme needs work.  Right now you can build it and run it if the dependencies are met.
 
 ![Configuration Paths](images/configPage2.png "Configuration Paths")
 
-##Configuring the paths in the INDI Web Manager on OS X
+### Configuring the paths in the INDI Web Manager on OS X
 
 There are many configuration options for the program.  The INDI Server is embedded in the app bundle on OS X along with all of its dependencies 
 and there are a number of environment variables and paths that are updated automatically to make this possible.  The user might also want to 
@@ -64,7 +65,7 @@ version of python or a different Python base user directory.  For many users, th
 
 ![Preferences](images/configPage1.png "Preferences")
 
-##INDI Web Manager App Options/Preferences
+### INDI Web Manager App Options/Preferences
 
 There are a number of settings for INDI Web Manager.  One nice way to use INDI Web Manager app, would be to configure all the settings
 appropriately and then configure the INDI Web Manager to automatically start when the program is opened.  You could even add the INDI Web Manager App
@@ -72,14 +73,14 @@ to your startup programs on your computer.  This provides a nice way on OS X and
 to automatically launch using customized settings and provides a nice way to visually monitor its status while running.
 
 
-##Building INDI Web Manager App on OS X
+### Building INDI Web Manager App on OS X
 
 [https://github.com/rlancaste/kstars-on-osx-craft](https://github.com/rlancaste/kstars-on-osx-craft)
 
 I have written a script that builds and packages INDI Web Manager App using Craft.  This is in the same repository as my script that
 builds and packages up KStars.  Just run the script and follow the directions and it should get all set up.
 
-##Building INDI Web Manger App on Linux.
+### Building INDI Web Manger App on Linux.
 
 For Linux, you can clone this repository and build the software.  Editing it in QT Creator would be the preffered method.
 
