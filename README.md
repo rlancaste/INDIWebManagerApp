@@ -2,7 +2,7 @@
 A Graphical program to Manage, Configure, Launch, and Monitor an INDI WebManager on OS X and Linux
 
 
-###What it does:
+### What it does:
 - Allows easy and extensive configuration of the options for an INDI Web Manager and an INDI server.
 - Makes it easy to set up a Stand alone INDI Server on OS X.
 - Allows the setup of an INDI Web Manager on an OS X machine (which was formerly VERY difficult)
