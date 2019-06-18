@@ -34,7 +34,7 @@ public:
     void closeEvent(QCloseEvent *event);
     static QString getDefault(QString option);
     QString getWebManagerURL();
-    QString getINDIServerURL();
+    QString getINDIServerURL(QString port);
     bool pythonInstalled();
     bool pipInstalled();
     bool indiWebInstalled();
@@ -56,6 +56,7 @@ private:
     void checkINDIServerStatus();
     QTimer serverMonitor;
     bool getRunningDrivers(QString &webManagerDrivers);
+    QString getINDIServerPort(QString &activeProfile);
     bool getWebManagerResponse(const QUrl &url, QJsonDocument *reply);
     void updateDisplaysforShutDown();
 

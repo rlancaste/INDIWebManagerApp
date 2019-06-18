@@ -85,9 +85,6 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     //This sets up the INDI Logo to look nice in the app.
-    QPixmap pix(":/media/images/indi_logo.png");
-    int w = 100;
-    int h = 100;
     ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
 
     //This sets up a timer to check the status of the INDI Server at 1 second intervals when it is running.
@@ -292,12 +289,12 @@ QString MainWindow::getWebManagerURL()
 /*
  * This gets the URL to the INDI Server using the users desired method.
  */
-QString MainWindow::getINDIServerURL()
+QString MainWindow::getINDIServerURL(QString port)
 {
     if(Options::managerOpeningMethod()==0)
-        return QString("%1:%2").arg(Options::computerHostName()).arg("7624");
+        return QString("%1:%2").arg(Options::computerHostName()).arg(port);
     else
-        return QString("%1:%2").arg(Options::computerIPAddress()).arg("7624");
+        return QString("%1:%2").arg(Options::computerIPAddress()).arg(port);
 }
 
 /*
@@ -379,7 +376,6 @@ void MainWindow::updateSettings()
     ui->hostDisplay->setText(Options::computerHostName());
     ui->ipDisplay->setText(Options::computerIPAddress());
     ui->displayWebManagerPath->setText(getWebManagerURL());
-    ui->displayINDIServerPath->setText(getINDIServerURL());
 
     configureEnvironmentVariables();
 
@@ -541,6 +537,7 @@ void MainWindow::updateDisplaysforShutDown()
     displayServerStatusOnline(false);
     ui->activeProfileDisplay->clear();
     ui->driversDisplay->clear();
+    ui->displayINDIServerPath->clear();
     serverMonitor.stop();
 }
 
@@ -607,6 +604,10 @@ void MainWindow::checkINDIServerStatus()
     bool INDIServerOnline = isINDIServerOnline(activeProfile);
     displayServerStatusOnline(INDIServerOnline);
     ui->activeProfileDisplay->setText(activeProfile);
+    QString port = "";
+    if(INDIServerOnline)
+        port = getINDIServerPort(activeProfile);
+    ui->displayINDIServerPath->setText(getINDIServerURL(port));
     QString webManagerDrivers="";
     getRunningDrivers(webManagerDrivers);
     ui->driversDisplay->setPlainText(webManagerDrivers);
@@ -672,6 +673,25 @@ bool MainWindow::isINDIServerOnline(QString &activeProfile)
         }
     }
     return false;
+}
+
+/*
+ * This method determines the port of the active server if one is running.
+ */
+QString MainWindow::getINDIServerPort(QString &activeProfile)
+{
+    QUrl url(QString(getWebManagerURL() + "/api/profiles/" + activeProfile));
+
+    QJsonDocument json;
+    if (getWebManagerResponse( url, &json))
+    {
+        QJsonObject jsonObj = json.object();
+        if(jsonObj.isEmpty())
+            return "";
+
+        return QString::number(jsonObj["port"].toInt());
+    }
+    return "";
 }
 
 /*
