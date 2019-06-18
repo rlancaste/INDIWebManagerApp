@@ -132,7 +132,11 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \nBoth Python and indiweb need to be installed and configured to use this program."));
+#ifdef Q_OS_OSX
+        QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \n\nHomebrew, Python, and INDIWeb need to be installed and configured to use this program.  \n\nJust click the installer button in the Preferences Dialog to get started."));
+#else
+        QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \n\nPython, Pip, and INDIWeb need to be installed and configured to use this program.  \n\nINDIWeb can be installed on Linux using the installer button in the Preferences Dialog, but python and pip must be installed from the command line."));
+#endif
         showPreferences();
     }
 }
@@ -297,31 +301,39 @@ QString MainWindow::getINDIServerURL()
 }
 
 /*
- * This method detects whether python3 is installed.
+ * This method detects whether python is installed.
  */
 bool MainWindow::pythonInstalled()
 {
 
-    return QFileInfo(getDefault("PythonExecFolder") + "/python").exists();
+    return QFileInfo(Options::pythonExecFolder() + "/python").exists() || QFileInfo(Options::pythonExecFolder() + "/python3").exists();
 }
 
 /*
- * This method detects whether indi-web is installed.
+ * This method detects whether pip is installed.
+ */
+bool MainWindow::pipInstalled()
+{
+
+    return QFileInfo(Options::pythonExecFolder() + "/pip").exists() || QFileInfo(Options::pythonExecFolder() + "/pip3").exists();
+}
+
+/*
+ * This method detects whether indi-web is installed in either python2 or python3.
  */
 bool MainWindow::indiWebInstalled()
 {
     QProcess testindiweb;
     QStringList argsList;
     argsList << "list";
-    testindiweb.start(getDefault("PythonExecFolder") +"/pip", argsList);
+    if(QFileInfo(Options::pythonExecFolder() + "/pip3").exists())
+        testindiweb.start(Options::pythonExecFolder() +"/pip3", argsList);
+    else
+        testindiweb.start(Options::pythonExecFolder() +"/pip", argsList);
     testindiweb.waitForFinished();
     QString listPip(testindiweb.readAllStandardOutput());
 
-    testindiweb.start(getDefault("PythonExecFolder") +"/pip3", argsList);
-    testindiweb.waitForFinished();
-    QString listPip3(testindiweb.readAllStandardOutput());
-
-    return listPip.contains("indiweb", Qt::CaseInsensitive) || listPip3.contains("indiweb", Qt::CaseInsensitive);
+    return listPip.contains("indiweb", Qt::CaseInsensitive);
 }
 
 /*

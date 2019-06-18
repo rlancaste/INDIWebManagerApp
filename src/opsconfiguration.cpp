@@ -201,9 +201,9 @@ void OpsConfiguration::slotInstallRequirements()
 {
     #ifdef Q_OS_OSX
 
-    if(brewInstalled() && parent->pythonInstalled() && parent->indiWebInstalled())
+    if(brewInstalled() && parent->pythonInstalled() && parent->pipInstalled() && parent->indiWebInstalled())
     {
-        QMessageBox::information(nullptr, "Message", i18n("Homebrew, python, and indiweb are already installed"));
+        QMessageBox::information(nullptr, "Message", i18n("Homebrew, python, pip, and indiweb are already installed"));
         return;
     }
 
@@ -263,7 +263,36 @@ void OpsConfiguration::slotInstallRequirements()
         updatePythonInstallationStatus();
     }
 #else
-        QMessageBox::information(nullptr, "Message", "The installer only works on OS X.  On Linux, please install python and indiweb from the command line.");
+    if( !parent->pythonInstalled() || !parent->pipInstalled() )
+    {
+        QMessageBox::information(nullptr, "Message", i18n("Python and Pip both need to be installed in your selected python exec folder in order to run indiweb.  Please either install these or change your exec folder to one that includes them."));
+        return;
+    }
+    if(parent->indiWebInstalled())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("indiweb is already installed"));
+        return;
+    }
+    //Try both just so we are sure that whichever python is installed, indiweb is installed in them.
+    QProcess install;
+    if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())
+    {
+        install.start(Options::pythonExecFolder() +"/pip3" , QStringList() << "install" << "indiweb");
+        install.waitForFinished();
+    }
+    else
+    {
+        install.start(Options::pythonExecFolder() +"/pip" , QStringList() << "install" << "indiweb");
+        install.waitForFinished();
+    }
+
+    if(!parent->indiWebInstalled())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("indiweb install failure"));
+        return;
+    }
+    QMessageBox::information(nullptr, "Message", i18n("INDIWeb is installed and ready to use."));
+    updatePythonInstallationStatus();
 #endif
 }
 

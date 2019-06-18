@@ -36,6 +36,7 @@ public:
     QString getWebManagerURL();
     QString getINDIServerURL();
     bool pythonInstalled();
+    bool pipInstalled();
     bool indiWebInstalled();
 
 private:
