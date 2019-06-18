@@ -610,7 +610,13 @@ void MainWindow::checkINDIServerStatus()
     ui->displayINDIServerPath->setText(getINDIServerURL(port));
     QString webManagerDrivers="";
     getRunningDrivers(webManagerDrivers);
-    ui->driversDisplay->setPlainText(webManagerDrivers);
+    ui->driversDisplay->clear();
+    QStringList activeDrivers = webManagerDrivers.split("\n");
+    foreach(QString driver, activeDrivers)
+    {
+        ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
+    }
+
 }
 
 /*

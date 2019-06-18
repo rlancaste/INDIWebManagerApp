@@ -7,5 +7,7 @@
         <file>icons/media-playback-stop-dark.svg</file>
         <file>icons/media-playback-start-dark.svg</file>
         <file>icons/configure-dark.svg</file>
+        <file>icons/green.png</file>
+        <file>icons/red.png</file>
     </qresource>
 </RCC>
