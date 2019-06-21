@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->restartWebManager, &QPushButton::clicked, this, &MainWindow::startWebManager);
     connect(ui->stopWebManager, &QPushButton::clicked, this, &MainWindow::stopWebManager);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
-    connect(ui->actionAbout,&QAction::triggered, this, [this]()
+    connect(ui->actionAbout,&QAction::triggered, this, []()
     {
         QMessageBox about;
         about.setIconPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
@@ -354,7 +354,7 @@ void MainWindow::showPreferences()
     if(backgroundBrightness < 100)
         page2->setIcon(QIcon(":/media/icons/configure-dark.svg"));
     else
-        page2->setIcon(QIcon(":/media/images/configure.svg"));
+        page2->setIcon(QIcon(":/media/icons/configure.svg"));
     preferencesDialog->show();
 }
 
@@ -478,16 +478,17 @@ void MainWindow::startWebManager()
  */
 void MainWindow::stopWebManager()
 {
-    disconnect(webManager, SIGNAL(finished(int)), this, SLOT(managerClosed(int)));
+    if(!webManager.isNull())
+    {
+        disconnect(webManager, SIGNAL(finished(int)), this, SLOT(managerClosed(int)));
+        webManager->kill();
+    }
     webManagerRunning  = false;
+
     QProcess killINDIServer;
-    QStringList killParams;
-    killParams<<"indiserver";
-    killINDIServer.start("/usr/bin/killall", killParams);
+    killINDIServer.start("/usr/bin/killall", QStringList()<<"indiserver");
     killINDIServer.waitForFinished(300);
-    webManager->kill();
     appendLogEntry(i18n("INDI Web Manager Shut down successfully."));
-    webManager->waitForFinished(300);
     updateDisplaysforShutDown();
 }
 
