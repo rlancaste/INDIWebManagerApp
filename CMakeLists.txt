@@ -12,9 +12,9 @@ project(INDIWebManagerApp)
 # Timestamp build
 string(TIMESTAMP INDI_WEB_MANAGER_APP_BUILD_TS UTC)
 
-# INDI Web Manager App Version 0.5
+# INDI Web Manager App Version 0.6
 set (INDIWebManagerApp_VERSION_MAJOR 0)
-set (INDIWebManagerApp_VERSION_MINOR 5)
+set (INDIWebManagerApp_VERSION_MINOR 6)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.cmake
