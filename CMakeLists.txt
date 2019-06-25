@@ -90,7 +90,7 @@ set_source_files_properties(${INDIWebManagerApp_ICON} PROPERTIES MACOSX_PACKAGE_
 endif(APPLE)
 
 ecm_add_app_icon(INDIWebManagerApp_SRCS ICONS
-       ${CMAKE_CURRENT_SOURCE_DIR}/images/indi_logo.png
+       ${CMAKE_CURRENT_SOURCE_DIR}/icons/128-indi_logo.png
 )
 
 qt5_add_resources(INDIWebManagerApp_SRCS resources.qrc)
