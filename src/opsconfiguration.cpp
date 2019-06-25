@@ -273,18 +273,33 @@ void OpsConfiguration::slotInstallRequirements()
         QMessageBox::information(nullptr, "Message", i18n("indiweb is already installed"));
         return;
     }
-    //Try both just so we are sure that whichever python is installed, indiweb is installed in them.
+
     QProcess install;
+    QString pathToPip="";
+
+     //Try multiple options since python and pip can be in different places and have different names.
+    //Start with the user's desired python exec folder and prefer pip3 over pip over pip2.
+
     if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())
-    {
-        install.start(Options::pythonExecFolder() +"/pip3" , QStringList() << "install" << "indiweb");
-        install.waitForFinished();
-    }
+        pathToPip = Options::pythonExecFolder() +"/pip3";
+    else if(QFileInfo(Options::pythonExecFolder() +"/pip").exists())
+        pathToPip = Options::pythonExecFolder() +"/pip";
+    else if(QFileInfo(Options::pythonExecFolder() +"/pip2").exists())
+        pathToPip = Options::pythonExecFolder() +"/pip2";
+    else if(QFileInfo("/usr/local/bin/pip3").exists())
+        pathToPip = "/usr/local/bin/pip3";
+    else if(QFileInfo("/usr/local/bin/pip").exists())
+        pathToPip = "/usr/local/bin/pip";
+    else if(QFileInfo("/usr/local/bin/pip2").exists())
+        pathToPip = "/usr/local/bin/pip2";
     else
     {
-        install.start(Options::pythonExecFolder() +"/pip" , QStringList() << "install" << "indiweb");
-        install.waitForFinished();
+        QMessageBox::information(nullptr, "Message", i18n("Cannot find pip in your Python Exec Directory. Please install pip, put a symlink to pip in there, or change your Python Exec Directory."));
+        return;
     }
+
+    install.start(pathToPip, QStringList() << "install" << "indiweb");
+    install.waitForFinished();
 
     if(!parent->indiWebInstalled())
     {

@@ -303,7 +303,7 @@ QString MainWindow::getINDIServerURL(QString port)
 bool MainWindow::pythonInstalled()
 {
 
-    return QFileInfo(Options::pythonExecFolder() + "/python").exists() || QFileInfo(Options::pythonExecFolder() + "/python3").exists();
+    return QFileInfo(Options::pythonExecFolder() + "/python").exists() || QFileInfo(Options::pythonExecFolder() + "/python2").exists() || QFileInfo(Options::pythonExecFolder() + "/python3").exists();
 }
 
 /*
@@ -312,7 +312,7 @@ bool MainWindow::pythonInstalled()
 bool MainWindow::pipInstalled()
 {
 
-    return QFileInfo(Options::pythonExecFolder() + "/pip").exists() || QFileInfo(Options::pythonExecFolder() + "/pip3").exists();
+    return QFileInfo(Options::pythonExecFolder() + "/pip").exists() || QFileInfo(Options::pythonExecFolder() + "/pip2").exists() || QFileInfo(Options::pythonExecFolder() + "/pip3").exists() || QFileInfo("/usr/local/bin/pip").exists() || QFileInfo("/usr/local/bin/pip2").exists() || QFileInfo("/usr/local/bin/pip3").exists();
 }
 
 /*
