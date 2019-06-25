@@ -26,11 +26,14 @@ OpsConfiguration::OpsConfiguration(MainWindow *parent)
     ui = new Ui::OpsConfiguration;
     ui->setupUi(this);
 
-    updatePythonInstallationStatus();
+    updatePythonAndIndiwebInstallationStatus();
     updateGSCInstallationStatus();
+
     connect(ui->installRequirements, &QAbstractButton::clicked,this, &OpsConfiguration::slotInstallRequirements);
     connect(ui->installGSC, SIGNAL(clicked()), this, SLOT(slotInstallGSC()));
     connect(ui->kcfg_GSCPath, &QLineEdit::textChanged, this, &OpsConfiguration::updateGSCInstallationStatus);
+    connect(ui->kcfg_indiwebPath, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
+    connect(ui->kcfg_PythonExecFolder, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
     ui->gscInstallCancel->setVisible(false);
     ui->downloadProgress->setVisible(false);
 
@@ -159,9 +162,9 @@ void OpsConfiguration::displayGSCInstallationStatus(bool installed)
 /*
  * This method detects whether Homebrew, Python3, and indi-web are properly installed and updates the status.
  */
-void OpsConfiguration::updatePythonInstallationStatus()
+void OpsConfiguration::updatePythonAndIndiwebInstallationStatus()
 {
-    bool installed = parent->pythonInstalled() && parent->indiWebInstalled();
+    bool installed = parent->pythonInstalled(ui->kcfg_PythonExecFolder->text()) && parent->indiWebInstalled(ui->kcfg_indiwebPath->text());
     displayInstallationStatus(installed);
 }
 
@@ -266,7 +269,7 @@ void OpsConfiguration::slotInstallRequirements()
             }
         }
         QMessageBox::information(nullptr, "Message", i18n("All installations are complete and ready to use."));
-        updatePythonInstallationStatus();
+        updatePythonAndIndiwebInstallationStatus();
     }
 #else
     if( !parent->pythonInstalled() || !parent->pipInstalled() )

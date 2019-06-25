@@ -300,10 +300,15 @@ QString MainWindow::getINDIServerURL(QString port)
 /*
  * This method detects whether python is installed.
  */
-bool MainWindow::pythonInstalled()
+bool MainWindow::pythonInstalled(QString pythonExecFolder)
 {
 
-    return QFileInfo(Options::pythonExecFolder() + "/python").exists() || QFileInfo(Options::pythonExecFolder() + "/python2").exists() || QFileInfo(Options::pythonExecFolder() + "/python3").exists();
+    return QFileInfo(pythonExecFolder + "/python").exists() || QFileInfo(pythonExecFolder + "/python2").exists() || QFileInfo(pythonExecFolder + "/python3").exists();
+}
+
+bool MainWindow::pythonInstalled()
+{
+    return(pythonInstalled(Options::pythonExecFolder()));
 }
 
 /*
@@ -318,35 +323,14 @@ bool MainWindow::pipInstalled()
 /*
  * This method detects whether indi-web is installed in either python2 or python3.
  */
+bool MainWindow::indiWebInstalled(QString indiWebPath)
+{
+    return QFileInfo(indiWebPath).exists() && indiWebPath.endsWith("indi-web");
+}
+
 bool MainWindow::indiWebInstalled()
 {
-    QString pathToPip="";
-
-    //Try multiple options since python and pip can be in different places and have different names.
-    //Start with the user's desired python exec folder and prefer pip3 over pip over pip2.
-
-    if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip3";
-    else if(QFileInfo(Options::pythonExecFolder() +"/pip").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip";
-    else if(QFileInfo(Options::pythonExecFolder() +"/pip2").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip2";
-    else if(QFileInfo("/usr/local/bin/pip3").exists())
-        pathToPip = "/usr/local/bin/pip3";
-    else if(QFileInfo("/usr/local/bin/pip").exists())
-        pathToPip = "/usr/local/bin/pip";
-    else if(QFileInfo("/usr/local/bin/pip2").exists())
-        pathToPip = "/usr/local/bin/pip2";
-    else
-        return false;
-
-    QProcess testindiweb;
-    testindiweb.start(pathToPip, QStringList() << "list");
-    testindiweb.waitForFinished();
-
-    QString listPip(testindiweb.readAllStandardOutput());
-
-    return listPip.contains("indiweb", Qt::CaseInsensitive);
+    return indiWebInstalled(Options::indiwebPath());
 }
 
 /*

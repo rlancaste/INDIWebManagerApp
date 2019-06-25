@@ -38,7 +38,7 @@ private slots:
     void slotInstallRequirements();
     bool brewInstalled();
     bool gscInstalled();
-    void updatePythonInstallationStatus();
+    void updatePythonAndIndiwebInstallationStatus();
     void updateGSCInstallationStatus();
     void slotGSCInstallerFinished();
     void slotInstallGSC();

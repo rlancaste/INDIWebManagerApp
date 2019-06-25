@@ -35,8 +35,10 @@ public:
     static QString getDefault(QString option);
     QString getWebManagerURL();
     QString getINDIServerURL(QString port);
+    bool pythonInstalled(QString pythonExecFolder);
     bool pythonInstalled();
     bool pipInstalled();
+    bool indiWebInstalled(QString indiWebPath);
     bool indiWebInstalled();
 
 private:
