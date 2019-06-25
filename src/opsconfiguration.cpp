@@ -283,7 +283,7 @@ void OpsConfiguration::slotInstallRequirements()
     QProcess install;
     QString pathToPip="";
 
-     //Try multiple options since python and pip can be in different places and have different names.
+    //Try multiple options since python and pip can be in different places and have different names.
     //Start with the user's desired python exec folder and prefer pip3 over pip over pip2.
 
     if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())

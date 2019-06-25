@@ -320,14 +320,30 @@ bool MainWindow::pipInstalled()
  */
 bool MainWindow::indiWebInstalled()
 {
-    QProcess testindiweb;
-    QStringList argsList;
-    argsList << "list";
-    if(QFileInfo(Options::pythonExecFolder() + "/pip3").exists())
-        testindiweb.start(Options::pythonExecFolder() +"/pip3", argsList);
+    QString pathToPip="";
+
+    //Try multiple options since python and pip can be in different places and have different names.
+    //Start with the user's desired python exec folder and prefer pip3 over pip over pip2.
+
+    if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())
+        pathToPip = Options::pythonExecFolder() +"/pip3";
+    else if(QFileInfo(Options::pythonExecFolder() +"/pip").exists())
+        pathToPip = Options::pythonExecFolder() +"/pip";
+    else if(QFileInfo(Options::pythonExecFolder() +"/pip2").exists())
+        pathToPip = Options::pythonExecFolder() +"/pip2";
+    else if(QFileInfo("/usr/local/bin/pip3").exists())
+        pathToPip = "/usr/local/bin/pip3";
+    else if(QFileInfo("/usr/local/bin/pip").exists())
+        pathToPip = "/usr/local/bin/pip";
+    else if(QFileInfo("/usr/local/bin/pip2").exists())
+        pathToPip = "/usr/local/bin/pip2";
     else
-        testindiweb.start(Options::pythonExecFolder() +"/pip", argsList);
+        return false;
+
+    QProcess testindiweb;
+    testindiweb.start(pathToPip, QStringList() << "list");
     testindiweb.waitForFinished();
+
     QString listPip(testindiweb.readAllStandardOutput());
 
     return listPip.contains("indiweb", Qt::CaseInsensitive);
