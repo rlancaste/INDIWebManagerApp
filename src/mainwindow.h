@@ -31,7 +31,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
     static QString getDefault(QString option);
     QString getWebManagerURL();
     QString getINDIServerURL(QString port);

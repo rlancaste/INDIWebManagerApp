@@ -67,7 +67,7 @@
             <whatsthis>This is the path to the INDI Drivers, it will be added to the PATH for the INDI Server and the xmlPath for the Web Manager.  On OS X, this is located in the Resources folder in the app bundle, on Linux, it is in the bin folder</whatsthis>
         	<default code="true">MainWindow::getDefault("INDIDriversPath")</default>
         </entry>
-        <entry name="INDIConfigDefault" type="Bool">
+        <entry name="INDIConfigPathDefault" type="Bool">
             <label>Use the default INDI Config Path.</label>
             <whatsthis>This option determines whether to use the default INDI Configuration Path or a user specified folder.</whatsthis>
             <default>true</default>

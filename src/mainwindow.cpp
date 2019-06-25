@@ -311,7 +311,7 @@ bool MainWindow::pythonInstalled()
  */
 bool MainWindow::pipInstalled()
 {
-
+    //Note, I had to add the last set for /usr/local because some people have python installed in /usr/bin and pip installed in /usr/local/bin
     return QFileInfo(Options::pythonExecFolder() + "/pip").exists() || QFileInfo(Options::pythonExecFolder() + "/pip2").exists() || QFileInfo(Options::pythonExecFolder() + "/pip3").exists() || QFileInfo("/usr/local/bin/pip").exists() || QFileInfo("/usr/local/bin/pip2").exists() || QFileInfo("/usr/local/bin/pip3").exists();
 }
 
@@ -462,7 +462,7 @@ void MainWindow::startWebManager()
          processArguments << "--logfile" << Options::logFilePath();
     if(!Options::managerPortNumberDefault())
         processArguments << "--port" << Options::managerPortNumber();
-    if(!Options::iNDIConfigDefault())
+    if(!Options::iNDIConfigPathDefault())
         processArguments << "--conf" << Options::iNDIConfigPath();
     appendLogEntry(Options::indiwebPath() + " " + processArguments.join(" "));
     webManager->start(Options::indiwebPath(), processArguments);
