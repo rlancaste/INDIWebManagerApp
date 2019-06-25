@@ -199,6 +199,12 @@ bool OpsConfiguration::gscInstalled()
  */
 void OpsConfiguration::slotInstallRequirements()
 {
+    if(Options::pythonExecFolder() != ui->kcfg_PythonExecFolder->text())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the Python Exec path before installing."));
+        return;
+    }
+
     #ifdef Q_OS_OSX
 
     if(brewInstalled() && parent->pythonInstalled() && parent->pipInstalled() && parent->indiWebInstalled())
@@ -318,6 +324,11 @@ void OpsConfiguration::slotInstallRequirements()
 void OpsConfiguration::slotInstallGSC()
 {
 #ifdef Q_OS_OSX
+    if(Options::gSCPath() != ui->kcfg_GSCPath->text())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the GSC path before installing."));
+        return;
+    }
     if(gscInstalled())
     {
         QMessageBox::information(nullptr, "Message", i18n("GSC is already installed."));
