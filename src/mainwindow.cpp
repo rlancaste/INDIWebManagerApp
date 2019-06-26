@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout,&QAction::triggered, this, []()
     {
         QMessageBox about;
-        about.setIconPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
+        about.setIconPixmap(QPixmap(":/media/images/indi_logo.png"));
         about.setText("<html>INDI Web Manager App<br> © 2019 Robert Lancaster<br> Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>href=https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>");
         about.exec();
     });
@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     //This sets up the INDI Logo to look nice in the app.
-    ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png").scaled (100,100,Qt::KeepAspectRatio));
+    ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png"));
 
     //This sets up a timer to check the status of the INDI Server at 1 second intervals when it is running.
     serverMonitor.setInterval(1000);
