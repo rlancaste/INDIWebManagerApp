@@ -515,6 +515,7 @@
     <addaction name="actionINDI_Web_Details"/>
     <addaction name="actionOS_X_Build_Script"/>
     <addaction name="actionINDI_Clients"/>
+    <addaction name="actionWhat_s_This_2"/>
    </widget>
    <addaction name="menuINDIWebMangerApp"/>
    <addaction name="menuView"/>
@@ -573,6 +574,11 @@
   <action name="actionINDI_Clients">
    <property name="text">
     <string>INDI Clients for this app</string>
+   </property>
+  </action>
+  <action name="actionWhat_s_This_2">
+   <property name="text">
+    <string>What's This?</string>
    </property>
   </action>
  </widget>

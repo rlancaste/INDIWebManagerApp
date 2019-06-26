@@ -28,6 +28,7 @@
 #include <KConfigDialog>
 #include <KLocalizedString>
 #include <QHostInfo>
+#include <QWhatsThis>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -100,6 +101,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOS_X_Build_Script,&QAction::triggered, this, []()
     {
         QDesktopServices::openUrl(QUrl("https://github.com/rlancaste/kstars-on-osx-craft"));
+    });
+
+    connect(ui->actionWhat_s_This_2,&QAction::triggered, this, []()
+    {
+        QWhatsThis::enterWhatsThisMode();
     });
 
 
@@ -381,6 +387,16 @@ void MainWindow::showPreferences()
         page2->setIcon(QIcon(":/media/icons/configure-dark.svg"));
     else
         page2->setIcon(QIcon(":/media/icons/configure.svg"));
+
+    QPushButton *whatsThis = new QPushButton("?");
+    whatsThis->setToolTip("What's This?");
+
+    connect(whatsThis,&QPushButton::clicked, this, []()
+    {
+        QWhatsThis::enterWhatsThisMode();
+    });
+
+    preferencesDialog->addActionButton(whatsThis);
     preferencesDialog->show();
 }
 
