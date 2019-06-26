@@ -316,7 +316,7 @@ void OpsConfiguration::slotInstallRequirements()
         return;
     }
     QMessageBox::information(nullptr, "Message", i18n("INDIWeb is installed and ready to use."));
-    updatePythonInstallationStatus();
+    updatePythonAndIndiwebInstallationStatus();
 #endif
 }
 
