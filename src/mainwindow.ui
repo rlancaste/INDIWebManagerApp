@@ -58,6 +58,9 @@
         <property name="toolTip">
          <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
         </property>
+        <property name="whatsThis">
+         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
+        </property>
        </widget>
       </item>
       <item row="1" column="1">
@@ -75,6 +78,9 @@
         <item>
          <widget class="QLineEdit" name="statusDisplay">
           <property name="toolTip">
+           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
            <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
           </property>
           <property name="readOnly">
@@ -113,6 +119,9 @@
         <property name="toolTip">
          <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
         </property>
+        <property name="whatsThis">
+         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+        </property>
         <property name="sizeAdjustPolicy">
          <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
         </property>
@@ -130,6 +139,9 @@
         <item>
          <widget class="QLineEdit" name="activeProfileDisplay">
           <property name="toolTip">
+           <string>The name of the currently running profile in the INDI Server.  This is updated once per second.</string>
+          </property>
+          <property name="whatsThis">
            <string>The name of the currently running profile in the INDI Server.  This is updated once per second.</string>
           </property>
           <property name="readOnly">
@@ -164,6 +176,9 @@
         <property name="toolTip">
          <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
         </property>
+        <property name="whatsThis">
+         <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
+        </property>
         <property name="text">
          <string>Open WebManager</string>
         </property>
@@ -187,6 +202,9 @@
         <property name="toolTip">
          <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
         </property>
+        <property name="whatsThis">
+         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
+        </property>
        </widget>
       </item>
       <item row="1" column="4">
@@ -204,6 +222,9 @@
         <item>
          <widget class="QLineEdit" name="serverStatusDisplay">
           <property name="toolTip">
+           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
            <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
           </property>
           <property name="readOnly">
@@ -248,6 +269,9 @@
           <property name="toolTip">
            <string>Starts the INDI Web Manager</string>
           </property>
+          <property name="whatsThis">
+           <string>Starts the INDI Web Manager</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -270,6 +294,9 @@
           <property name="toolTip">
            <string>Stops the INDI Web Manager</string>
           </property>
+          <property name="whatsThis">
+           <string>Stops the INDI Web Manager</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -290,6 +317,9 @@
            </size>
           </property>
           <property name="toolTip">
+           <string>Configures the INDI Web Manager</string>
+          </property>
+          <property name="whatsThis">
            <string>Configures the INDI Web Manager</string>
           </property>
           <property name="text">
@@ -347,6 +377,9 @@
           <property name="toolTip">
            <string>This is the host name of your computer.  It is how your computer is known on the local network.  You can use this to connect to your INDI Web Manager.  You can change this by going into your system settings on your computer.  </string>
           </property>
+          <property name="whatsThis">
+           <string>This is the host name of your computer.  It is how your computer is known on the local network.  You can use this to connect to your INDI Web Manager.  You can change this by going into your system settings on your computer.  </string>
+          </property>
           <property name="text">
            <string>localhost</string>
           </property>
@@ -371,6 +404,9 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
+           <string>This is the current local IP address of your computer.  It is a number unique on your local network and can be used to connect to your INDI Web Manager just like the host name.  </string>
+          </property>
+          <property name="whatsThis">
            <string>This is the current local IP address of your computer.  It is a number unique on your local network and can be used to connect to your INDI Web Manager just like the host name.  </string>
           </property>
           <property name="readOnly">
@@ -403,6 +439,9 @@
           <property name="toolTip">
            <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
           </property>
+          <property name="whatsThis">
+           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+          </property>
           <property name="text">
            <string>8624</string>
           </property>
@@ -418,6 +457,9 @@
     <item>
      <widget class="QPushButton" name="showLog">
       <property name="toolTip">
+       <string>This will show the INDI Web Manager log in the space below.</string>
+      </property>
+      <property name="whatsThis">
        <string>This will show the INDI Web Manager log in the space below.</string>
       </property>
       <property name="text">
@@ -466,11 +508,20 @@
            <height>0</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>The INDI Web Manager Log</string>
+         </property>
+         <property name="whatsThis">
+          <string>The INDI Web Manager Log</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="clearLog">
          <property name="toolTip">
+          <string>Clears the INDI Web Manager Log.</string>
+         </property>
+         <property name="whatsThis">
           <string>Clears the INDI Web Manager Log.</string>
          </property>
          <property name="text">
