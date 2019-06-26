@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     //This makes the buttons look nice on OS X.
+    ui->whatsThis->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->stopWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->restartWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->configureWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
@@ -104,6 +105,11 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->actionWhat_s_This_2,&QAction::triggered, this, []()
+    {
+        QWhatsThis::enterWhatsThisMode();
+    });
+
+    connect(ui->whatsThis,&QPushButton::clicked, this, []()
     {
         QWhatsThis::enterWhatsThisMode();
     });
