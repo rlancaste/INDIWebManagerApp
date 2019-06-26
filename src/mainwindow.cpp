@@ -403,7 +403,7 @@ void MainWindow::configureEnvironmentVariables()
     if(Options::gPhotoCAMLIBSDefault())
         Options::setGPhotoCAMLIBS(getDefault("GPhotoCAMLIBS"));
 
-    QString newPATH = Options::pythonExecFolder() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    QString newPATH = Options::pythonExecFolder() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
     insertEnvironmentVariable("PATH", newPATH);
 
     #ifdef Q_OS_OSX
