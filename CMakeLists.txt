@@ -14,7 +14,7 @@ string(TIMESTAMP INDI_WEB_MANAGER_APP_BUILD_TS UTC)
 
 # INDI Web Manager App Version 0.7
 set (INDIWebManagerApp_VERSION_MAJOR 0)
-set (INDIWebManagerApp_VERSION_MINOR 7)
+set (INDIWebManagerApp_VERSION_MINOR 8)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.cmake

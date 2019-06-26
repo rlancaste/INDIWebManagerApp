@@ -506,8 +506,15 @@
     <addaction name="actionMain_Window"/>
     <addaction name="actionHIde_Window"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionWhat_s_This"/>
+   </widget>
    <addaction name="menuINDIWebMangerApp"/>
    <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionMain_Window">
    <property name="text">
@@ -532,6 +539,11 @@
   <action name="actionShow_Log">
    <property name="text">
     <string>Show Log</string>
+   </property>
+  </action>
+  <action name="actionWhat_s_This">
+   <property name="text">
+    <string>What's This?</string>
    </property>
   </action>
  </widget>
