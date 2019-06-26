@@ -77,6 +77,32 @@ MainWindow::MainWindow(QWidget *parent) :
         about.exec();
     });
 
+    connect(ui->actionINDI_Details,&QAction::triggered, this, []()
+    {
+        QDesktopServices::openUrl(QUrl("https://www.indilib.org"));
+    });
+
+    connect(ui->actionINDI_Forum,&QAction::triggered, this, []()
+    {
+        QDesktopServices::openUrl(QUrl("https://www.indilib.org/forum.html"));
+    });
+
+    connect(ui->actionINDI_Web_Details,&QAction::triggered, this, []()
+    {
+        QDesktopServices::openUrl(QUrl("https://github.com/knro/indiwebmanager"));
+    });
+
+    connect(ui->actionINDI_Clients,&QAction::triggered, this, []()
+    {
+        QDesktopServices::openUrl(QUrl("https://www.indilib.org/about/clients.html"));
+    });
+
+    connect(ui->actionOS_X_Build_Script,&QAction::triggered, this, []()
+    {
+        QDesktopServices::openUrl(QUrl("https://github.com/rlancaste/kstars-on-osx-craft"));
+    });
+
+
     //This sets up the Web Manager to launch in your favorite browser using either the host name or IP Address
     connect(ui->openWebManager, &QPushButton::clicked, this, [this]()
     {

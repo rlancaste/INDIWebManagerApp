@@ -4,4 +4,4 @@ Singleton=true
 Mutators=true
 ItemAccessors=false
 SetUserTexts=true
-#GenerateProperties=true
+TranslationSystem=kde
