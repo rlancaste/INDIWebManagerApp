@@ -31,7 +31,11 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="gscStatusDisplay"/>
+      <widget class="QLineEdit" name="gscStatusDisplay">
+       <property name="toolTip">
+        <string>This check determines whether GSC data is installed on your computer.  Note that this does NOT check for the gsc executable.  GSC is used by the CCD Simulator to load fake stars to give a more realistic simulation.</string>
+       </property>
+      </widget>
      </item>
      <item row="7" column="2">
       <widget class="QCheckBox" name="kcfg_INDIDriversDefault">
@@ -59,6 +63,9 @@
      </item>
      <item row="3" column="4">
       <widget class="QPushButton" name="gscInstallCancel">
+       <property name="toolTip">
+        <string>This cancels the GSC download</string>
+       </property>
        <property name="text">
         <string>X</string>
        </property>
@@ -104,6 +111,9 @@
      </item>
      <item row="3" column="3">
       <widget class="QProgressBar" name="downloadProgress">
+       <property name="toolTip">
+        <string>This shows the progress of the GSC download</string>
+       </property>
        <property name="value">
         <number>24</number>
        </property>
@@ -172,6 +182,9 @@
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="installRequirements">
+       <property name="toolTip">
+        <string>This install button is meant to install indiweb to your system so that this program can run.  You can also install indiweb via the command line.  On Linux, this button can only install indiweb.  On Mac OS X, this button will install homebrew, python3, and indiweb.  </string>
+       </property>
        <property name="text">
         <string>Install</string>
        </property>
@@ -179,13 +192,20 @@
      </item>
      <item row="3" column="2">
       <widget class="QPushButton" name="installGSC">
+       <property name="toolTip">
+        <string>This button will install the GSC data on OS X systems at the desired path.  GSC data takes up about 300 MB of space.  This button only works on OS X because the gsc executable is also necessary to use gsc.  For OS X, it is included in the app bundle.  On Linux, you need to install GSC from the command line from the ppa.</string>
+       </property>
        <property name="text">
         <string>Install</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="installationStatusDisplay"/>
+      <widget class="QLineEdit" name="installationStatusDisplay">
+       <property name="toolTip">
+        <string>Checks whether indi-web is installed and has what it needs to run.  It checks for python to be in the Exec Folder and the indi-web executable to be at the selected path.  If the paths are incorrect, you can edit them and this check will automatically update.  If you don't have them installed, you can install from the command line or try to use the install button.</string>
+       </property>
+      </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label">
