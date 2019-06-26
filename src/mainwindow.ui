@@ -510,12 +510,13 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionWhat_s_This_2"/>
+    <addaction name="separator"/>
     <addaction name="actionINDI_Details"/>
     <addaction name="actionINDI_Forum"/>
     <addaction name="actionINDI_Web_Details"/>
     <addaction name="actionOS_X_Build_Script"/>
     <addaction name="actionINDI_Clients"/>
-    <addaction name="actionWhat_s_This_2"/>
    </widget>
    <addaction name="menuINDIWebMangerApp"/>
    <addaction name="menuView"/>
