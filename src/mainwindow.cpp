@@ -40,6 +40,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/media/images/indi_logo.png"));
 
+    //Note: This is for the tooltips AND the What's this
+    //I tried to use stylesheets, but what's this did not listen.
+    QPalette p = qApp->palette();
+    p.setColor(QPalette::ColorRole::ToolTipBase, Qt::black);
+    p.setColor(QPalette::ColorRole::ToolTipText, Qt::yellow);
+    //This is strange that the button text color didn't come through!
+    #ifdef Q_OS_OSX
+        p.setColor(QPalette::ColorRole::ButtonText,QApplication::palette().text().color());
+    #endif
+    qApp->setPalette(p);
+
     //This should make the icons look good no matter what the theme or mode of the system is.
     int backgroundBrightness = this->palette().color(QWidget::backgroundRole()).lightness();
     if(backgroundBrightness < 100)
