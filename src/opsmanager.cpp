@@ -117,6 +117,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         "\n" \
         "[Service]\n" \
         "Environment=\"DISPLAY=:0\"\n" \
+        "Environment=XAUTHORITY=" + QDir::homePath() + "/.Xauthority\n" \
         "Type=idle\n" \
         "User=" + qgetenv("USER") + "\n" \
         "ExecStart=" + QCoreApplication::applicationFilePath() + "\n" \
