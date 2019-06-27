@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <KLocalizedString>
 
 OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
 {
