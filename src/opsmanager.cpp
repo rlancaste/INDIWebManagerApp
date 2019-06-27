@@ -79,7 +79,7 @@ void OpsManager::updateFromCheckBoxes()
 }
 
 void OpsManager::setLaunchAtStartup(bool launchAtStart)
-{  
+{
     if(launchAtStart)
     {
         QString fileText = "";
@@ -132,23 +132,23 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         }
         bool ok;
         QString password = QInputDialog::getText(nullptr, "Get Password",
-                                                 i18n("To create the service file and enable the service, we need to use sudo. \nYour admin password:"), QLineEdit::Normal,
+                                                 i18n("To create the service file and enable the service, we need to use sudo. \nYour admin password please:"), QLineEdit::Normal,
                                                  "", &ok);
         if (ok && !password.isEmpty())
         {
             QProcess loadService;
-            loadService.start("sudo", QStringList() << "-p" << password << "mv" << tempFile << startupFilePath);
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S mv " + tempFile + " " + startupFilePath);
             loadService.waitForFinished();
-            loadService.start("sudo", QStringList() << "-p" << password << "chmod" << "644" << startupFilePath);
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S chmod 644 " + startupFilePath);
             loadService.waitForFinished();
-            loadService.start("sudo", QStringList() << "-p" << password << "systemctl" << "daemon-reload");
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl daemon-reload");
             loadService.waitForFinished();
-            loadService.start("sudo", QStringList() << "-p" << password << "systemctl" << "enable" << "INDIWebManagerApp.service");
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl enable INDIWebManagerApp.service");
             loadService.waitForFinished();
         }
         else
         {
-            QMessageBox::information(nullptr, "message", i18n("Since I cannot get your sudo password, I can't complete your request.  You can try this again, or do this instead:"));
+            QMessageBox::information(nullptr, "message", i18n("Since we cannot get your sudo password, we can't complete your request.  You can try clicking the button again and entering your password, or manually do it using the following steps in a Terminal."));
 
             QMessageBox::information(nullptr, "message", "sudo mv " + QDir::homePath() + "/INDIWebManagerApp.service /etc/systemd/system/INDIWebManagerApp.service\n" \
                                                          "sudo chmod 644 /etc/systemd/system/INDIWebManagerApp.service\n" \
@@ -160,7 +160,30 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
     }
     else
     {
+    #ifdef Q_OS_OSX
         QFile::remove(startupFilePath);
+    #else
+        bool ok;
+        QString password = QInputDialog::getText(nullptr, "Get Password",
+                                                 i18n("To delete the service file and stop the service, we need to use sudo. \nYour admin password please:"), QLineEdit::Normal,
+                                                 "", &ok);
+        if (ok && !password.isEmpty())
+        {
+            QProcess loadService;
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S rm " + startupFilePath);
+            loadService.waitForFinished();
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl daemon-reload");
+            loadService.waitForFinished();
+
+        }
+        else
+        {
+            QMessageBox::information(nullptr, "message", i18n("Since we cannot get your sudo password, we can't complete your request.  You can try clicking the button again and entering your password, or manually do it using the following steps in a Terminal."));
+
+            QMessageBox::information(nullptr, "message", "sudo rm /etc/systemd/system/INDIWebManagerApp.service\n" \
+                                                         "sudo systemctl daemon-reload\n");
+        }
+    #endif
     }
     ui->launchAtStartup->setChecked(checkLaunchAtStartup());
 }
