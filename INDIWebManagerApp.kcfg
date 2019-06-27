@@ -14,7 +14,7 @@
         <entry name="PythonExecFolder" type="String">
             <label>Path to the python executable folder.</label>
             <tooltip>This is the path to the folder the python executables are in, such as /usr/bin/ it will be added to the PATH.</tooltip>
-            <whatsthis>This is the path to the python executables, it will be added to the PATH.</whatsthis>
+            <whatsthis>This is the path to the folder the python executables are in, such as /usr/bin/ it will be added to the PATH.</whatsthis>
             <default code="true">MainWindow::getDefault("PythonExecFolder")</default>
         </entry>
         <entry name="indiwebPathDefault" type="Bool">
@@ -181,14 +181,14 @@
         </entry>
         <entry name="EnableVerboseMode" type="Bool">
             <label>Enables verbose output from the INDI Web Manager</label>
-            <tooltip>Determines whether to display more details in the log as the INDI Web Manger is running.</tooltip>
-            <whatsthis>Determines whether to display more details in the log as the INDI Web Manger is running.</whatsthis>
+            <tooltip>Determines whether to display more details in the log as the INDI Web Manager is running.</tooltip>
+            <whatsthis>Determines whether to display more details in the log as the INDI Web Manager is running.</whatsthis>
             <default>true</default>
         </entry>
         <entry name="AutoLaunchManager" type="Bool">
-            <label>Automatically launch the INDI Web Manager</label>
-            <tooltip>Determines whether to automatically launch the INDI Web Manager on startup.</tooltip>
-            <whatsthis>Determines whether to automatically launch the INDI Web Manager on startup.</whatsthis>
+            <label>Automatically launch the INDI Web Manager on program open</label>
+            <tooltip>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need to add INDI Web Manager App to your system startup programs.</tooltip>
+            <whatsthis>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need to add INDI Web Manager App to your system startup programs.</whatsthis>
             <default>false</default>
         </entry>
     </group>
