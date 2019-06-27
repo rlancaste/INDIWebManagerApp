@@ -26,10 +26,13 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
    startupFilePath = "/etc/systemd/system/indiwebmanagerapp.service";
 #endif
 
+   //This connects all the default checkboxes to the update function.
    connect(ui->kcfg_ComputerHostNameAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_ComputerIPAddressAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_ManagerPortNumberDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_LogFilePathDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
+
+   //This connects the launch at startup checkbox to the toggle function
    connect(ui->launchAtStartup, &QCheckBox::clicked, this, &OpsManager::toggleLaunchAtStartup);
 
    //This waits a moment for the kconfig to load the options, then sets the Line Edits to read only appropriagely
@@ -78,6 +81,10 @@ void OpsManager::updateFromCheckBoxes()
 
 }
 
+/*
+ * This creates and installs or uninstalls the startup file to the appropriate location for your operating system.
+ * For Linux it requires sudo and an admin password, but not for OS X.
+ */
 void OpsManager::setLaunchAtStartup(bool launchAtStart)
 {
     if(launchAtStart)
@@ -190,11 +197,17 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
     ui->launchAtStartup->setChecked(checkLaunchAtStartup());
 }
 
+/*
+ * This toggles installing or uninstalling the startup file, depending on whether it is installed already.
+ */
 void OpsManager::toggleLaunchAtStartup()
 {
     setLaunchAtStartup(!checkLaunchAtStartup());
 }
 
+/*
+ * This method checks to see if the startup file exists in its default location.
+ */
 bool OpsManager::checkLaunchAtStartup()
 {
     return QFileInfo(startupFilePath).exists();

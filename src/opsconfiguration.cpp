@@ -26,18 +26,24 @@ OpsConfiguration::OpsConfiguration(MainWindow *parent)
     ui = new Ui::OpsConfiguration;
     ui->setupUi(this);
 
+    //This updates the status so that the user knows if they are installed when it opens.
     updatePythonAndIndiwebInstallationStatus();
     updateGSCInstallationStatus();
 
-    connect(ui->installRequirements, &QAbstractButton::clicked,this, &OpsConfiguration::slotInstallRequirements);
-    connect(ui->installGSC, SIGNAL(clicked()), this, SLOT(slotInstallGSC()));
+    //Connects install buttons to their methods
+    connect(ui->installRequirements, &QAbstractButton::clicked, this, &OpsConfiguration::slotInstallRequirements);
+    connect(ui->installGSC, &QAbstractButton::clicked, this, &OpsConfiguration::slotInstallGSC);
+
+    //Connects the line edits to the update status methods so the user can see in real time if the path is right.
     connect(ui->kcfg_GSCPath, &QLineEdit::textChanged, this, &OpsConfiguration::updateGSCInstallationStatus);
     connect(ui->kcfg_indiwebPath, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
     connect(ui->kcfg_PythonExecFolder, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
+
+    //Hides the installation displays for GSC since it is not currently running
     ui->gscInstallCancel->setVisible(false);
     ui->downloadProgress->setVisible(false);
 
-    //This Disables some setting Controls on Linux
+    //This Disables some setting Controls on Linux that are not used for Linux
     #if defined(Q_OS_LINUX)
         ui->kcfg_INDIPrefix->setEnabled(false);
         ui->kcfg_INDIPrefixDefault->setEnabled(false);
@@ -160,7 +166,7 @@ void OpsConfiguration::displayGSCInstallationStatus(bool installed)
 }
 
 /*
- * This method detects whether Homebrew, Python3, and indi-web are properly installed and updates the status.
+ * This method detects whether Python3 and indi-web are properly installed and updates the status.
  */
 void OpsConfiguration::updatePythonAndIndiwebInstallationStatus()
 {
@@ -202,6 +208,7 @@ bool OpsConfiguration::gscInstalled()
  */
 void OpsConfiguration::slotInstallRequirements()
 {
+    //This check is performed to make sure the path in the text box matches the current option setting.
     if(Options::pythonExecFolder() != ui->kcfg_PythonExecFolder->text())
     {
         QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the Python Exec path before installing."));

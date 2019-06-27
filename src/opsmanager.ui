@@ -193,6 +193,12 @@
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="toolTip">
+        <string>If enabled, this will create a startup file for Linux (service file in systemd) or OS X (plist file in Launch Agents) that will automatically launch INDI Web Manager App on system startup.  If disabled, it will delete that startup file.  For Linux, it requires an admin password to do these things, but not on OS X.  </string>
+       </property>
+       <property name="whatsThis">
+        <string>If enabled, this will create a startup file for Linux (service file in systemd) or OS X (plist file in Launch Agents) that will automatically launch INDI Web Manager App on system startup.  If disabled, it will delete that startup file.  For Linux, it requires an admin password to do these things, but not on OS X.  </string>
+       </property>
        <property name="text">
         <string>Enable</string>
        </property>

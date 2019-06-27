@@ -86,10 +86,11 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QMessageBox about;
         about.setIconPixmap(QPixmap(":/media/images/indi_logo.png"));
-        about.setText("<html>INDI Web Manager App<br> © 2019 Robert Lancaster<br> Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>href=https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>");
+        about.setText(i18n("<html>INDI Web Manager App<br>&nbsp;&nbsp;© 2019 Robert Lancaster<br>&nbsp;&nbsp;Version: %1<br>&nbsp;&nbsp;Build: %2<br><br>Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>").arg(QString(INDIWebManagerApp_VERSION).arg(QString(INDI_WEB_MANAGER_APP_BUILD_TS))));
         about.exec();
     });
 
+    //These set up the actions in the help menu
     connect(ui->actionINDI_Details,&QAction::triggered, this, []()
     {
         QDesktopServices::openUrl(QUrl("https://www.indilib.org"));
@@ -160,14 +161,15 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    appendLogEntry( "Welcome to INDI Web Manager App " + QString(INDIWebManagerApp_VERSION));
-    appendLogEntry( "Build: " + QString(INDI_WEB_MANAGER_APP_BUILD_TS));
-    appendLogEntry( "OS: " + QSysInfo::productType() + " " + QSysInfo::productVersion());
-    appendLogEntry( "API: " + QSysInfo::buildAbi());
-    appendLogEntry( "Arch: " + QSysInfo::currentCpuArchitecture());
-    appendLogEntry( "Kernel Type: " + QSysInfo::kernelType());
-    appendLogEntry( "Kernel Version: " + QSysInfo::kernelVersion());
-    appendLogEntry( "Qt Version: " + QString(QT_VERSION_STR));
+    //This prints lots of details to the log about the system.
+    appendLogEntry( i18n("Welcome to INDI Web Manager App ") + QString(INDIWebManagerApp_VERSION));
+    appendLogEntry( i18n("Build: ") + QString(INDI_WEB_MANAGER_APP_BUILD_TS));
+    appendLogEntry( i18n("OS: ") + QSysInfo::productType() + " " + QSysInfo::productVersion());
+    appendLogEntry( i18n("API: ") + QSysInfo::buildAbi());
+    appendLogEntry( i18n("Arch: ") + QSysInfo::currentCpuArchitecture());
+    appendLogEntry( i18n("Kernel Type: ") + QSysInfo::kernelType());
+    appendLogEntry( i18n("Kernel Version: ") + QSysInfo::kernelVersion());
+    appendLogEntry( i18n("Qt Version: ") + QString(QT_VERSION_STR));
 
      //This will finish setting up the Web Manager and launch it if the requirements are installed and auto launch is selected.
     if(pythonInstalled() && indiWebInstalled())
@@ -387,7 +389,7 @@ bool MainWindow::indiWebInstalled()
  */
 void MainWindow::showPreferences()
 {
-    KConfigDialog *preferencesDialog = new KConfigDialog(this, "Preferences Dialog", Options::self());
+    KConfigDialog *preferencesDialog = new KConfigDialog(this, i18n("Preferences Dialog"), Options::self());
     connect(preferencesDialog->button(QDialogButtonBox::Apply), SIGNAL(clicked()), SLOT(updateSettings()));
     connect(preferencesDialog->button(QDialogButtonBox::Ok), SIGNAL(clicked()), SLOT(updateSettings()));
 
@@ -398,6 +400,7 @@ void MainWindow::showPreferences()
 
     OpsConfiguration *config2 = new OpsConfiguration(this);
     KPageWidgetItem *page2 = preferencesDialog->addPage(config2, i18n("Configuration Options"));
+
     //This should make the icon look good no matter what the theme or mode of the system is.
     int backgroundBrightness = this->palette().color(QWidget::backgroundRole()).lightness();
     if(backgroundBrightness < 100)
@@ -622,12 +625,12 @@ void MainWindow::displayManagerStatusOnline(bool online)
 {
     if(online)
     {
-        ui->statusDisplay->setText("Online");
+        ui->statusDisplay->setText(i18n("Online"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
     }
     else
     {
-        ui->statusDisplay->setText("Offline");
+        ui->statusDisplay->setText(i18n("Offline"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
     }
 }
@@ -686,12 +689,12 @@ void MainWindow::displayServerStatusOnline(bool online)
 {
     if(online)
     {
-        ui->serverStatusDisplay->setText("Online");
+        ui->serverStatusDisplay->setText(i18n("Online"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
     }
     else
     {
-        ui->serverStatusDisplay->setText("Offline");
+        ui->serverStatusDisplay->setText(i18n("Offline"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
     }
 }
