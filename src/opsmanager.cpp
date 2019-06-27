@@ -9,6 +9,9 @@
 
 #include "opsmanager.h"
 #include "ui_opsmanager.h"
+#include <QDir>
+#include <QInputDialog>
+#include <QMessageBox>
 
 OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
 {
@@ -16,10 +19,17 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
    ui = new Ui::OpsManager;
    ui->setupUi(this);
 
+#ifdef Q_OS_OSX
+   startupFilePath = QDir::homePath() + "/Library/LaunchAgents/" + "com.INDIWebManager.LaunchAgent.plist";
+#else
+   startupFilePath = "/etc/systemd/system/INDIWebManagerApp.service";
+#endif
+
    connect(ui->kcfg_ComputerHostNameAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_ComputerIPAddressAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_ManagerPortNumberDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_LogFilePathDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
+   connect(ui->launchAtStartup, &QCheckBox::clicked, this, &OpsManager::toggleLaunchAtStartup);
 
    //This waits a moment for the kconfig to load the options, then sets the Line Edits to read only appropriagely
    QTimer::singleShot(100, this, &OpsManager::updateFromCheckBoxes);
@@ -63,4 +73,103 @@ void OpsManager::updateFromCheckBoxes()
     else
          ui->kcfg_LogFilePath->setText(Options::logFilePath());
 
+    ui->launchAtStartup->setChecked(checkLaunchAtStartup());
+
+}
+
+void OpsManager::setLaunchAtStartup(bool launchAtStart)
+{  
+    if(launchAtStart)
+    {
+        QString fileText = "";
+
+    #ifdef Q_OS_OSX
+        fileText = "" \
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" \
+        "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" \
+        "<plist version=\"1.0\">\n" \
+        "<dict>\n" \
+        "    <key>Disabled</key>\n" \
+        "    <false/>\n" \
+        "    <key>Label</key>\n" \
+        "    <string>INDI Web Manager App</string>\n" \
+        "    <key>ProgramArguments</key>\n" \
+        "    <array>\n" \
+        "        <string>" + QCoreApplication::applicationDirPath() + "/indiwebmanagerapp</string>\n" \
+        "    </array>\n" \
+        "    <key>RunAtLoad</key>\n" \
+        "    <true/>\n" \
+        "</dict>\n" \
+        "</plist>";
+
+        QFile file( startupFilePath );
+        if ( file.open(QIODevice::ReadWrite) )
+        {
+            QTextStream stream( &file );
+            stream << fileText << endl;
+        }
+    #else
+        fileText = "" \
+        "[Unit]\n" \
+        "Description=INDI Web Manager App\n" \
+        "After=multi-user.target\n" \
+        "\n" \
+        "[Service]\n" \
+        "Type=idle\n" \
+        "User=" + qgetenv("USER") + "\n" \
+        "ExecStart=" + QCoreApplication::applicationDirPath() + "/indiwebmanagerapp\n" \
+        "\n" \
+        "[Install]\n" \
+        "WantedBy=multi-user.target";
+
+        QString tempFile =  QDir::homePath() + "/INDIWebManagerApp.service";
+        QFile file2(tempFile);
+        if ( file2.open(QIODevice::ReadWrite) )
+        {
+            QTextStream stream( &file2 );
+            stream << fileText << endl;
+        }
+        bool ok;
+        QString password = QInputDialog::getText(nullptr, "Get Password",
+                                                 i18n("To create the service file and enable the service, we need to use sudo. \nYour admin password:"), QLineEdit::Normal,
+                                                 "", &ok);
+        if (ok && !password.isEmpty())
+        {
+            QProcess loadService;
+            loadService.start("sudo", QStringList() << "-p" << password << "mv" << tempFile << startupFilePath);
+            loadService.waitForFinished();
+            loadService.start("sudo", QStringList() << "-p" << password << "chmod" << "644" << startupFilePath);
+            loadService.waitForFinished();
+            loadService.start("sudo", QStringList() << "-p" << password << "systemctl" << "daemon-reload");
+            loadService.waitForFinished();
+            loadService.start("sudo", QStringList() << "-p" << password << "systemctl" << "enable" << "INDIWebManagerApp.service");
+            loadService.waitForFinished();
+        }
+        else
+        {
+            QMessageBox::information(nullptr, "message", i18n("Since I cannot get your sudo password, I can't complete your request.  You can try this again, or do this instead:"));
+
+            QMessageBox::information(nullptr, "message", "sudo mv " + QDir::homePath() + "/INDIWebManagerApp.service /etc/systemd/system/INDIWebManagerApp.service\n" \
+                                                         "sudo chmod 644 /etc/systemd/system/INDIWebManagerApp.service\n" \
+                                                         "sudo systemctl daemon-reload\n" \
+                                                         "sudo systemctl enable INDIWebManagerApp.service\n");
+        }
+    #endif
+
+    }
+    else
+    {
+        QFile::remove(startupFilePath);
+    }
+    ui->launchAtStartup->setChecked(checkLaunchAtStartup());
+}
+
+void OpsManager::toggleLaunchAtStartup()
+{
+    setLaunchAtStartup(!checkLaunchAtStartup());
+}
+
+bool OpsManager::checkLaunchAtStartup()
+{
+    return QFileInfo(startupFilePath).exists();
 }

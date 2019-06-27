@@ -31,9 +31,13 @@ public:
 private:
     Ui::OpsManager *ui;
     MainWindow *parent;
+    QString startupFilePath;
 
 private slots:
     void updateFromCheckBoxes();
+    void setLaunchAtStartup(bool launchAtStart);
+    bool checkLaunchAtStartup();
+    void toggleLaunchAtStartup();
 };
 
 #endif // OPSMANAGER_H
