@@ -23,7 +23,7 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
 #ifdef Q_OS_OSX
    startupFilePath = QDir::homePath() + "/Library/LaunchAgents/" + "com.INDIWebManager.LaunchAgent.plist";
 #else
-   startupFilePath = "/etc/systemd/system/INDIWebManagerApp.service";
+   startupFilePath = "/etc/systemd/system/indiwebmanagerapp.service";
 #endif
 
    connect(ui->kcfg_ComputerHostNameAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
@@ -96,7 +96,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         "    <string>INDI Web Manager App</string>\n" \
         "    <key>ProgramArguments</key>\n" \
         "    <array>\n" \
-        "        <string>" + QCoreApplication::applicationDirPath() + "/indiwebmanagerapp</string>\n" \
+        "        <string>" + QCoreApplication::applicationFilePath() + "</string>\n" \
         "    </array>\n" \
         "    <key>RunAtLoad</key>\n" \
         "    <true/>\n" \
@@ -116,14 +116,15 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         "After=multi-user.target\n" \
         "\n" \
         "[Service]\n" \
+        "Environment=\"DISPLAY=:0\"\n" \
         "Type=idle\n" \
         "User=" + qgetenv("USER") + "\n" \
-        "ExecStart=" + QCoreApplication::applicationDirPath() + "/indiwebmanagerapp\n" \
+        "ExecStart=" + QCoreApplication::applicationFilePath() + "\n" \
         "\n" \
         "[Install]\n" \
         "WantedBy=multi-user.target";
 
-        QString tempFile =  QDir::homePath() + "/INDIWebManagerApp.service";
+        QString tempFile =  QDir::homePath() + "/indiwebmanagerapp.service";
         QFile file2(tempFile);
         if ( file2.open(QIODevice::ReadWrite) )
         {
@@ -143,17 +144,17 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
             loadService.waitForFinished();
             loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl daemon-reload");
             loadService.waitForFinished();
-            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl enable INDIWebManagerApp.service");
+            loadService.start("bash", QStringList() << "-c" << "echo " + password + " | sudo -S systemctl enable indiwebmanagerapp.service");
             loadService.waitForFinished();
         }
         else
         {
             QMessageBox::information(nullptr, "message", i18n("Since we cannot get your sudo password, we can't complete your request.  You can try clicking the button again and entering your password, or manually do it using the following steps in a Terminal."));
 
-            QMessageBox::information(nullptr, "message", "sudo mv " + QDir::homePath() + "/INDIWebManagerApp.service /etc/systemd/system/INDIWebManagerApp.service\n" \
-                                                         "sudo chmod 644 /etc/systemd/system/INDIWebManagerApp.service\n" \
+            QMessageBox::information(nullptr, "message", "sudo mv " + QDir::homePath() + "/indiwebmanagerapp.service /etc/systemd/system/indiwebmanagerapp.service\n" \
+                                                         "sudo chmod 644 /etc/systemd/system/indiwebmanagerapp.service\n" \
                                                          "sudo systemctl daemon-reload\n" \
-                                                         "sudo systemctl enable INDIWebManagerApp.service\n");
+                                                         "sudo systemctl enable indiwebmanagerapp.service\n");
         }
     #endif
 
@@ -180,7 +181,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         {
             QMessageBox::information(nullptr, "message", i18n("Since we cannot get your sudo password, we can't complete your request.  You can try clicking the button again and entering your password, or manually do it using the following steps in a Terminal."));
 
-            QMessageBox::information(nullptr, "message", "sudo rm /etc/systemd/system/INDIWebManagerApp.service\n" \
+            QMessageBox::information(nullptr, "message", "sudo rm /etc/systemd/system/indiwebmanagerapp.service\n" \
                                                          "sudo systemctl daemon-reload\n");
         }
     #endif
