@@ -10,11 +10,21 @@
 #include "mainwindow.h"
 #include "version.h"
 #include <QApplication>
+#include <QMessageBox>
+#include <KLocalizedString>
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     a.setApplicationVersion(INDIWebManagerApp_VERSION);
+
+    QString name = qgetenv("USER");
+    if (name == "root")
+    {
+        QMessageBox::information(nullptr, "message", i18n("Please do not run INDIWebManagerApp as sudo or root. This is not supported.  It will cause issues and is not good practice"));
+    }
+
     MainWindow w;
     w.show();
     return a.exec();
