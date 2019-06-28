@@ -42,7 +42,7 @@ Web Manager and INDI Server.  So it is pretty essential on OS X and can make thi
 ### Installing INDI Web Manager App on OS X
 ![INDI Web Manager App Log](images/macImageWithLog.png "INDI Web Manager App Log")
 
-On OS X, installing the prebuilt INDI Web Manager App is fairly easy.  Just download the DMG, mount it, and drag it to your 
+On OS X, installing the prebuilt INDI Web Manager App is fairly easy.  Just download the DMG [https://github.com/rlancaste/INDIWebManagerApp/releases](https://github.com/rlancaste/INDIWebManagerApp/releases), mount it, and drag it to your 
 Computer, probably in the Applications folder, but can be put just about anywhere.  The quick start guide runs through many details 
 about this program, I would highly recommend reading that.  On the first run, you will have to right click the app and click open
 since it is open source software and is unsigned.  Also, since this program relies on having homebrew-based python3 and 
@@ -55,7 +55,8 @@ There is also an installer fo that in the Preferences Dialog.
 ### Installing INDI Web Manager App on Linux
 ![INDI Web Manager App Linux](images/linuxImage.png "INDI Web Manager App Linux")
 
-This section of the Readme needs work.  Right now you can build it and run it if the dependencies are met.
+There are two options for Linux, you can either install it from the INDI Nightly PPA [https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily](https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily),
+or you can download the source from this repository and build it.
 
 
 
