@@ -110,5 +110,18 @@ builds and packages up KStars.  Just run the script and follow the directions an
 
 For Linux, you can clone this repository and build the software.  Editing it in QT Creator would be the preffered method.
 
+The Build requirements include:
+ - cmake (>= 2.8.12)
+ - pkg-config
+ - extra-cmake-modules (>= 1.7.0)
+ - kio-dev
+ - qtbase5-dev
+ - kdoctools-dev
+ - libkf5config-dev
+ - libkf5i18n-dev
+ - libindi-dev (>= 1.6.1)
+ - indi-bin (>= 1.6.1)
+ - python3-pip
+
 
 
