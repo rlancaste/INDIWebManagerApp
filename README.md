@@ -55,9 +55,12 @@ There is also an installer fo that in the Preferences Dialog.
 ### Installing INDI Web Manager App on Linux
 ![INDI Web Manager App Linux](images/linuxImage.png "INDI Web Manager App Linux")
 
-There are two options for Linux, you can either install it from the INDI Nightly PPA [https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily](https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily),
-or you can download the source from this repository and build it.
+There are two options for Linux:
 
+1. You can install it from the INDI Nightly PPA
+ [https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily](https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily)
+ 
+2. You can download the source from this repository and build it.
 The Build requirements include:
  - cmake
  - pkg-config
