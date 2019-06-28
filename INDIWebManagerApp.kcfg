@@ -125,8 +125,8 @@
         </entry>
         <entry name="ComputerHostName" type="String">
             <label>Computer Network Host Name.</label>
-            <tooltip>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems it needs .local or .home at the end and on others it does not.</tooltip>
-            <whatsthis>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems it needs .local or .home at the end and on others it does not.</whatsthis>
+            <tooltip>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems, the client needs .local or .home at the end and on others it does not.</tooltip>
+            <whatsthis>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems, the client needs .local or .home at the end and on others it does not.</whatsthis>
             <default code="true">MainWindow::getDefault("ComputerHostName")</default>
         </entry>
         <entry name="ComputerIPAddressAuto" type="Bool">
@@ -175,8 +175,8 @@
         </entry>
         <entry name="EnableWebManagerLogFile" type="Bool">
             <label>Enable the log file?</label>
-            <tooltip>Determines whether to save the INDI Web Manager program output to a log file.</tooltip>
-            <whatsthis>Determines whether to save the INDI Web Manager program output to a log file.</whatsthis>
+            <tooltip>Determines whether to save the INDI Web Manager program output to a log file.  Note that if INDI Web Manager outputs to a log file, it will not display this information in the log of the main window of INDI Web Manager App.</tooltip>
+            <whatsthis>Determines whether to save the INDI Web Manager program output to a log file.  Note that if INDI Web Manager outputs to a log file, it will not display this information in the log of the main window of INDI Web Manager App.</whatsthis>
             <default>false</default>
         </entry>
         <entry name="EnableVerboseMode" type="Bool">

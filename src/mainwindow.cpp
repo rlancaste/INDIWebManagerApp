@@ -468,11 +468,18 @@ void MainWindow::configureEnvironmentVariables()
     QString newPATH = Options::pythonExecFolder() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
     insertEnvironmentVariable("PATH", newPATH);
 
+    //Note that these environment variables only make sense on OS X.
+    //If they are blank, they are not to be set
     #ifdef Q_OS_OSX
-        insertEnvironmentPath("INDIPREFIX", Options::iNDIPrefix());
-        insertEnvironmentPath("IOLIBS", Options::gPhotoIOLIBS());
-        insertEnvironmentPath("CAMLIBS", Options::gPhotoCAMLIBS());
+        if(Options::iNDIPrefix() != "")
+            insertEnvironmentPath("INDIPREFIX", Options::iNDIPrefix());
+        if(Options::gPhotoIOLIBS() != "")
+            insertEnvironmentPath("IOLIBS", Options::gPhotoIOLIBS());
+        if(Options::gPhotoCAMLIBS() != "")
+            insertEnvironmentPath("CAMLIBS", Options::gPhotoCAMLIBS());
     #endif
+
+    //This sets the path to the GSC Data
     insertEnvironmentPath("GSCDAT", Options::gSCPath());
 }
 
