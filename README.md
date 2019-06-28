@@ -58,6 +58,19 @@ There is also an installer fo that in the Preferences Dialog.
 There are two options for Linux, you can either install it from the INDI Nightly PPA [https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily](https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily),
 or you can download the source from this repository and build it.
 
+The Build requirements include:
+ - cmake
+ - pkg-config
+ - extra-cmake-modules (>= 1.7.0)
+ - kio-dev
+ - qtbase5-dev
+ - kdoctools-dev
+ - libkf5config-dev
+ - libkf5i18n-dev
+ - libindi-dev (>= 1.6.1)
+ - indi-bin (>= 1.6.1)
+ - python3-pip
+
 
 
 ### Configuring the paths in the INDI Web Manager on OS X
