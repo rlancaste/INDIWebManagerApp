@@ -62,7 +62,7 @@ There are two options for Linux:
  
 2. You can download the source from this repository and build it.
 The Build requirements include:
- - cmake
+ - cmake (>= 2.8.12)
  - pkg-config
  - extra-cmake-modules (>= 1.7.0)
  - kio-dev
