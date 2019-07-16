@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QMessageBox about;
         about.setIconPixmap(QPixmap(":/media/images/indi_logo.png"));
-        about.setText(i18n("<html>INDI Web Manager App<br>&nbsp;&nbsp;© 2019 Robert Lancaster<br>&nbsp;&nbsp;Version: %1<br>&nbsp;&nbsp;Build: %2<br><br>Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>").arg(QString(INDIWebManagerApp_VERSION).arg(QString(INDI_WEB_MANAGER_APP_BUILD_TS))));
+        about.setText(i18n("<html>INDI Web Manager App<br>&nbsp;&nbsp;© 2019 Robert Lancaster<br>&nbsp;&nbsp;Version: %1<br>&nbsp;&nbsp;Build: %2<br><br>Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>").arg(QString(INDIWebManagerApp_VERSION)).arg(QString(INDI_WEB_MANAGER_APP_BUILD_TS)));
         about.exec();
     });
 
