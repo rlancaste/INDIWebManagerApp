@@ -16,6 +16,7 @@
 #include <QPlainTextEdit>
 #include <QCloseEvent>
 #include <QTimer>
+#include <QLabel>
 #include <QNetworkAccessManager>
 #include "Options.h"
 #include "version.h"
@@ -62,9 +63,13 @@ private:
     bool getWebManagerResponse(const QUrl &url, QJsonDocument *reply);
     void updateDisplaysforShutDown();
 
+    QLabel *managerStatusinTray;
+    QLabel *serverStatusinTray;
+
 
 
 private slots:
+    void openWebManager();
     void startWebManager();
     void stopWebManager();
     void appendLogEntry();

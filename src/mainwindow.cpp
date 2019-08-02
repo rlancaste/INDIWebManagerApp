@@ -29,6 +29,8 @@
 #include <KLocalizedString>
 #include <QHostInfo>
 #include <QWhatsThis>
+#include <QSystemTrayIcon>
+#include <QWidgetAction>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -39,6 +41,45 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowIcon(QIcon(":/media/images/indi_logo.png"));
+
+    QMenu *trayIconMenu = new QMenu(this);
+
+    managerStatusinTray = new QLabel("Web Manager: Offline",this);
+    managerStatusinTray->setAlignment(Qt::AlignCenter);
+    QWidgetAction* a = new QWidgetAction(trayIconMenu);
+    a->setDefaultWidget(managerStatusinTray);
+    trayIconMenu->addAction(a);
+
+    serverStatusinTray = new QLabel("INDI Server: Offline",this);
+    serverStatusinTray->setAlignment(Qt::AlignCenter);
+    QWidgetAction* b = new QWidgetAction(trayIconMenu);
+    b->setDefaultWidget(serverStatusinTray);
+    trayIconMenu->addAction(b);
+
+    trayIconMenu->addSeparator();
+
+    QAction *hideAction = new QAction("Hide App Window");
+    trayIconMenu->addAction(hideAction);
+    connect(hideAction,&QAction::triggered, this, &QMainWindow::hide);
+
+    QAction *showAction = new QAction("Show App Window");
+    trayIconMenu->addAction(showAction);
+    connect(showAction,&QAction::triggered, this, &QMainWindow::show);
+    connect(showAction,&QAction::triggered, this, &QMainWindow::raise);
+
+    QAction *openAction = new QAction("Open Web Manager");
+    trayIconMenu->addAction(openAction);
+    connect(openAction, &QAction::triggered, this, &MainWindow::openWebManager);
+
+    QAction *quitAction = new QAction("Quit");
+    trayIconMenu->addAction(quitAction);
+    connect(quitAction,&QAction::triggered, this, &QApplication::quit);
+
+    QSystemTrayIcon  *trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(QIcon(":/media/images/indi_logo.png"));
+    trayIcon->show();
+
 
     //Note: This is for the tooltips AND the What's this
     //I tried to use stylesheets, but what's this did not listen.
@@ -128,11 +169,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     //This sets up the Web Manager to launch in your favorite browser using either the host name or IP Address
-    connect(ui->openWebManager, &QPushButton::clicked, this, [this]()
-    {
-        QUrl url(getWebManagerURL());
-        QDesktopServices::openUrl(url);
-    });
+    connect(ui->openWebManager, &QPushButton::clicked, this, &MainWindow::openWebManager);
 
     //This sets up the INDI Logo to look nice in the app.
     ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png"));
@@ -324,6 +361,15 @@ QString MainWindow::getDefault(QString option)
         return QDir::homePath() + "/.indi/webmanagerlog.txt";
 
     return QString();
+}
+
+/*
+ * This sets up the Web Manager to launch in your favorite browser using either the host name or IP Address
+ */
+void MainWindow::openWebManager()
+{
+    QUrl url(getWebManagerURL());
+    QDesktopServices::openUrl(url);
 }
 
 /*
@@ -620,6 +666,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         stopWebManager();
     webManager->waitForFinished(300);
     event->accept();
+    qApp->exit();
 }
 
 /*
@@ -634,11 +681,15 @@ void MainWindow::displayManagerStatusOnline(bool online)
     {
         ui->statusDisplay->setText(i18n("Online"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
+        managerStatusinTray->setText("Manager: Online");
+        managerStatusinTray->setStyleSheet("QLabel {color: green;}");
     }
     else
     {
         ui->statusDisplay->setText(i18n("Offline"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
+        managerStatusinTray->setText("Manager: Offline");
+        managerStatusinTray->setStyleSheet("QLabel {color: red;}");
     }
 }
 
@@ -698,11 +749,15 @@ void MainWindow::displayServerStatusOnline(bool online)
     {
         ui->serverStatusDisplay->setText(i18n("Online"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
+        serverStatusinTray->setText("INDI Server: Online");
+        serverStatusinTray->setStyleSheet("QLabel {color: green;}");
     }
     else
     {
         ui->serverStatusDisplay->setText(i18n("Offline"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
+        serverStatusinTray->setText("INDI Server: Offline");
+        serverStatusinTray->setStyleSheet("QLabel {color: red;}");
     }
 }
 
