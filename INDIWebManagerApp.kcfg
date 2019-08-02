@@ -187,8 +187,14 @@
         </entry>
         <entry name="AutoLaunchManager" type="Bool">
             <label>Automatically launch the INDI Web Manager on program open</label>
-            <tooltip>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need to add INDI Web Manager App to your system startup programs.</tooltip>
-            <whatsthis>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need to add INDI Web Manager App to your system startup programs.</whatsthis>
+            <tooltip>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need the other option.</tooltip>
+            <whatsthis>Determines whether to automatically launch the INDI Web Manager when INDI Web Manager App is opened. Note: this does NOT start INDI Web Manager App or INDI Web Manager at system startup.  For that you need the other option.</whatsthis>
+            <default>false</default>
+        </entry>
+        <entry name="AutoHideManagerApp" type="Bool">
+            <label>Automatically hide the INDI Web Manager App on program open</label>
+            <tooltip>Determines whether to hide the INDI Web Manager App when it opens, thus using it as a System Tray Program</tooltip>
+            <whatsthis>Determines whether to hide the INDI Web Manager App when it opens, thus using it as a System Tray Program</whatsthis>
             <default>false</default>
         </entry>
     </group>

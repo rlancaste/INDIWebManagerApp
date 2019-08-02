@@ -228,6 +228,13 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
         showPreferences();
     }
+
+    //This waits a moment for the options to load, and once they do, if the AutoHide function is selected, it autohides the window.
+    QTimer::singleShot(10, this, [this](){
+        if(Options::autoHideManagerApp())
+            this->hide();
+    });
+
 }
 
 //This deletes the ui variable on shutdown
