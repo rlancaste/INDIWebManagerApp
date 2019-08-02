@@ -64,9 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QAction *showAction = new QAction("Show App Window");
     trayIconMenu->addAction(showAction);
-    connect(showAction,&QAction::triggered, this, &QMainWindow::show);
-    connect(showAction,&QAction::triggered, this, &QMainWindow::raise);
-
+    connect(showAction,&QAction::triggered, this, &MainWindow::showAndRaise);
     trayIconMenu->addSeparator();
 
     QAction *openAction = new QAction("Open Web Manager");
@@ -80,8 +78,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QSystemTrayIcon  *trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/media/images/indi_logo.png"));
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &QMainWindow::show);
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &QMainWindow::raise);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason r){
+        if (r == QSystemTrayIcon::Trigger)
+            showAndRaise();
+    });
     trayIcon->show();
 
 
@@ -376,6 +376,12 @@ void MainWindow::openWebManager()
     QDesktopServices::openUrl(url);
 }
 
+void MainWindow::showAndRaise()
+{
+    show();
+    raise();
+}
+
 /*
  * This gets the URL to the INDI Web Manager using the users desired method.
  */
@@ -666,11 +672,19 @@ void MainWindow::updateDisplaysforShutDown()
  */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if(webManagerRunning)
-        stopWebManager();
-    webManager->waitForFinished(300);
-    event->accept();
-    qApp->exit();
+    if(QMessageBox::question(nullptr, "Message", i18n("Do you really want to quit (Yes), or just hide the window (No)?")) == QMessageBox::Yes)
+    {
+        if(webManagerRunning)
+            stopWebManager();
+        webManager->waitForFinished(300);
+        event->accept();
+        qApp->exit();
+    }
+    else
+    {
+       event->ignore();
+       this->hide();
+    }
 }
 
 /*

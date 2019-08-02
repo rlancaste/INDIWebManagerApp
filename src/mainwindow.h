@@ -70,6 +70,7 @@ private:
 
 private slots:
     void openWebManager();
+    void showAndRaise();
     void startWebManager();
     void stopWebManager();
     void appendLogEntry();
