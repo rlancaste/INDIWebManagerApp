@@ -67,6 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(showAction,&QAction::triggered, this, &QMainWindow::show);
     connect(showAction,&QAction::triggered, this, &QMainWindow::raise);
 
+    trayIconMenu->addSeparator();
+
     QAction *openAction = new QAction("Open Web Manager");
     trayIconMenu->addAction(openAction);
     connect(openAction, &QAction::triggered, this, &MainWindow::openWebManager);
@@ -78,6 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QSystemTrayIcon  *trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/media/images/indi_logo.png"));
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &QMainWindow::show);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &QMainWindow::raise);
     trayIcon->show();
 
 
