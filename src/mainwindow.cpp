@@ -58,20 +58,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     trayIconMenu->addSeparator();
 
-    QAction *hideAction = new QAction("Hide App Window");
+    QAction *hideAction = new QAction("Hide App Window", this);
     trayIconMenu->addAction(hideAction);
     connect(hideAction,&QAction::triggered, this, &QMainWindow::hide);
 
-    QAction *showAction = new QAction("Show App Window");
+    QAction *showAction = new QAction("Show App Window", this);
     trayIconMenu->addAction(showAction);
     connect(showAction,&QAction::triggered, this, &MainWindow::showAndRaise);
     trayIconMenu->addSeparator();
 
-    QAction *openAction = new QAction("Open Web Manager");
+    QAction *openAction = new QAction("Open Web Manager", this);
     trayIconMenu->addAction(openAction);
     connect(openAction, &QAction::triggered, this, &MainWindow::openWebManager);
 
-    QAction *quitAction = new QAction("Quit");
+    QAction *quitAction = new QAction("Quit", this);
     trayIconMenu->addAction(quitAction);
     connect(quitAction,&QAction::triggered, this, &QApplication::quit);
 
