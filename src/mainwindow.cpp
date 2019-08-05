@@ -750,15 +750,21 @@ void MainWindow::checkINDIServerStatus()
     ui->activeProfileDisplay->setText(activeProfile);
     QString port = "";
     if(INDIServerOnline)
-        port = getINDIServerPort(activeProfile);
-    ui->displayINDIServerPath->setText(getINDIServerURL(port));
-    QString webManagerDrivers="";
-    getRunningDrivers(webManagerDrivers);
-    ui->driversDisplay->clear();
-    QStringList activeDrivers = webManagerDrivers.split("\n");
-    foreach(QString driver, activeDrivers)
     {
-        ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
+        port = getINDIServerPort(activeProfile);
+        ui->displayINDIServerPath->setText(getINDIServerURL(port));
+        QString webManagerDrivers="";
+        getRunningDrivers(webManagerDrivers);
+        ui->driversDisplay->clear();
+        QStringList activeDrivers = webManagerDrivers.split("\n");
+        foreach(QString driver, activeDrivers)
+        {
+            ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
+        }
+    }
+    else
+    {
+         ui->driversDisplay->clear();
     }
 
 }
