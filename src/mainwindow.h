@@ -63,8 +63,8 @@ private:
     bool getWebManagerResponse(const QUrl &url, QJsonDocument *reply);
     void updateDisplaysforShutDown();
 
-    QLabel *managerStatusinTray;
-    QLabel *serverStatusinTray;
+    QAction *managerStatusinTray;
+    QAction *serverStatusinTray;
 
 
 

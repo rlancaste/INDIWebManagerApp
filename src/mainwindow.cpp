@@ -44,17 +44,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QMenu *trayIconMenu = new QMenu(this);
 
-    managerStatusinTray = new QLabel("Web Manager: Offline",this);
-    managerStatusinTray->setAlignment(Qt::AlignCenter);
-    QWidgetAction* a = new QWidgetAction(trayIconMenu);
-    a->setDefaultWidget(managerStatusinTray);
-    trayIconMenu->addAction(a);
+    managerStatusinTray = new QAction("Web Manager: Offline",this);
+    managerStatusinTray->setIcon(QIcon(":/media/icons/red.png"));
+    managerStatusinTray->setIconVisibleInMenu(true);
+    trayIconMenu->addAction(managerStatusinTray);
 
-    serverStatusinTray = new QLabel("INDI Server: Offline",this);
-    serverStatusinTray->setAlignment(Qt::AlignCenter);
-    QWidgetAction* b = new QWidgetAction(trayIconMenu);
-    b->setDefaultWidget(serverStatusinTray);
-    trayIconMenu->addAction(b);
+    serverStatusinTray = new QAction("INDI Server: Offline",this);
+    serverStatusinTray->setIcon(QIcon(":/media/icons/red.png"));
+    serverStatusinTray->setIconVisibleInMenu(true);
+    trayIconMenu->addAction(serverStatusinTray);
 
     trayIconMenu->addSeparator();
 
@@ -707,14 +705,14 @@ void MainWindow::displayManagerStatusOnline(bool online)
         ui->statusDisplay->setText(i18n("Online"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
         managerStatusinTray->setText("Manager: Online");
-        managerStatusinTray->setStyleSheet("QLabel {color: green;}");
+        managerStatusinTray->setIcon(QIcon(":/media/icons/green.png"));
     }
     else
     {
         ui->statusDisplay->setText(i18n("Offline"));
         ui->statusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
         managerStatusinTray->setText("Manager: Offline");
-        managerStatusinTray->setStyleSheet("QLabel {color: red;}");
+        managerStatusinTray->setIcon(QIcon(":/media/icons/red.png"));
     }
 }
 
@@ -775,14 +773,14 @@ void MainWindow::displayServerStatusOnline(bool online)
         ui->serverStatusDisplay->setText(i18n("Online"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: green;}");
         serverStatusinTray->setText("INDI Server: Online");
-        serverStatusinTray->setStyleSheet("QLabel {color: green;}");
+        serverStatusinTray->setIcon(QIcon(":/media/icons/green.png"));
     }
     else
     {
         ui->serverStatusDisplay->setText(i18n("Offline"));
         ui->serverStatusDisplay->setStyleSheet("QLineEdit {background-color: red;}");
         serverStatusinTray->setText("INDI Server: Offline");
-        serverStatusinTray->setStyleSheet("QLabel {color: red;}");
+        serverStatusinTray->setIcon(QIcon(":/media/icons/red.png"));
     }
 }
 
