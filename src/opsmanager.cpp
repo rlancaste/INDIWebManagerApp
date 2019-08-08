@@ -123,6 +123,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         "After=multi-user.target\n" \
         "\n" \
         "[Service]\n" \
+        "ExecStartPre=/bin/sleep 20\n" \
         "Environment=\"DISPLAY=:0\"\n" \
         "Environment=XAUTHORITY=" + QDir::homePath() + "/.Xauthority\n" \
         "Type=idle\n" \
