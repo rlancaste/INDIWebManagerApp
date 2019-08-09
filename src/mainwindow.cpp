@@ -200,6 +200,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //This sets up the INDI Logo to look nice in the app.
     ui->INDILogo->setPixmap(QPixmap(":/media/images/indi_logo.png"));
 
+    //This sets up a timer to check the status of the IP Address List at 10 second intervals when it is running
+    serverMonitor.setInterval(10000);
+    connect(&serverMonitor, &QTimer::timeout, this, &MainWindow::updateIPAddressList);
+    serverMonitor.start();
+
     //This sets up a timer to check the status of the INDI Server at 1 second intervals when it is running.
     serverMonitor.setInterval(1000);
     connect(&serverMonitor, &QTimer::timeout, this, &MainWindow::checkINDIServerStatus);
@@ -223,16 +228,6 @@ MainWindow::MainWindow(QWidget *parent) :
             killWebManager.waitForFinished(300);
         }
     }
-
-    //This prints lots of details to the log about the system.
-    appendLogEntry( i18n("Welcome to INDI Web Manager App ") + QString(INDIWebManagerApp_VERSION));
-    appendLogEntry( i18n("Build: ") + QString(INDI_WEB_MANAGER_APP_BUILD_TS));
-    appendLogEntry( i18n("OS: ") + QSysInfo::productType() + " " + QSysInfo::productVersion());
-    appendLogEntry( i18n("API: ") + QSysInfo::buildAbi());
-    appendLogEntry( i18n("Arch: ") + QSysInfo::currentCpuArchitecture());
-    appendLogEntry( i18n("Kernel Type: ") + QSysInfo::kernelType());
-    appendLogEntry( i18n("Kernel Version: ") + QSysInfo::kernelVersion());
-    appendLogEntry( i18n("Qt Version: ") + QString(QT_VERSION_STR));
 
      //This will finish setting up the Web Manager and launch it if the requirements are installed and auto launch is selected.
     if(pythonInstalled() && indiWebInstalled())
@@ -416,7 +411,6 @@ void MainWindow::updateIPAddressList()
                     type = "Wifi";
                 if(interface.type() == QNetworkInterface::Virtual)
                     type = "Virtual";
-                qDebug()<<interface.name()<<","<<type;
                 for (const QNetworkAddressEntry &address: addressEntries)
                 {
                         QListWidgetItem *newItem = new QListWidgetItem();
@@ -571,6 +565,26 @@ void MainWindow::updateSettings()
     updateIPAddressList();
     ui->ipListDisplay->adjustSize();  
     ui->displayWebManagerPath->setText(getWebManagerURL());
+    if(Options::enableWebManagerLogFile())
+    {
+        managerLogFile = "";
+        qDebug()<<Options::logFilePath();
+        QFileInfo logFileParentFolderInfo = QFileInfo(QFileInfo(Options::logFilePath()).dir().path());
+        if(logFileParentFolderInfo.exists() && logFileParentFolderInfo.isWritable())
+            managerLogFile = Options::logFilePath().remove(".txt") + "_" + QDateTime::currentDateTime().toString("yyyy-MM-ddThh-mm") + ".txt";
+        else
+            QMessageBox::information(nullptr, "message", i18n("The path for the selected log file does not exist or is not writeable.  Please create it or select another path.  The log file will not be saved until you do."));
+    }
+
+    //This prints lots of details to the log about the system.
+    createManagerLogEntry( i18n("Welcome to INDI Web Manager App ") + QString(INDIWebManagerApp_VERSION));
+    createManagerLogEntry( i18n("Build: ") + QString(INDI_WEB_MANAGER_APP_BUILD_TS));
+    createManagerLogEntry( i18n("OS: ") + QSysInfo::productType() + " " + QSysInfo::productVersion());
+    createManagerLogEntry( i18n("API: ") + QSysInfo::buildAbi());
+    createManagerLogEntry( i18n("Arch: ") + QSysInfo::currentCpuArchitecture());
+    createManagerLogEntry( i18n("Kernel Type: ") + QSysInfo::kernelType());
+    createManagerLogEntry( i18n("Kernel Version: ") + QSysInfo::kernelVersion());
+    createManagerLogEntry( i18n("Qt Version: ") + QString(QT_VERSION_STR));
 
     configureEnvironmentVariables();
 
@@ -624,7 +638,7 @@ void MainWindow::configureEnvironmentVariables()
 void MainWindow::insertEnvironmentVariable(QString variable, QString value)
 {
     qputenv(variable.toUtf8().data(), value.toLatin1());
-    appendLogEntry("export " + variable + "=" + value.replace(" ", "\\ "));
+    createManagerLogEntry("export " + variable + "=" + value.replace(" ", "\\ "));
 }
 
 /*
@@ -636,7 +650,7 @@ void MainWindow::insertEnvironmentPath(QString variable, QString filePath)
     if (QFileInfo::exists(filePath))
         insertEnvironmentVariable(variable, filePath);
     else
-        appendLogEntry(i18n("The Path for the %1 environment variable does not exist on this system.  Please check your settings.  The stated path was: ").arg(variable) + filePath);
+        createManagerLogEntry(i18n("The Path for the %1 environment variable does not exist on this system.  Please check your settings.  The stated path was: ").arg(variable) + filePath);
 }
 
 /*
@@ -651,22 +665,20 @@ void MainWindow::startWebManager()
     }
     webManager = new QProcess(this);
 
-    appendLogEntry(i18n("INDI Web Manager Started."));
+    createManagerLogEntry(i18n("INDI Web Manager Started."));
     connect(webManager, SIGNAL(finished(int)), this, SLOT(managerClosed(int)));
     webManager->setProcessChannelMode(QProcess::MergedChannels);
-    connect(webManager, SIGNAL(readyReadStandardOutput()), this, SLOT(appendLogEntry()));
+    connect(webManager, SIGNAL(readyReadStandardOutput()), this, SLOT(appendManagerLogEntry()));
     QStringList processArguments;
     if(Options::enableVerboseMode())
          processArguments << "--verbose";
     //This one is not optional
     processArguments << "--xmldir" << QDir(Options::iNDIDriversPath()).absolutePath();
-    if(Options::enableWebManagerLogFile())
-         processArguments << "--logfile" << Options::logFilePath();
     if(!Options::managerPortNumberDefault())
         processArguments << "--port" << Options::managerPortNumber();
     if(!Options::iNDIConfigPathDefault())
         processArguments << "--conf" << Options::iNDIConfigPath();
-    appendLogEntry(Options::indiwebPath() + " " + processArguments.join(" "));
+    createManagerLogEntry(Options::indiwebPath() + " " + processArguments.join(" "));
     webManager->start(Options::indiwebPath(), processArguments);
     displayManagerStatusOnline(true);
 
@@ -690,27 +702,47 @@ void MainWindow::stopWebManager()
     QProcess killINDIServer;
     killINDIServer.start("/usr/bin/killall", QStringList()<<"indiserver");
     killINDIServer.waitForFinished(300);
-    appendLogEntry(i18n("INDI Web Manager Shut down successfully."));
+    createManagerLogEntry(i18n("INDI Web Manager Shut down successfully."));
     updateDisplaysforShutDown();
 }
 
 /*
  * This method uses the method below it to put output from the running web manager into the log in the Main Window and console.
  */
-void MainWindow::appendLogEntry()
+void MainWindow::appendManagerLogEntry()
 {
-    appendLogEntry(webManager->readAll().trimmed());
+    appendManagerLogEntry(webManager->readAll().trimmed());
+}
+
+/*
+ * This method uses the method below it to put output from the running web manager into the log in the Main Window and console.
+ */
+void MainWindow::createManagerLogEntry(QString text)
+{
+    QString entry = QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss:  ") + text;
+    appendManagerLogEntry(entry.trimmed());
 }
 
 /*
  * This method puts information into the log in the Main Window.  It also outputs the same message to the console.
  * Note: Should this also append to the web manager log file.  Is this possible?
  */
-void MainWindow::appendLogEntry(QString text)
+void MainWindow::appendManagerLogEntry(QString entry)
 {
-    QString entry = QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss:  ") + text;
     ui->webManagerLog->appendPlainText(entry);
     qDebug()<<entry;
+
+    if(Options::enableWebManagerLogFile() && managerLogFile != "")
+    {
+        QFile logFile;
+        logFile.setFileName(managerLogFile);
+        if(logFile.open(QIODevice::ReadWrite | QIODevice::Append))
+        {
+            QTextStream out(&logFile);
+            out<<entry<<endl;
+            logFile.close();
+        }
+    }
 }
 
 /*
@@ -723,10 +755,10 @@ void MainWindow::managerClosed(int result)
 {
     webManagerRunning = false;
     if(result==0)
-        appendLogEntry(i18n("INDI Web Manager Shut down successfully."));
+        createManagerLogEntry(i18n("INDI Web Manager Shut down successfully."));
     else
     {
-        appendLogEntry(i18n("INDI Web Manager Shut down with error."));
+        createManagerLogEntry(i18n("INDI Web Manager Shut down with error."));
     }
     updateDisplaysforShutDown();
 }
@@ -1030,7 +1062,7 @@ void MainWindow::sendWebManagerCommand(const QUrl &url)
         if (!timeout.isActive())
         {
             response->deleteLater();
-            appendLogEntry(i18n("Timeout while waiting for response from INDI Server"));
+            createManagerLogEntry(i18n("Timeout while waiting for response from INDI Server"));
             return;
         }
         qApp->processEvents();
@@ -1039,7 +1071,7 @@ void MainWindow::sendWebManagerCommand(const QUrl &url)
 
     if (response->error() != QNetworkReply::NoError)
     {
-        appendLogEntry(i18n("INDI: Error communicating with INDI Web Manager: ") + response->errorString());
+        createManagerLogEntry(i18n("INDI: Error communicating with INDI Web Manager: ") + response->errorString());
     }
 }
 
@@ -1071,7 +1103,7 @@ bool MainWindow::getWebManagerResponse(const QUrl &url, QJsonDocument *reply)
             if (parseError.error != QJsonParseError::NoError)
             {
                 if(webManagerRunning) //This way it doesn't print errors when checking to see if the Web Manager is running at all
-                    appendLogEntry(i18n("INDI: JSon error during parsing ") + parseError.errorString());
+                    createManagerLogEntry(i18n("INDI: JSon error during parsing ") + parseError.errorString());
                 return false;
             }
         }
@@ -1080,7 +1112,7 @@ bool MainWindow::getWebManagerResponse(const QUrl &url, QJsonDocument *reply)
     else
     {
         if(webManagerRunning)  //This way it doesn't print errors when checking to see if the Web Manager is running at all
-            appendLogEntry(i18n("INDI: Error communicating with INDI Web Manager: ") + response->errorString());
+            createManagerLogEntry(i18n("INDI: Error communicating with INDI Web Manager: ") + response->errorString());
         return false;
     }
 }

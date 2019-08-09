@@ -16,6 +16,30 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="2">
+      <widget class="QCheckBox" name="kcfg_ManagerPortNumberDefault">
+       <property name="text">
+        <string>Default</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Manager Port Number</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="kcfg_LogFilePath">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="13" column="2">
       <widget class="QCheckBox" name="launchAtStartup">
        <property name="enabled">
@@ -35,6 +59,20 @@
        </property>
       </widget>
      </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Manager Log File</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Auto Hide ManagerApp</string>
+       </property>
+      </widget>
+     </item>
      <item row="6" column="2">
       <widget class="QCheckBox" name="kcfg_EnableWebManagerLogFile">
        <property name="text">
@@ -42,20 +80,17 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_6">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Verbose Mode</string>
+        <string>Custom Hostname/IP</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="2">
-      <widget class="QCheckBox" name="kcfg_LogFilePathDefault">
+     <item row="13" column="0">
+      <widget class="QLabel" name="label_9">
        <property name="text">
-        <string>Default</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
+        <string>Start at System Startup</string>
        </property>
       </widget>
      </item>
@@ -66,31 +101,13 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
+     <item row="5" column="2">
+      <widget class="QCheckBox" name="kcfg_LogFilePathDefault">
        <property name="text">
-        <string>Manager Hostname/IP</string>
+        <string>Default</string>
        </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="kcfg_LogFilePath">
-       <property name="readOnly">
+       <property name="checked">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Manager Port Number</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Manager Log File</string>
        </property>
       </widget>
      </item>
@@ -111,20 +128,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="kcfg_ManagerHostNameOrIP">
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="kcfg_ManagerPortNumber">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="7" column="2">
       <widget class="QCheckBox" name="kcfg_EnableVerboseMode">
        <property name="text">
@@ -135,10 +138,24 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="0">
-      <widget class="QLabel" name="label_9">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="kcfg_ManagerHostNameOrIP">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="kcfg_CustomHostNameOrIP">
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Start at System Startup</string>
+        <string>Verbose Mode</string>
        </property>
       </widget>
      </item>
@@ -152,34 +169,24 @@
        </property>
       </widget>
      </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="label_10">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Auto Hide ManagerApp</string>
+        <string>Manager Hostname/IP</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QCheckBox" name="kcfg_ManagerPortNumberDefault">
-       <property name="text">
-        <string>Default</string>
-       </property>
-       <property name="checked">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="kcfg_ManagerPortNumber">
+       <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Custom Hostname/IP</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="kcfg_CustomHostNameOrIP">
+     <item row="13" column="1">
+      <widget class="QLineEdit" name="kcfg_StartupDelay">
        <property name="readOnly">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>

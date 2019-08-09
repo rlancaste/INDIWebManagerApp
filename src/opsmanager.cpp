@@ -103,14 +103,18 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
             QTextStream stream( &file );
             stream << fileText << endl;
         }
+
     #else
+        int delay = QInputDialog::getInt(nullptr, "Get Delay for Startup",
+                                                 i18n("Your system probably needs a delay at startup for the Window Manager to load, how long would you like?:"), QLineEdit::Normal,
+                                                 20, 0);
         fileText = "" \
         "[Unit]\n" \
         "Description=INDI Web Manager App\n" \
         "After=multi-user.target\n" \
         "\n" \
         "[Service]\n" \
-        "ExecStartPre=/bin/sleep 20\n" \
+        "ExecStartPre=/bin/sleep " + delay + "\n" \
         "Environment=\"DISPLAY=:0\"\n" \
         "Environment=XAUTHORITY=" + QDir::homePath() + "/.Xauthority\n" \
         "Type=idle\n" \

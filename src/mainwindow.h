@@ -58,6 +58,7 @@ private:
     bool isWebManagerOnline();
     bool isINDIServerOnline(QString &activeProfile);
     void checkINDIServerStatus();
+    QTimer ipMonitor;
     QTimer serverMonitor;
     QStringList getProfiles();
     bool getRunningDrivers(QString &webManagerDrivers);
@@ -69,8 +70,10 @@ private:
     QAction *managerStatusinTray;
     QAction *serverStatusinTray;
 
-     QStringList oldProfiles;
-     QString oldDrivers;
+    QStringList oldProfiles;
+    QString oldDrivers;
+
+    QString managerLogFile;
 
 private slots:
     void openWebManager();
@@ -79,8 +82,9 @@ private slots:
     void stopWebManager();
     void startINDIServer();
     void stopINDIServer();
-    void appendLogEntry();
-    void appendLogEntry(QString text);
+    void appendManagerLogEntry();
+    void createManagerLogEntry(QString text);
+    void appendManagerLogEntry(QString entry);
     void managerClosed(int result);
     void showPreferences();
     void setLogVisible(bool visible);
