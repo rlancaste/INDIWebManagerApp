@@ -101,11 +101,17 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->stopWebManager->setIcon(QIcon(":/media/icons/media-playback-stop-dark.svg"));
         ui->restartWebManager->setIcon(QIcon(":/media/icons/media-playback-start-dark.svg"));
         ui->configureWebManager->setIcon(QIcon(":/media/icons/configure-dark.svg"));
+        ui->stopINDIServer->setIcon(QIcon(":/media/icons/media-playback-stop-dark.svg"));
+        ui->startINDIServer->setIcon(QIcon(":/media/icons/media-playback-start-dark.svg"));
+        ui->configureINDIServer->setIcon(QIcon(":/media/icons/configure-dark.svg"));
     }
     else {
         ui->stopWebManager->setIcon(QIcon(":/media/icons/media-playback-stop.svg"));
         ui->restartWebManager->setIcon(QIcon(":/media/icons/media-playback-start.svg"));
         ui->configureWebManager->setIcon(QIcon(":/media/icons/configure.svg"));
+        ui->stopINDIServer->setIcon(QIcon(":/media/icons/media-playback-stop.svg"));
+        ui->startINDIServer->setIcon(QIcon(":/media/icons/media-playback-start.svg"));
+        ui->configureINDIServer->setIcon(QIcon(":/media/icons/configure.svg"));
     }
 
     //This makes the buttons look nice on OS X.
@@ -113,6 +119,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stopWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->restartWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->configureWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    ui->configureINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    ui->startINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    ui->stopINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+
 
     //This will hide the log and capture the window size to make the later algorithm for showing/hiding work properly.
     ui->logViewer->setVisible(false);
@@ -124,6 +134,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPreferences, &QAction::triggered, this, &MainWindow::showPreferences);
     connect(ui->restartWebManager, &QPushButton::clicked, this, &MainWindow::startWebManager);
     connect(ui->stopWebManager, &QPushButton::clicked, this, &MainWindow::stopWebManager);
+    connect(ui->configureINDIServer, &QPushButton::clicked, this, &MainWindow::openWebManager);
+    connect(ui->startINDIServer, &QPushButton::clicked, this, &MainWindow::startWebManager);
+    connect(ui->stopINDIServer, &QPushButton::clicked, this, &MainWindow::stopWebManager);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
     connect(ui->actionAbout,&QAction::triggered, this, []()
     {
@@ -373,6 +386,28 @@ QString MainWindow::getDefault(QString option)
 }
 
 /*
+ * This gets the list of addresses available for this computer
+ */
+QStringList MainWindow::getIPAddressList()
+{
+    QStringList addresses=QStringList();
+    #ifdef __linux__
+        QProcess getIPs;
+        getIPs.start("hostname",QStringList()<<"-I");
+        getIPs.waitForFinished();
+        QString returnedIPs=getIPs.readAllStandardOutput();
+        addresses=returnedIPs.split(" ");
+        return addresses;
+    #endif
+    const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
+    for (const QHostAddress &address: QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost)
+            addresses.append(address.toString());
+    }
+    return addresses;
+}
+
+/*
  * This sets up the Web Manager to launch in your favorite browser using either the host name or IP Address
  */
 void MainWindow::openWebManager()
@@ -498,6 +533,9 @@ void MainWindow::updateSettings()
 
     ui->hostDisplay->setText(Options::computerHostName());
     ui->ipDisplay->setText(Options::computerIPAddress());
+    ui->ipListDisplay->clear();
+    ui->ipListDisplay->addItems(getIPAddressList());
+    ui->ipListDisplay->adjustSize();
     ui->displayWebManagerPath->setText(getWebManagerURL());
 
     configureEnvironmentVariables();

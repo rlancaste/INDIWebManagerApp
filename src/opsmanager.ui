@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>314</height>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,16 +16,26 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="kcfg_ComputerIPAddress">
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <widget class="QLineEdit" name="kcfg_ManagerPortNumber">
        <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QCheckBox" name="kcfg_EnableVerboseMode">
+       <property name="text">
+        <string>Enable</string>
+       </property>
+       <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
@@ -47,14 +57,14 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Open Manager Using</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
+     <item row="7" column="2">
       <widget class="QCheckBox" name="kcfg_LogFilePathDefault">
        <property name="text">
         <string>Default</string>
@@ -64,14 +74,14 @@
        </property>
       </widget>
      </item>
-     <item row="14" column="0">
+     <item row="15" column="0">
       <widget class="QLabel" name="label_9">
        <property name="text">
         <string>Start at System Startup</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="2" column="2">
       <widget class="QCheckBox" name="kcfg_ComputerIPAddressAuto">
        <property name="text">
         <string>Auto</string>
@@ -81,14 +91,14 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Verbose Mode</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="QComboBox" name="kcfg_ManagerOpeningMethod">
        <item>
         <property name="text">
@@ -102,7 +112,7 @@
        </item>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="3" column="2">
       <widget class="QCheckBox" name="kcfg_ManagerPortNumberDefault">
        <property name="text">
         <string>Default</string>
@@ -112,38 +122,21 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="2">
-      <widget class="QCheckBox" name="kcfg_EnableVerboseMode">
-       <property name="text">
-        <string>Enable</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Computer IP Address</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Manager Port Number</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Manager Log File</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="2">
+     <item row="11" column="2">
       <widget class="QCheckBox" name="kcfg_AutoLaunchManager">
        <property name="text">
         <string>Enable</string>
@@ -153,21 +146,21 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="label_8">
        <property name="text">
         <string>Auto Launch Manager</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QLineEdit" name="kcfg_LogFilePath">
        <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="7" column="2">
+     <item row="8" column="2">
       <widget class="QCheckBox" name="kcfg_EnableWebManagerLogFile">
        <property name="text">
         <string>Enable</string>
@@ -181,14 +174,14 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Manager Log File</string>
        </property>
       </widget>
      </item>
-     <item row="14" column="2">
+     <item row="15" column="2">
       <widget class="QCheckBox" name="launchAtStartup">
        <property name="enabled">
         <bool>true</bool>
@@ -207,20 +200,37 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="0">
+     <item row="14" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
         <string>Auto Hide ManagerApp</string>
        </property>
       </widget>
      </item>
-     <item row="13" column="2">
+     <item row="14" column="2">
       <widget class="QCheckBox" name="kcfg_AutoHideManagerApp">
        <property name="text">
         <string>Enable</string>
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="IPAddressSelector"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Computer IP Address</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Available IP Addresses</string>
        </property>
       </widget>
      </item>

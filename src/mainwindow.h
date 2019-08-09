@@ -34,6 +34,7 @@ public:
     ~MainWindow();
     void closeEvent(QCloseEvent *event) override;
     static QString getDefault(QString option);
+    QStringList getIPAddressList();
     QString getWebManagerURL();
     QString getINDIServerURL(QString port);
     bool pythonInstalled(QString pythonExecFolder);
@@ -65,8 +66,6 @@ private:
 
     QAction *managerStatusinTray;
     QAction *serverStatusinTray;
-
-
 
 private slots:
     void openWebManager();
