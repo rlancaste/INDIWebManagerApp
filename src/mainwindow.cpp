@@ -392,18 +392,42 @@ QString MainWindow::getDefault(QString option)
 QStringList MainWindow::getIPAddressList()
 {
     QStringList addresses=QStringList();
-    #ifdef __linux__
-        QProcess getIPs;
-        getIPs.start("hostname",QStringList()<<"-I");
-        getIPs.waitForFinished();
-        QString returnedIPs=getIPs.readAllStandardOutput();
-        addresses=returnedIPs.split(" ");
-        return addresses;
-    #endif
+    for (const QNetworkInterface &interface: QNetworkInterface::allInterfaces()) {
+        if(interface.type()!=QNetworkInterface::Unknown && interface.type()!=QNetworkInterface::Loopback)
+        {
+            QList<QNetworkAddressEntry> addressEntries = interface.addressEntries();
+            for (const QNetworkAddressEntry &address: addressEntries) {
+                if(address.ip().protocol() != QAbstractSocket::IPv4Protocol)
+                    addressEntries.removeOne(address);
+            }
+            if(addressEntries.size() > 0 )
+            {
+                QString type = "";
+                if(interface.type() == QNetworkInterface::Ethernet)
+                    type = "Ethernet";
+                if(interface.type() == QNetworkInterface::Wifi)
+                    type = "Wifi";
+                if(interface.type() == QNetworkInterface::Virtual)
+                    type = "Virtual";
+                qDebug()<<interface.name()<<","<<type;
+                for (const QNetworkAddressEntry &address: addressEntries)
+                {
+                        //addresses.append(address.toString());
+                        qDebug()<<address.ip().toString()<<" , "<<address.ip().isSiteLocal()<<","<<address.ip().isGlobal();
+                }
+            }
+
+        }
+
+    }
+
     const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
     for (const QHostAddress &address: QNetworkInterface::allAddresses()) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost)
+        {
             addresses.append(address.toString());
+        }
+
     }
     return addresses;
 }
