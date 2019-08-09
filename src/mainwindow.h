@@ -34,7 +34,7 @@ public:
     ~MainWindow();
     void closeEvent(QCloseEvent *event) override;
     static QString getDefault(QString option);
-    QStringList getIPAddressList();
+    void updateIPAddressList();
     QString getWebManagerURL();
     QString getINDIServerURL(QString port);
     bool pythonInstalled(QString pythonExecFolder);

@@ -31,6 +31,7 @@
 #include <QWhatsThis>
 #include <QSystemTrayIcon>
 #include <QWidgetAction>
+#include <QListWidget>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -146,6 +147,15 @@ MainWindow::MainWindow(QWidget *parent) :
         about.setText(i18n("<html>INDI Web Manager App<br>&nbsp;&nbsp;© 2019 Robert Lancaster<br>&nbsp;&nbsp;Version: %1<br>&nbsp;&nbsp;Build: %2<br><br>Please see the Github page:<br><a href=https://github.com/rlancaste/INDIWebManagerApp>https://github.com/rlancaste/INDIWebManagerApp</a> <br>for details and source code.</html>").arg(QString(INDIWebManagerApp_VERSION)).arg(QString(INDI_WEB_MANAGER_APP_BUILD_TS)));
         about.exec();
     });
+    connect(ui->ipListDisplay,&QListWidget::itemSelectionChanged, this, [this]()
+    {
+        QString host = ui->ipListDisplay->currentItem()->text();
+        Options::setManagerHostNameOrIP(host);
+        ui->hostDisplay->setText(host);
+        ui->displayWebManagerPath->setText(getWebManagerURL());
+        ui->ipInformation->setText(ui->ipListDisplay->currentItem()->toolTip());
+    });
+
 
     //These set up the actions in the help menu
     connect(ui->actionINDI_Details,&QAction::triggered, this, []()
@@ -362,24 +372,14 @@ QString MainWindow::getDefault(QString option)
     }
 
     //This is the name of the computer on the local network.
-    else if (option == "ComputerHostName")
+    else if (option == "ManagerHostNameOrIP")
         return QHostInfo::localHostName();
 
-    //This is the IP of the computer on the local network.
-    else if (option == "ComputerIPAddress")
-    {
-        const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
-        for (const QHostAddress &address: QNetworkInterface::allAddresses()) {
-            if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost)
-                return address.toString();
-            }
-        return localhost.toString();
-    }
-    //This is the name of the computer on the local network.
+    //This is the port the INDI Web Manager will be hosted on.
     else if (option == "ManagerPortNumber")
         return "8624";
 
-    //This is the name of the computer on the local network.
+    //This is the path for the log file.
     else if (option == "LogFilePath")
         return QDir::homePath() + "/.indi/webmanagerlog.txt";
 
@@ -389,12 +389,15 @@ QString MainWindow::getDefault(QString option)
 /*
  * This gets the list of addresses available for this computer
  */
-QStringList MainWindow::getIPAddressList()
+void MainWindow::updateIPAddressList()
 {
-    QStringList addresses=QStringList();
+    ui->ipListDisplay->clear();
+    QListWidgetItem *hostItem = new QListWidgetItem();
+    hostItem->setText(QHostInfo::localHostName());
+    hostItem->setToolTip("Local Hostname");
+    hostItem->setTextColor(Qt::green);
+    ui->ipListDisplay->addItem(hostItem);
     for (const QNetworkInterface &interface: QNetworkInterface::allInterfaces()) {
-        if(interface.type()!=QNetworkInterface::Unknown && interface.type()!=QNetworkInterface::Loopback)
-        {
             QList<QNetworkAddressEntry> addressEntries = interface.addressEntries();
             for (const QNetworkAddressEntry &address: addressEntries) {
                 if(address.ip().protocol() != QAbstractSocket::IPv4Protocol)
@@ -403,6 +406,10 @@ QStringList MainWindow::getIPAddressList()
             if(addressEntries.size() > 0 )
             {
                 QString type = "";
+                if(interface.type() == QNetworkInterface::Unknown)
+                    type = "Unknown";
+                if(interface.type() == QNetworkInterface::Loopback)
+                    type = "LocalHost";
                 if(interface.type() == QNetworkInterface::Ethernet)
                     type = "Ethernet";
                 if(interface.type() == QNetworkInterface::Wifi)
@@ -412,24 +419,39 @@ QStringList MainWindow::getIPAddressList()
                 qDebug()<<interface.name()<<","<<type;
                 for (const QNetworkAddressEntry &address: addressEntries)
                 {
-                        //addresses.append(address.toString());
-                        qDebug()<<address.ip().toString()<<" , "<<address.ip().isSiteLocal()<<","<<address.ip().isGlobal();
+                        QListWidgetItem *newItem = new QListWidgetItem();
+                        newItem->setText(address.ip().toString());
+                        newItem->setToolTip(interface.name() + ", " + type);
+                        if(!address.ip().isGlobal())
+                            newItem->setTextColor(Qt::blue);
+                        else {
+                            newItem->setTextColor(Qt::green);
+                        }
+                        ui->ipListDisplay->addItem(newItem);
+
                 }
-            }
-
         }
 
     }
 
-    const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
-    for (const QHostAddress &address: QNetworkInterface::allAddresses()) {
-        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost)
-        {
-            addresses.append(address.toString());
-        }
 
+    QList<QListWidgetItem *> customItemList = ui->ipListDisplay->findItems(Options::customHostNameOrIP(),Qt::MatchExactly);
+    if(customItemList.size() == 0 && Options::customHostNameOrIP() != "")
+    {
+        QListWidgetItem *customItem = new QListWidgetItem();
+        customItem->setText(Options::customHostNameOrIP());
+        customItem->setToolTip("Custom Host/IP");
+        customItem->setTextColor(Qt::blue);
+        ui->ipListDisplay->addItem(customItem);
     }
-    return addresses;
+
+    QList<QListWidgetItem *> currentItemList = ui->ipListDisplay->findItems(Options::managerHostNameOrIP(),Qt::MatchExactly);
+    if(currentItemList.count() == 1)
+        ui->ipListDisplay->setCurrentItem(currentItemList.first());
+    else {
+        ui->ipListDisplay->setCurrentItem(ui->ipListDisplay->item(0));
+    }
+
 }
 
 /*
@@ -452,10 +474,7 @@ void MainWindow::showAndRaise()
  */
 QString MainWindow::getWebManagerURL()
 {
-    if(Options::managerOpeningMethod()==0)
-        return QString("http://%1:%2").arg(Options::computerHostName()).arg(Options::managerPortNumber());
-    else
-        return QString("http://%1:%2").arg(Options::computerIPAddress()).arg(Options::managerPortNumber());
+    return QString("http://%1:%2").arg(Options::managerHostNameOrIP()).arg(Options::managerPortNumber());
 }
 
 /*
@@ -463,10 +482,7 @@ QString MainWindow::getWebManagerURL()
  */
 QString MainWindow::getINDIServerURL(QString port)
 {
-    if(Options::managerOpeningMethod()==0)
-        return QString("%1:%2").arg(Options::computerHostName()).arg(port);
-    else
-        return QString("%1:%2").arg(Options::computerIPAddress()).arg(port);
+    return QString("%1:%2").arg(Options::managerHostNameOrIP()).arg(port);
 }
 
 /*
@@ -551,16 +567,9 @@ void MainWindow::updateSettings()
     if(webManagerRunning)
         stopWebManager();
 
-    if(Options::computerHostNameAuto())
-        Options::setComputerHostName(getDefault("ComputerHostName"));
-    if(Options::computerIPAddressAuto())
-        Options::setComputerIPAddress(getDefault("ComputerIPAddress"));
-
-    ui->hostDisplay->setText(Options::computerHostName());
-    ui->ipDisplay->setText(Options::computerIPAddress());
-    ui->ipListDisplay->clear();
-    ui->ipListDisplay->addItems(getIPAddressList());
-    ui->ipListDisplay->adjustSize();
+    //ui->hostDisplay->setText(Options::computerHostName());
+    updateIPAddressList();
+    ui->ipListDisplay->adjustSize();  
     ui->displayWebManagerPath->setText(getWebManagerURL());
 
     configureEnvironmentVariables();

@@ -117,29 +117,17 @@
         </entry>
     </group>
     <group name="NetworkConfiguration">
-        <entry name="ComputerHostNameAuto" type="Bool">
-            <label>Computer Network Host Name Automatic.</label>
-            <tooltip>This determines whether to automatically retreive the system host name or use a user configured one.</tooltip>
-            <whatsthis>This determines whether to automatically retreive the system host name or use a user configured one.</whatsthis>
-            <default>true</default>
+        <entry name="ManagerHostNameOrIP" type="String">
+            <label>INDI Web Manager Hostname or IP Address.</label>
+            <tooltip>This is the computer hostname or IP Address that INDIWebManagerApp is using to access the INDI Web Manager.  It does not affect the actual computer hostname or IP address and will not affect how other clients access the INDI Server.  For that you need to change your system settings.</tooltip>
+            <whatsthis>This is the computer hostname or IP Address that INDIWebManagerApp is using to access the INDI Web Manager.  It does not affect the actual computer hostname or IP address and will not affect how other clients access the INDI Server.  For that you need to change your system settings.</whatsthis>
+            <default code="true">MainWindow::getDefault("ManagerHostNameOrIP")</default>
         </entry>
-        <entry name="ComputerHostName" type="String">
-            <label>Computer Network Host Name.</label>
-            <tooltip>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems, the client needs .local or .home at the end and on others it does not.</tooltip>
-            <whatsthis>This is what your computer is known as on in the local network.  It is by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system host name, you need to do that in your system settings.   Note: on some systems, the client needs .local or .home at the end and on others it does not.</whatsthis>
-            <default code="true">MainWindow::getDefault("ComputerHostName")</default>
-        </entry>
-        <entry name="ComputerIPAddressAuto" type="Bool">
-            <label>Computer Network IP Address Automatic.</label>
-            <tooltip>This determines whether to automatically retreive the system IP Address or use a user configured one.</tooltip>
-            <whatsthis>This determines whether to automatically retreive the system IP Address or use a user configured one.</whatsthis>
-            <default>true</default>
-        </entry>
-        <entry name="ComputerIPAddress" type="String">
-            <label>Computer Network IP Address.</label>
-            <tooltip>This is your IP address on your local network.  It is used by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system IP Address, you need to do that in your system settings.</tooltip>
-            <whatsthis>This is your IP address on your local network.  It is used by this program to access the INDI Web Manager and the INDI Server.  It does NOT change the system IP Address, you need to do that in your system settings.</whatsthis>
-            <default code="true">MainWindow::getDefault("ComputerIPAddress")</default>
+        <entry name="CustomHostNameOrIP" type="String">
+            <label>Custom INDI Web Manager Hostname or IP Address.</label>
+            <tooltip>This is where you can add a custom IP address or host name for your computer.  You should make sure that the addresss you enter is valid.</tooltip>
+            <whatsthis>This is where you can add a custom IP address or host name for your computer.  You should make sure that the addresss you enter is valid.</whatsthis>
+            <default></default>
         </entry>
     </group>
     <group name="ManagerConfiguration">

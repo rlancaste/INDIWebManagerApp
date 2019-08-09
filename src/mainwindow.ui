@@ -43,7 +43,7 @@
      <number>3</number>
     </property>
     <item>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -73,6 +73,13 @@
         <property name="verticalSpacing">
          <number>4</number>
         </property>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Port: </string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="2">
          <widget class="QLineEdit" name="hostDisplay">
           <property name="sizePolicy">
@@ -94,6 +101,19 @@
            <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item row="5" column="2">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="3" column="2">
          <widget class="QLineEdit" name="portDisplay">
@@ -117,33 +137,6 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Port: </string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>IP:</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
@@ -151,8 +144,15 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Info:</string>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="2">
-         <widget class="QLineEdit" name="ipDisplay">
+         <widget class="QLineEdit" name="ipInformation">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -160,10 +160,10 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>This is the host name of your computer.  It is how your computer is known on the local network.  You can use this to connect to your INDI Web Manager.  You can change this by going into your system settings on your computer.  </string>
+           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
           </property>
           <property name="whatsThis">
-           <string>This is the host name of your computer.  It is how your computer is known on the local network.  You can use this to connect to your INDI Web Manager.  You can change this by going into your system settings on your computer.  </string>
+           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
           </property>
           <property name="text">
            <string/>
@@ -410,7 +410,7 @@
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>IP(s): </string>
+             <string>Hosts: </string>
             </property>
            </widget>
           </item>
@@ -432,7 +432,7 @@
              <bool>false</bool>
             </property>
             <property name="selectionMode">
-             <enum>QAbstractItemView::NoSelection</enum>
+             <enum>QAbstractItemView::SingleSelection</enum>
             </property>
             <property name="resizeMode">
              <enum>QListView::Fixed</enum>

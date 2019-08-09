@@ -27,8 +27,6 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
 #endif
 
    //This connects all the default checkboxes to the update function.
-   connect(ui->kcfg_ComputerHostNameAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
-   connect(ui->kcfg_ComputerIPAddressAuto, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_ManagerPortNumberDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
    connect(ui->kcfg_LogFilePathDefault, &QCheckBox::clicked, this, &OpsManager::updateFromCheckBoxes);
 
@@ -37,8 +35,6 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
 
    //This waits a moment for the kconfig to load the options, then sets the Line Edits to read only appropriagely
    QTimer::singleShot(100, this, &OpsManager::updateFromCheckBoxes);
-
-   ui->ipAddressList->addItems(parent->getIPAddressList());
 
 }
 
@@ -55,20 +51,8 @@ OpsManager::~OpsManager()
  */
 void OpsManager::updateFromCheckBoxes()
 {
-    ui->kcfg_ComputerHostName->setReadOnly(ui->kcfg_ComputerHostNameAuto->isChecked());
-    ui->kcfg_ComputerIPAddress->setReadOnly(ui->kcfg_ComputerIPAddressAuto->isChecked());
     ui->kcfg_ManagerPortNumber->setReadOnly(ui->kcfg_ManagerPortNumberDefault->isChecked());
     ui->kcfg_LogFilePath->setReadOnly(ui->kcfg_LogFilePathDefault->isChecked());
-
-    if(ui->kcfg_ComputerHostNameAuto->isChecked())
-         ui->kcfg_ComputerHostName->setText(parent->getDefault("ComputerHostName"));
-    else
-         ui->kcfg_ComputerHostName->setText(Options::computerHostName());
-
-    if(ui->kcfg_ComputerIPAddressAuto->isChecked())
-         ui->kcfg_ComputerIPAddress->setText(parent->getDefault("ComputerIPAddress"));
-    else
-         ui->kcfg_ComputerIPAddress->setText(Options::computerIPAddress());
 
     if(ui->kcfg_ManagerPortNumberDefault->isChecked())
          ui->kcfg_ManagerPortNumber->setText(parent->getDefault("ManagerPortNumber"));
