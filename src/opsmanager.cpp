@@ -38,8 +38,7 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
    //This waits a moment for the kconfig to load the options, then sets the Line Edits to read only appropriagely
    QTimer::singleShot(100, this, &OpsManager::updateFromCheckBoxes);
 
-   ui->IPAddressSelector->addItems(parent->getIPAddressList());
-   ui->IPAddressSelector->setCurrentText(Options::computerIPAddress());
+   ui->ipAddressList->addItems(parent->getIPAddressList());
 
 }
 

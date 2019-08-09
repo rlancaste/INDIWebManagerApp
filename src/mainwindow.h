@@ -59,19 +59,26 @@ private:
     bool isINDIServerOnline(QString &activeProfile);
     void checkINDIServerStatus();
     QTimer serverMonitor;
+    QStringList getProfiles();
     bool getRunningDrivers(QString &webManagerDrivers);
     QString getINDIServerPort(QString &activeProfile);
+    void sendWebManagerCommand(const QUrl &url);
     bool getWebManagerResponse(const QUrl &url, QJsonDocument *reply);
     void updateDisplaysforShutDown();
 
     QAction *managerStatusinTray;
     QAction *serverStatusinTray;
 
+     QStringList oldProfiles;
+     QString oldDrivers;
+
 private slots:
     void openWebManager();
     void showAndRaise();
     void startWebManager();
     void stopWebManager();
+    void startINDIServer();
+    void stopINDIServer();
     void appendLogEntry();
     void appendLogEntry(QString text);
     void managerClosed(int result);

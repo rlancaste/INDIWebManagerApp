@@ -43,7 +43,7 @@
      <number>3</number>
     </property>
     <item>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -53,511 +53,6 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <item row="5" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Active Profile:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="activeProfileDisplay">
-          <property name="toolTip">
-           <string>The name of the currently running profile in the INDI Server.  This is updated once per second.</string>
-          </property>
-          <property name="whatsThis">
-           <string>The name of the currently running profile in the INDI Server.  This is updated once per second.</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>INDI Web Manager</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Status:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="serverStatusDisplay">
-          <property name="toolTip">
-           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
-          </property>
-          <property name="whatsThis">
-           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="displayINDIServerPath">
-        <property name="toolTip">
-         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
-        </property>
-        <property name="whatsThis">
-         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="4">
-       <widget class="QListWidget" name="driversDisplay">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
-        </property>
-        <property name="whatsThis">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>IP(s): </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="ipListDisplay">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QAbstractScrollArea::AdjustToContents</enum>
-            </property>
-            <property name="autoScroll">
-             <bool>false</bool>
-            </property>
-            <property name="showDropIndicator" stdset="0">
-             <bool>false</bool>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::NoSelection</enum>
-            </property>
-            <property name="resizeMode">
-             <enum>QListView::Fixed</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="4">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>INDI Server</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="displayWebManagerPath">
-        <property name="toolTip">
-         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
-        </property>
-        <property name="whatsThis">
-         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Status:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="statusDisplay">
-          <property name="toolTip">
-           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
-          </property>
-          <property name="whatsThis">
-           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="4" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Server:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="startINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Starts the INDI Web Manager</string>
-            </property>
-            <property name="whatsThis">
-             <string>Starts the INDI Web Manager</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Stops the INDI Web Manager</string>
-            </property>
-            <property name="whatsThis">
-             <string>Stops the INDI Web Manager</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="configureINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Configures the INDI Web Manager</string>
-            </property>
-            <property name="whatsThis">
-             <string>Configures the INDI Web Manager</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item row="4" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Manager:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="whatsThis">
-          <property name="minimumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>What's this?</string>
-          </property>
-          <property name="whatsThis">
-           <string>What's this?</string>
-          </property>
-          <property name="text">
-           <string>?</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="restartWebManager">
-          <property name="minimumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Starts the INDI Web Manager</string>
-          </property>
-          <property name="whatsThis">
-           <string>Starts the INDI Web Manager</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="stopWebManager">
-          <property name="minimumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Stops the INDI Web Manager</string>
-          </property>
-          <property name="whatsThis">
-           <string>Stops the INDI Web Manager</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="configureWebManager">
-          <property name="minimumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Configures the INDI Web Manager</string>
-          </property>
-          <property name="whatsThis">
-           <string>Configures the INDI Web Manager</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="openWebManager">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>80</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-          <underline>false</underline>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
-        </property>
-        <property name="whatsThis">
-         <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
-        </property>
-        <property name="text">
-         <string>Open WebManager</string>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" rowspan="5">
-       <widget class="QLabel" name="INDILogo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0" rowspan="3">
        <layout class="QGridLayout" name="gridLayout">
         <property name="leftMargin">
@@ -680,6 +175,483 @@
         </item>
        </layout>
       </item>
+      <item row="4" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="profileBox"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="startINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Starts the INDI Web Manager</string>
+            </property>
+            <property name="whatsThis">
+             <string>Starts the INDI Web Manager</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Stops the INDI Web Manager</string>
+            </property>
+            <property name="whatsThis">
+             <string>Stops the INDI Web Manager</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="configureINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Configures the INDI Web Manager</string>
+            </property>
+            <property name="whatsThis">
+             <string>Configures the INDI Web Manager</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="serverStatusDisplay">
+          <property name="toolTip">
+           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLineEdit" name="displayINDIServerPath">
+        <property name="toolTip">
+         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
+        </property>
+        <property name="whatsThis">
+         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>INDI Web Manager</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="statusDisplay">
+          <property name="toolTip">
+           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="displayWebManagerPath">
+        <property name="toolTip">
+         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
+        </property>
+        <property name="whatsThis">
+         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" rowspan="5">
+       <widget class="QLabel" name="INDILogo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>IP(s): </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="ipListDisplay">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="autoScroll">
+             <bool>false</bool>
+            </property>
+            <property name="showDropIndicator" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::NoSelection</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Fixed</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="4">
+       <widget class="QListWidget" name="driversDisplay">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+        </property>
+        <property name="whatsThis">
+         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="openWebManager">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <italic>true</italic>
+            <bold>true</bold>
+            <underline>false</underline>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
+          </property>
+          <property name="text">
+           <string>OPEN</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="restartWebManager">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Starts the INDI Web Manager</string>
+          </property>
+          <property name="whatsThis">
+           <string>Starts the INDI Web Manager</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="stopWebManager">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Stops the INDI Web Manager</string>
+          </property>
+          <property name="whatsThis">
+           <string>Stops the INDI Web Manager</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="configureWebManager">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Configures the INDI Web Manager</string>
+          </property>
+          <property name="whatsThis">
+           <string>Configures the INDI Web Manager</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>INDI Server</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="whatsThis">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>What's this?</string>
+          </property>
+          <property name="whatsThis">
+           <string>What's this?</string>
+          </property>
+          <property name="text">
+           <string>?</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </item>
     <item>
@@ -768,7 +740,7 @@
      <x>0</x>
      <y>0</y>
      <width>770</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuINDIWebMangerApp">

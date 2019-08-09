@@ -115,6 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     //This makes the buttons look nice on OS X.
+    ui->openWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->whatsThis->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->stopWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->restartWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
@@ -135,8 +136,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->restartWebManager, &QPushButton::clicked, this, &MainWindow::startWebManager);
     connect(ui->stopWebManager, &QPushButton::clicked, this, &MainWindow::stopWebManager);
     connect(ui->configureINDIServer, &QPushButton::clicked, this, &MainWindow::openWebManager);
-    connect(ui->startINDIServer, &QPushButton::clicked, this, &MainWindow::startWebManager);
-    connect(ui->stopINDIServer, &QPushButton::clicked, this, &MainWindow::stopWebManager);
+    connect(ui->startINDIServer, &QPushButton::clicked, this, &MainWindow::startINDIServer);
+    connect(ui->stopINDIServer, &QPushButton::clicked, this, &MainWindow::stopINDIServer);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
     connect(ui->actionAbout,&QAction::triggered, this, []()
     {
@@ -704,7 +705,7 @@ void MainWindow::updateDisplaysforShutDown()
 {
     displayManagerStatusOnline(false);
     displayServerStatusOnline(false);
-    ui->activeProfileDisplay->clear();
+    ui->profileBox->clear();
     ui->driversDisplay->clear();
     ui->displayINDIServerPath->clear();
     serverMonitor.stop();
@@ -785,7 +786,15 @@ void MainWindow::checkINDIServerStatus()
     QString activeProfile = "";
     bool INDIServerOnline = isINDIServerOnline(activeProfile);
     displayServerStatusOnline(INDIServerOnline);
-    ui->activeProfileDisplay->setText(activeProfile);
+    QStringList profiles = getProfiles();
+    if(oldProfiles.join(",") != profiles.join(",") || ui->profileBox->count() == 0)
+    {
+        ui->profileBox->clear();
+        ui->profileBox->addItems(profiles);
+        ui->profileBox->setCurrentText(activeProfile);
+        oldProfiles = profiles;
+    }
+    ui->profileBox->setDisabled(INDIServerOnline);
     QString port = "";
     if(INDIServerOnline)
     {
@@ -793,16 +802,21 @@ void MainWindow::checkINDIServerStatus()
         ui->displayINDIServerPath->setText(getINDIServerURL(port));
         QString webManagerDrivers="";
         getRunningDrivers(webManagerDrivers);
-        ui->driversDisplay->clear();
-        QStringList activeDrivers = webManagerDrivers.split("\n");
-        foreach(QString driver, activeDrivers)
+        if(oldDrivers != webManagerDrivers || ui->driversDisplay->count() ==0)
         {
-            ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
+            ui->driversDisplay->clear();
+            QStringList activeDrivers = webManagerDrivers.split("\n");
+            foreach(QString driver, activeDrivers)
+            {
+                ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
+            }
+            oldDrivers = webManagerDrivers;
         }
     }
     else
     {
          ui->driversDisplay->clear();
+         oldDrivers.clear();
     }
 
 }
@@ -874,6 +888,25 @@ bool MainWindow::isINDIServerOnline(QString &activeProfile)
 }
 
 /*
+ * This method tries to start an INDIServer using the specified profile.
+ */
+void MainWindow::startINDIServer()
+{
+    QString profileToStart = ui->profileBox->currentText();
+    QUrl url(QString(getWebManagerURL() + "/api/server/start/" + profileToStart));
+    sendWebManagerCommand(url);
+}
+
+/*
+ * This method tries to stop the currently running INDIServer
+ */
+void MainWindow::stopINDIServer()
+{
+    QUrl url(QString(getWebManagerURL() + "/api/server/stop"));
+    sendWebManagerCommand(url);
+}
+
+/*
  * This method determines the port of the active server if one is running.
  */
 QString MainWindow::getINDIServerPort(QString &activeProfile)
@@ -890,6 +923,32 @@ QString MainWindow::getINDIServerPort(QString &activeProfile)
         return QString::number(jsonObj["port"].toInt());
     }
     return "";
+}
+
+/*
+ * This method determines what drivers are active on an INDIServer hosted by this program and accessed using the desired method.
+ */
+QStringList MainWindow::getProfiles()
+{
+    QStringList profilesList;
+    QUrl url(QString(getWebManagerURL() + "/api/profiles"));
+
+    QJsonDocument json;
+    if (getWebManagerResponse( url, &json))
+    {
+        QJsonArray array = json.array();
+
+        if (array.isEmpty())
+            return profilesList;
+
+        for (auto value : array)
+        {
+            QJsonObject profile = value.toObject();
+            profilesList << profile["name"].toString();
+        }
+        return profilesList;
+    }
+    return profilesList;
 }
 
 /*
@@ -917,6 +976,38 @@ bool MainWindow::getRunningDrivers(QString &webManagerDrivers)
         return true;
     }
     return false;
+}
+
+/*
+ * This method is how POST commands are sent to the INDI Server
+ */
+void MainWindow::sendWebManagerCommand(const QUrl &url)
+{
+    QNetworkAccessManager manager;
+    QNetworkRequest request;
+    request.setUrl(url);
+    QNetworkReply *response = manager.post(request, QByteArray());
+
+    QTimer timeout(this);
+    timeout.setInterval(5000);
+    timeout.setSingleShot(true);
+    timeout.start();
+    while (!response->isFinished())
+    {
+        if (!timeout.isActive())
+        {
+            response->deleteLater();
+            appendLogEntry(i18n("Timeout while waiting for response from INDI Server"));
+            return;
+        }
+        qApp->processEvents();
+    }
+    timeout.stop();
+
+    if (response->error() != QNetworkReply::NoError)
+    {
+        appendLogEntry(i18n("INDI: Error communicating with INDI Web Manager: ") + response->errorString());
+    }
 }
 
 /*
