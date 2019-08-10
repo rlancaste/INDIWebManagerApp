@@ -92,10 +92,10 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>This is the host name or IP Address that INDIWebManagerApp is using to connect to the INDI Web Manager and INDI Server.  It can be changed by clicking on a host to the right.  It does not affect how other clients access the INDI Web Manager</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="whatsThis">
-           <string>This is the host name of your computer.  It is how your computer is known on the local network.  You can use this to connect to your INDI Web Manager.  You can change this by going into your system settings on your computer.  </string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string>localhost</string>
@@ -166,7 +166,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display.  It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="whatsThis">
-           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display. It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string/>
@@ -195,7 +195,20 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QComboBox" name="profileBox"/>
+           <widget class="QComboBox" name="profileBox">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="startINDIServer">
@@ -212,10 +225,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Starts the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>Starts the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string/>
@@ -237,10 +250,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Stops the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>Stops the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string/>
@@ -262,10 +275,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Configures the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>Configures the INDI Web Manager</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string/>
@@ -411,7 +424,10 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server.  You can test the connections by clicking one to see if it works.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works.  The green ones should be accessible anywhere on the local network.  The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works. The green ones should be accessible anywhere on the local network. The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="sizeAdjustPolicy">
            <enum>QAbstractScrollArea::AdjustToContents</enum>

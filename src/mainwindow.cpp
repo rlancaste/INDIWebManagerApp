@@ -116,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     //This makes the buttons look nice on OS X.
+    /*
     ui->openWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->whatsThis->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->stopWebManager->setAttribute(Qt::WA_LayoutUsesWidgetRect);
@@ -124,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->configureINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->startINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
     ui->stopINDIServer->setAttribute(Qt::WA_LayoutUsesWidgetRect);
+    */
 
 
     //This will hide the log and capture the window size to make the later algorithm for showing/hiding work properly.
@@ -555,7 +557,7 @@ void MainWindow::showPreferences()
 
 /*
  * This method should update all the environment variables and the displayed settings in the main window.
- * It should be run after the configuration settings have been changed and any time the user presses the refresh button.
+ * It should be run after the configuration settings have been changed.
  */
 void MainWindow::updateSettings()
 {
@@ -563,7 +565,6 @@ void MainWindow::updateSettings()
     if(webManagerRunning)
         stopWebManager();
 
-    //ui->hostDisplay->setText(Options::computerHostName());
     updateIPAddressList();
     ui->ipListDisplay->adjustSize();  
     ui->displayWebManagerPath->setText(getWebManagerURL());
@@ -868,6 +869,7 @@ void MainWindow::checkINDIServerStatus()
     {
         port = getINDIServerPort(activeProfile);
         ui->displayINDIServerPath->setText(getINDIServerURL(port));
+        ui->displayINDIServerPath->setCursorPosition(0);
         QString webManagerDrivers="";
         getRunningDrivers(webManagerDrivers);
         if(oldDrivers != webManagerDrivers || ui->driversDisplay->count() ==0)
