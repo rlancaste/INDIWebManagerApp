@@ -152,7 +152,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QString host = ui->ipListDisplay->currentItem()->text();
         Options::setManagerHostNameOrIP(host);
         ui->hostDisplay->setText(host);
+        ui->hostDisplay->setCursorPosition(0);
         ui->displayWebManagerPath->setText(getWebManagerURL());
+        ui->displayWebManagerPath->setCursorPosition(0);
         ui->ipInformation->setText(ui->ipListDisplay->currentItem()->toolTip());
     });
 
@@ -565,6 +567,7 @@ void MainWindow::updateSettings()
     updateIPAddressList();
     ui->ipListDisplay->adjustSize();  
     ui->displayWebManagerPath->setText(getWebManagerURL());
+    ui->displayWebManagerPath->setCursorPosition(0);
     if(Options::enableWebManagerLogFile())
     {
         managerLogFile = "";
