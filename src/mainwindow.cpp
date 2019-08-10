@@ -1055,7 +1055,11 @@ bool MainWindow::getRunningDrivers(QString &webManagerDrivers)
         for (auto value : array)
         {
             QJsonObject driver = value.toObject();
-            webManagerDriversList << driver["name"].toString();
+            if(driver["label"].toString() != "")
+                webManagerDriversList << driver["label"].toString();
+            else {
+                webManagerDriversList << driver["name"].toString();
+            }
         }
         webManagerDrivers=webManagerDriversList.join("\n");
         return true;
