@@ -56,434 +56,47 @@
       <property name="verticalSpacing">
        <number>0</number>
       </property>
-      <item row="5" column="0" rowspan="3">
-       <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
         <property name="leftMargin">
-         <number>0</number>
+         <number>10</number>
         </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>2</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>4</number>
-        </property>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_2">
+        <item>
+         <widget class="QLabel" name="label_10">
           <property name="text">
-           <string>Port: </string>
+           <string>INDI Server</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="hostDisplay">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="whatsThis">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>localhost</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+        <item>
+         <widget class="QPushButton" name="whatsThis">
+          <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>0</height>
+            <width>32</width>
+            <height>32</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLineEdit" name="portDisplay">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
           </property>
           <property name="toolTip">
-           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+           <string>What's this?</string>
           </property>
           <property name="whatsThis">
-           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+           <string>What's this?</string>
           </property>
           <property name="text">
-           <string>8624</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Host: </string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Info:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLineEdit" name="ipInformation">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display.  It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="whatsThis">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display. It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
+           <string>?</string>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item row="4" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="profileBox">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="startINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="stopINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="configureINDIServer">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Status:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="serverStatusDisplay">
-          <property name="toolTip">
-           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
-          </property>
-          <property name="whatsThis">
-           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="displayINDIServerPath">
-        <property name="toolTip">
-         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
-        </property>
-        <property name="whatsThis">
-         <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>INDI Web Manager</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Status:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="statusDisplay">
-          <property name="toolTip">
-           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
-          </property>
-          <property name="whatsThis">
-           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="displayWebManagerPath">
-        <property name="toolTip">
-         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
-        </property>
-        <property name="whatsThis">
-         <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" rowspan="5">
-       <widget class="QLabel" name="INDILogo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QListWidget" name="ipListDisplay">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works.  The green ones should be accessible anywhere on the local network.  The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="whatsThis">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works. The green ones should be accessible anywhere on the local network. The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContents</enum>
-          </property>
-          <property name="autoScroll">
-           <bool>false</bool>
-          </property>
-          <property name="showDropIndicator" stdset="0">
-           <bool>false</bool>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="resizeMode">
-           <enum>QListView::Fixed</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="7" column="4">
-       <widget class="QListWidget" name="driversDisplay">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
-        </property>
-        <property name="whatsThis">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-        </property>
-       </widget>
       </item>
       <item row="4" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -615,23 +228,293 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <property name="leftMargin">
-         <number>10</number>
+      <item row="7" column="4">
+       <widget class="QListWidget" name="driversDisplay">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+        </property>
+        <property name="whatsThis">
+         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="topMargin">
+         <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>INDI Server</string>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="profileBox">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This box displays the currently running profile on the INDI Server.  If the INDI Server is not currently running, this also lets you select one of the profiles to start on the INDI Server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="startINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts the selected profile on the INDI Server that is currently hosted by this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stops the INDI Server that is currently hosted on this computer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="configureINDIServer">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="whatsThis">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="0" rowspan="3">
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>2</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>4</number>
+        </property>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Port: </string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="hostDisplay">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the Host Name or IP Address that INDIWebManagerApp uses to access the INDI Web Manager and INDI Server.  It does not affect how other clients access INDI, nor does it affect your system settings.  If you want to change this setting to see information about it or to test the connection, click on the host names or IP addresses to the right.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>localhost</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="portDisplay">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This is the port number currently being used to host your INDI Web Manager. You will need this number to connect to your INDI Web Manager. You can change this by clicking the Settings button.</string>
+          </property>
+          <property name="text">
+           <string>8624</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Host: </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Info:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="ipInformation">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display.  It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is where information about the currently selected host will display. It shows the Interface name followed by the type of interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLineEdit" name="displayWebManagerPath">
+          <property name="toolTip">
+           <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This is a path you can use to access the INDI Web Manager from an Internet Browser.  This path will be used by the big button below to open the Web Manager in your default browser.  You can also copy and paste the link into a browser or give it to someone to access the INDI Web Manager on the local network.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="whatsThis">
+         <widget class="QPushButton" name="copyManagerToClipboard">
           <property name="minimumSize">
            <size>
             <width>32</width>
@@ -645,13 +528,188 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>What's this?</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copy to Clipboard&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="whatsThis">
-           <string>What's this?</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copy to Clipboard&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>?</string>
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>INDI Web Manager</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="statusDisplay">
+          <property name="toolTip">
+           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This shows the current status of the INDI Web Manager.  It is either Offline or Online.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QListWidget" name="ipListDisplay">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works.  The green ones should be accessible anywhere on the local network.  The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are the hostnames and IP Addresses on this computer that other clients can use to access the INDI Web Manager and INDI Server. You can test the connections by clicking one to see if it works. The green ones should be accessible anywhere on the local network. The blue ones have more limited accessibility.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>false</bool>
+          </property>
+          <property name="showDropIndicator" stdset="0">
+           <bool>false</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="resizeMode">
+           <enum>QListView::Fixed</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Status:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="serverStatusDisplay">
+          <property name="toolTip">
+           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This shows the current status of the INDI Server.  It is either Offline or Online.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" rowspan="5">
+       <widget class="QLabel" name="INDILogo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLineEdit" name="displayINDIServerPath">
+          <property name="toolTip">
+           <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
+          </property>
+          <property name="whatsThis">
+           <string>This is how the INDI Server can be accessed by an INDI Client such as KStars.</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="copyServerToClipboard">
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copy to Clipboard&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Copy to Clipboard&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>

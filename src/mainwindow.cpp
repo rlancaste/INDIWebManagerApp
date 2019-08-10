@@ -32,6 +32,7 @@
 #include <QSystemTrayIcon>
 #include <QWidgetAction>
 #include <QListWidget>
+#include <QClipboard>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -105,6 +106,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->stopINDIServer->setIcon(QIcon(":/media/icons/media-playback-stop-dark.svg"));
         ui->startINDIServer->setIcon(QIcon(":/media/icons/media-playback-start-dark.svg"));
         ui->configureINDIServer->setIcon(QIcon(":/media/icons/configure-dark.svg"));
+        ui->copyManagerToClipboard->setIcon(QIcon(":/media/icons/edit-copy-dark.svg"));
+        ui->copyServerToClipboard->setIcon(QIcon(":/media/icons/edit-copy-dark.svg"));
     }
     else {
         ui->stopWebManager->setIcon(QIcon(":/media/icons/media-playback-stop.svg"));
@@ -113,6 +116,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->stopINDIServer->setIcon(QIcon(":/media/icons/media-playback-stop.svg"));
         ui->startINDIServer->setIcon(QIcon(":/media/icons/media-playback-start.svg"));
         ui->configureINDIServer->setIcon(QIcon(":/media/icons/configure.svg"));
+        ui->copyManagerToClipboard->setIcon(QIcon(":/media/icons/edit-copy.svg"));
+        ui->copyServerToClipboard->setIcon(QIcon(":/media/icons/edit-copy.svg"));
     }
 
     //This makes the buttons look nice on OS X.
@@ -158,6 +163,16 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->displayWebManagerPath->setText(getWebManagerURL());
         ui->displayWebManagerPath->setCursorPosition(0);
         ui->ipInformation->setText(ui->ipListDisplay->currentItem()->toolTip());
+    });
+
+    //These two connections enable the clipboard copy buttons
+    connect(ui->copyManagerToClipboard,&QPushButton::clicked, this, [this]()
+    {
+        qApp->clipboard()->setText(ui->displayWebManagerPath->text());
+    });
+    connect(ui->copyServerToClipboard,&QPushButton::clicked, this, [this]()
+    {
+        qApp->clipboard()->setText(ui->displayINDIServerPath->text());
     });
 
 

@@ -9,5 +9,7 @@
         <file>icons/configure-dark.svg</file>
         <file>icons/green.png</file>
         <file>icons/red.png</file>
+        <file>icons/edit-copy.svg</file>
+        <file>icons/edit-copy-dark.svg</file>
     </qresource>
 </RCC>
