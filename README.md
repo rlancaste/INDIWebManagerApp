@@ -122,6 +122,17 @@ The Build requirements include:
  - libindi-dev (>= 1.6.1)
  - indi-bin (>= 1.6.1)
  - python3-pip
-
+ 
+ Steps to build on Ubuntu:
+ 
+ - sudo apt -y install python3-pip
+ - pip3 install indiweb    (NOTE: Not as root!)
+ - mkdir -p ~/AstroRoot/
+ - git clone https://github.com/rlancaste/INDIWebManagerApp.git
+ - mkdir -p ~/AstroRoot/INDIWebManagerApp-build
+ - cd ~/AstroRoot/INDIWebManagerApp-build
+ - cmake -DCMAKE_INSTALL_PREFIX=/usr ~/AstroRoot/INDIWebManagerApp/
+ - make
+ - sudo make install
 
 
