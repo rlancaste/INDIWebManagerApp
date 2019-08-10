@@ -183,13 +183,6 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="1">
-      <widget class="QLineEdit" name="kcfg_StartupDelay">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>

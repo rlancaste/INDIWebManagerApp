@@ -105,16 +105,19 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         }
 
     #else
-        int delay = QInputDialog::getInt(nullptr, "Get Delay for Startup",
-                                                 i18n("Your system probably needs a delay at startup for the Window Manager to load, how long would you like?:"), QLineEdit::Normal,
-                                                 20, 0);
-        fileText = "" \
+        bool ok = false;
+        int delay = QInputDialog::getInt(nullptr, i18n("Get Delay for Startup"),
+                                                 i18n("Your system probably needs a delay at startup for the Window Manager to load, how long would you like?:"),
+                                                 20, 0, 100, 1, &ok);
+        if(!ok)
+            delay = 0;
+        fileText = QString("" \
         "[Unit]\n" \
         "Description=INDI Web Manager App\n" \
         "After=multi-user.target\n" \
         "\n" \
         "[Service]\n" \
-        "ExecStartPre=/bin/sleep " + delay + "\n" \
+        "ExecStartPre=/bin/sleep %1\n" \
         "Environment=\"DISPLAY=:0\"\n" \
         "Environment=XAUTHORITY=" + QDir::homePath() + "/.Xauthority\n" \
         "Type=idle\n" \
@@ -122,7 +125,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         "ExecStart=" + QCoreApplication::applicationFilePath() + "\n" \
         "\n" \
         "[Install]\n" \
-        "WantedBy=multi-user.target";
+        "WantedBy=multi-user.target").arg(delay);
 
         QString tempFile =  QDir::homePath() + "/indiwebmanagerapp.service";
         QFile file2(tempFile);
@@ -131,7 +134,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
             QTextStream stream( &file2 );
             stream << fileText << endl;
         }
-        bool ok;
+        ok = false;
         QString password = QInputDialog::getText(nullptr, "Get Password",
                                                  i18n("To create the service file and enable the service, we need to use sudo. \nYour admin password please:"), QLineEdit::Normal,
                                                  "", &ok);
