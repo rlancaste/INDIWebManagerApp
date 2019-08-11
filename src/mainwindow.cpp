@@ -405,66 +405,106 @@ QString MainWindow::getDefault(QString option)
  */
 void MainWindow::updateIPAddressList()
 {
-    ui->ipListDisplay->clear();
-    QListWidgetItem *hostItem = new QListWidgetItem();
-    hostItem->setText(QHostInfo::localHostName());
-    hostItem->setToolTip("Local Hostname");
-    hostItem->setTextColor(Qt::green);
-    ui->ipListDisplay->addItem(hostItem);
-    for (const QNetworkInterface &interface: QNetworkInterface::allInterfaces()) {
-            QList<QNetworkAddressEntry> addressEntries = interface.addressEntries();
-            for (const QNetworkAddressEntry &address: addressEntries) {
-                if(address.ip().protocol() != QAbstractSocket::IPv4Protocol)
-                    addressEntries.removeOne(address);
-            }
-            if(addressEntries.size() > 0 )
-            {
-                QString type = "";
-                if(interface.type() == QNetworkInterface::Unknown)
-                    type = "Unknown";
-                if(interface.type() == QNetworkInterface::Loopback)
-                    type = "LocalHost";
-                if(interface.type() == QNetworkInterface::Ethernet)
-                    type = "Ethernet";
-                if(interface.type() == QNetworkInterface::Wifi)
-                    type = "Wifi";
-                if(interface.type() == QNetworkInterface::Virtual)
-                    type = "Virtual";
-                for (const QNetworkAddressEntry &address: addressEntries)
-                {
-                        QListWidgetItem *newItem = new QListWidgetItem();
-                        newItem->setText(address.ip().toString());
-                        newItem->setToolTip(interface.name() + ", " + type);
-                        if(!address.ip().isGlobal())
-                            newItem->setTextColor(Qt::blue);
-                        else {
-                            newItem->setTextColor(Qt::green);
-                        }
-                        ui->ipListDisplay->addItem(newItem);
+    QList<QHostAddress> newIPList= QNetworkInterface::allAddresses();
+    bool changed = false;
+    if(newIPList.count() == oldIPList.count())
+    {
+        for( int i = 0; i < newIPList.count(); i++ )
+            if(oldIPList.at(i).toString() != newIPList.at(i).toString())
+                changed = true;
+    }
+    else
+        changed = true;
 
+    if(changed)
+    {
+        oldIPList = newIPList;
+        ui->ipListDisplay->clear();
+        QListWidgetItem *hostItem = new QListWidgetItem();
+        hostItem->setText(QHostInfo::localHostName());
+        hostItem->setToolTip("Local Hostname");
+        hostItem->setTextColor(Qt::green);
+        ui->ipListDisplay->addItem(hostItem);
+        for (const QNetworkInterface &interface: QNetworkInterface::allInterfaces()) {
+                QList<QNetworkAddressEntry> addressEntries = interface.addressEntries();
+                for (const QNetworkAddressEntry &address: addressEntries) {
+                    if(address.ip().protocol() != QAbstractSocket::IPv4Protocol)
+                        addressEntries.removeOne(address);
                 }
+                if(addressEntries.size() > 0 )
+                {
+                    QString type = "Unknown";
+                    #if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
+                        if(interface.type() == QNetworkInterface::Unknown)
+                            type = "Unknown";
+                        if(interface.type() == QNetworkInterface::Loopback)
+                            type = "Localhost";
+                        if(interface.type() == QNetworkInterface::Ethernet)
+                            type = "Ethernet";
+                        if(interface.type() == QNetworkInterface::Wifi)
+                            type = "Wifi";
+                        if(interface.type() == QNetworkInterface::Virtual)
+                            type = "Virtual";
+                        if(interface.type() == QNetworkInterface::Ppp)
+                            type = "Point to Point Protocol";
+                        if(interface.type() == QNetworkInterface::Slip)
+                            type = "Serial Line IP";
+                    #else
+                        if(interface.name().startsWith("eth"))
+                            type = "Ethernet";
+                        if(interface.name().startsWith("en"))
+                            type = "Ethernet";
+                        if(interface.name().startsWith("wl"))
+                            type = "Wifi";
+                        if(interface.name().startsWith("ww"))
+                            type = "Wifi";
+                        if(interface.name().startsWith("sl"))
+                            type = "Serial Line IP";
+                        if(interface.name().startsWith("lo"))
+                            type = "Localhost";
+                        if(interface.name().startsWith("ppp"))
+                            type = "Point to Point Protocol";
+                        if(interface.name().startsWith("vm"))
+                            type = "Virtual Machine IP";
+                        if(interface.name().startsWith("vbox"))
+                            type = "Virtual Machine IP";
+                    #endif
+                    for (const QNetworkAddressEntry &address: addressEntries)
+                    {
+                            QListWidgetItem *newItem = new QListWidgetItem();
+                            newItem->setText(address.ip().toString());
+                            newItem->setToolTip(interface.name() + ", " + type);
+                            QString firstOctet = address.ip().toString().split(".").first();
+                            if(!address.ip().isLoopback() || firstOctet == "172" || firstOctet == "192")
+                                newItem->setTextColor(Qt::green);
+                            else {
+                                newItem->setTextColor(Qt::blue);
+                            }
+                            ui->ipListDisplay->addItem(newItem);
+
+                    }
+            }
+
         }
 
+
+        QList<QListWidgetItem *> customItemList = ui->ipListDisplay->findItems(Options::customHostNameOrIP(),Qt::MatchExactly);
+        if(customItemList.size() == 0 && Options::customHostNameOrIP() != "")
+        {
+            QListWidgetItem *customItem = new QListWidgetItem();
+            customItem->setText(Options::customHostNameOrIP());
+            customItem->setToolTip("Custom Host/IP");
+            customItem->setTextColor(Qt::blue);
+            ui->ipListDisplay->addItem(customItem);
+        }
+
+        QList<QListWidgetItem *> currentItemList = ui->ipListDisplay->findItems(Options::managerHostNameOrIP(),Qt::MatchExactly);
+        if(currentItemList.count() == 1)
+            ui->ipListDisplay->setCurrentItem(currentItemList.first());
+        else {
+            ui->ipListDisplay->setCurrentItem(ui->ipListDisplay->item(0));
+        }
     }
-
-
-    QList<QListWidgetItem *> customItemList = ui->ipListDisplay->findItems(Options::customHostNameOrIP(),Qt::MatchExactly);
-    if(customItemList.size() == 0 && Options::customHostNameOrIP() != "")
-    {
-        QListWidgetItem *customItem = new QListWidgetItem();
-        customItem->setText(Options::customHostNameOrIP());
-        customItem->setToolTip("Custom Host/IP");
-        customItem->setTextColor(Qt::blue);
-        ui->ipListDisplay->addItem(customItem);
-    }
-
-    QList<QListWidgetItem *> currentItemList = ui->ipListDisplay->findItems(Options::managerHostNameOrIP(),Qt::MatchExactly);
-    if(currentItemList.count() == 1)
-        ui->ipListDisplay->setCurrentItem(currentItemList.first());
-    else {
-        ui->ipListDisplay->setCurrentItem(ui->ipListDisplay->item(0));
-    }
-
 }
 
 /*

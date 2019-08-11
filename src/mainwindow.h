@@ -72,6 +72,7 @@ private:
 
     QStringList oldProfiles;
     QString oldDrivers;
+    QList<QHostAddress> oldIPList;
 
     QString managerLogFile;
 
