@@ -59,11 +59,13 @@ There are two options for Linux:
 
 1. If you are running Ubuntu, you can install it from the [INDI PPA](https://launchpad.net/%7Emutlaqja/+archive/ubuntu/ppa/+packages?batch=75&memo=150&start=150)
  
+ ```
  sudo apt-add-repository ppa:mutlaqja/ppa -y
  sudo apt update
  sudo apt -y install python3-pip
  pip3 install indiweb					(NOTE: Not as root!)
  sudo apt -y install indiwebmanagerapp
+ ```
  
  2. If you are not running Ubuntu or want to build the latest version from source, please see below.
 
@@ -118,14 +120,16 @@ The Build requirements include:
  
  Steps to build on Ubuntu:
  
- - sudo apt -y install python3-pip
- - pip3 install indiweb    			(NOTE: Not as root!)
- - mkdir -p ~/AstroRoot/
- - git clone https://github.com/rlancaste/INDIWebManagerApp.git
- - mkdir -p ~/AstroRoot/INDIWebManagerApp-build
- - cd ~/AstroRoot/INDIWebManagerApp-build
- - cmake -DCMAKE_INSTALL_PREFIX=/usr ~/AstroRoot/INDIWebManagerApp/
- - make
- - sudo make install
+ ```
+sudo apt -y install python3-pip
+pip3 install indiweb    			(NOTE: Not as root!)
+mkdir -p ~/AstroRoot/
+git clone https://github.com/rlancaste/INDIWebManagerApp.git
+mkdir -p ~/AstroRoot/INDIWebManagerApp-build
+cd ~/AstroRoot/INDIWebManagerApp-build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ~/AstroRoot/INDIWebManagerApp/
+make
+sudo make install
+ ```
 
 
