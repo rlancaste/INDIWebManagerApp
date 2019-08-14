@@ -57,22 +57,15 @@ There is also an installer fo that in the Preferences Dialog.
 
 There are two options for Linux:
 
-1. You can install it from the INDI Nightly PPA
- [https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily](https://code.launchpad.net/~mutlaqja/+recipe/indiwebmanagerapp-daily)
+1. If you are running Ubuntu, you can install it from the [INDI PPA](https://launchpad.net/%7Emutlaqja/+archive/ubuntu/ppa/+packages?batch=75&memo=150&start=150)
  
-2. You can download the source from this repository and build it.
-The Build requirements include:
- - cmake (>= 2.8.12)
- - pkg-config
- - extra-cmake-modules (>= 1.7.0)
- - kio-dev
- - qtbase5-dev
- - kdoctools-dev
- - libkf5config-dev
- - libkf5i18n-dev
- - libindi-dev (>= 1.6.1)
- - indi-bin (>= 1.6.1)
- - python3-pip
+ sudo apt-add-repository ppa:mutlaqja/ppa -y
+ sudo apt update
+ sudo apt -y install python3-pip
+ pip3 install indiweb					(NOTE: Not as root!)
+ sudo apt -y install indiwebmanagerapp
+ 
+ 2. If you are not running Ubuntu or want to build the latest version from source, please see below.
 
 
 
@@ -126,7 +119,7 @@ The Build requirements include:
  Steps to build on Ubuntu:
  
  - sudo apt -y install python3-pip
- - pip3 install indiweb    (NOTE: Not as root!)
+ - pip3 install indiweb    			(NOTE: Not as root!)
  - mkdir -p ~/AstroRoot/
  - git clone https://github.com/rlancaste/INDIWebManagerApp.git
  - mkdir -p ~/AstroRoot/INDIWebManagerApp-build
