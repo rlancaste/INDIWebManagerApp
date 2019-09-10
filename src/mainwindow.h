@@ -62,7 +62,7 @@ private:
     QTimer serverMonitor;
     QStringList getProfiles();
     bool getRunningDrivers(QString &webManagerDrivers);
-    QString getINDIServerPort(QString &activeProfile);
+    QString getINDIServerPort();
     void sendWebManagerCommand(const QUrl &url);
     bool getWebManagerResponse(const QUrl &url, QJsonDocument *reply);
     void updateDisplaysforShutDown();
@@ -70,7 +70,10 @@ private:
     QAction *managerStatusinTray;
     QAction *serverStatusinTray;
 
+    //Thse parameters are used to prevent the constant update of the UI.
+    //When these things don't change, there is no need to redraw or recreate UI components.
     QStringList oldProfiles;
+    QString oldActiveProfile;
     QString oldDrivers;
     QList<QHostAddress> oldIPList;
 

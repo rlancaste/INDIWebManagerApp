@@ -163,6 +163,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->displayWebManagerPath->setText(getWebManagerURL());
         ui->displayWebManagerPath->setCursorPosition(0);
         ui->ipInformation->setText(ui->ipListDisplay->currentItem()->toolTip());
+        checkINDIServerStatus(); //This will update the address for the indi server in the box
     });
 
     //These two connections enable the clipboard copy buttons
@@ -911,20 +912,21 @@ void MainWindow::checkINDIServerStatus()
     bool INDIServerOnline = isINDIServerOnline(activeProfile);
     displayServerStatusOnline(INDIServerOnline);
     QStringList profiles = getProfiles();
-    if(oldProfiles.join(",") != profiles.join(",") || ui->profileBox->count() == 0)
+    if(oldProfiles.join(",") != profiles.join(",") || ui->profileBox->count() == 0 || oldActiveProfile != activeProfile)
     {
         ui->profileBox->clear();
         ui->profileBox->addItems(profiles);
         ui->profileBox->setCurrentText(activeProfile);
         oldProfiles = profiles;
+        oldActiveProfile = activeProfile;
     }
     ui->profileBox->setDisabled(INDIServerOnline);
     QString port = "";
+    port = getINDIServerPort();
+    ui->displayINDIServerPath->setText(getINDIServerURL(port));
+    ui->displayINDIServerPath->setCursorPosition(0);
     if(INDIServerOnline)
     {
-        port = getINDIServerPort(activeProfile);
-        ui->displayINDIServerPath->setText(getINDIServerURL(port));
-        ui->displayINDIServerPath->setCursorPosition(0);
         QString webManagerDrivers="";
         getRunningDrivers(webManagerDrivers);
         if(oldDrivers != webManagerDrivers || ui->driversDisplay->count() ==0)
@@ -942,6 +944,7 @@ void MainWindow::checkINDIServerStatus()
     {
          ui->driversDisplay->clear();
          oldDrivers.clear();
+
     }
 
 }
@@ -1034,18 +1037,24 @@ void MainWindow::stopINDIServer()
 /*
  * This method determines the port of the active server if one is running.
  */
-QString MainWindow::getINDIServerPort(QString &activeProfile)
+QString MainWindow::getINDIServerPort()
 {
-    QUrl url(QString(getWebManagerURL() + "/api/profiles/" + activeProfile));
+    QUrl url(QString(getWebManagerURL() + "/api/profiles"));
 
     QJsonDocument json;
     if (getWebManagerResponse( url, &json))
     {
-        QJsonObject jsonObj = json.object();
-        if(jsonObj.isEmpty())
+        QJsonArray array = json.array();
+
+        if (array.isEmpty())
             return "";
 
-        return QString::number(jsonObj["port"].toInt());
+        for (auto value : array)
+        {
+            QJsonObject profile = value.toObject();
+            if(profile["name"].toString() == ui->profileBox->currentText())
+                return QString::number(profile["port"].toInt());
+        }
     }
     return "";
 }
