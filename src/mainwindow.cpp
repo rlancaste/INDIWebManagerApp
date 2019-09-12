@@ -33,12 +33,17 @@
 #include <QWidgetAction>
 #include <QListWidget>
 #include <QClipboard>
+#include "indi/guimanager.h"
+#include "indi/driverinfo.h"
+#include "indi/drivermanager.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    _MainWindow = this;
+
     setWindowTitle(i18n("INDI Web Manager App"));
     ui->setupUi(this);
 
@@ -143,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPreferences, &QAction::triggered, this, &MainWindow::showPreferences);
     connect(ui->restartWebManager, &QPushButton::clicked, this, &MainWindow::startWebManager);
     connect(ui->stopWebManager, &QPushButton::clicked, this, &MainWindow::stopWebManager);
-    connect(ui->configureINDIServer, &QPushButton::clicked, this, &MainWindow::openWebManager);
+    connect(ui->configureINDIServer, &QPushButton::clicked, this, &MainWindow::configureINDIServer);
     connect(ui->startINDIServer, &QPushButton::clicked, this, &MainWindow::startINDIServer);
     connect(ui->stopINDIServer, &QPushButton::clicked, this, &MainWindow::stopINDIServer);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
@@ -178,7 +183,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     //These set up the actions in the help menu
-    connect(ui->actionINDI_Details,&QAction::triggered, this, []()
+    connect(ui->actionINDI_Details,&QAction::triggered, this, [this]()
     {
         QDesktopServices::openUrl(QUrl("https://www.indilib.org"));
     });
@@ -278,6 +283,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+MainWindow *MainWindow::_MainWindow = nullptr;
+
+MainWindow *MainWindow::Instance()
+{
+    if (_MainWindow == nullptr)
+    {
+        _MainWindow = new MainWindow(nullptr);
+    }
+    return _MainWindow;
 }
 
 /*
@@ -506,6 +522,11 @@ void MainWindow::updateIPAddressList()
             ui->ipListDisplay->setCurrentItem(ui->ipListDisplay->item(0));
         }
     }
+}
+
+void MainWindow::configureINDIServer()
+{
+    GUIManager::Instance()->setVisible(true);
 }
 
 /*
@@ -925,19 +946,36 @@ void MainWindow::checkINDIServerStatus()
     port = getINDIServerPort();
     ui->displayINDIServerPath->setText(getINDIServerURL(port));
     ui->displayINDIServerPath->setCursorPosition(0);
+
     if(INDIServerOnline)
     {
         QString webManagerDrivers="";
         getRunningDrivers(webManagerDrivers);
         if(oldDrivers != webManagerDrivers || ui->driversDisplay->count() ==0)
         {
+            DriverInfo * remote_indi = new DriverInfo(QString("Ekos Remote Host"));
+            remote_indi->setHostParameters(Options::managerHostNameOrIP(), getINDIServerPort());
+            remote_indi->setDriverSource(GENERATED_SOURCE);
+            DriverManager::Instance()->connectRemoteHost(remote_indi);
+
             ui->driversDisplay->clear();
             QStringList activeDrivers = webManagerDrivers.split("\n");
             foreach(QString driver, activeDrivers)
-            {
-                ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/green.png"),driver));
-            }
+                ui->driversDisplay->addItem(new QListWidgetItem(QIcon(":/media/icons/red.png"),driver));
             oldDrivers = webManagerDrivers;
+        }
+
+        foreach (ISD::GDInterface * gd, INDIListener::Instance()->getDevices())
+        {
+            INDI::BaseDevice * bd = gd->getBaseDevice();
+            QList<QListWidgetItem*> items = ui->driversDisplay->findItems(bd->getDeviceName(), Qt::MatchExactly);
+            if(items.count()==1)
+            {
+                if(bd->isConnected())
+                    items.first()->setIcon(QIcon(":/media/icons/green.png"));
+                else
+                    items.first()->setIcon(QIcon(":/media/icons/red.png"));
+            }
         }
     }
     else
@@ -1020,9 +1058,13 @@ bool MainWindow::isINDIServerOnline(QString &activeProfile)
  */
 void MainWindow::startINDIServer()
 {
-    QString profileToStart = ui->profileBox->currentText();
-    QUrl url(QString(getWebManagerURL() + "/api/server/start/" + profileToStart));
-    sendWebManagerCommand(url);
+    QString activeProfile;
+    if(!isINDIServerOnline(activeProfile))
+    {
+        QString profileToStart = ui->profileBox->currentText();
+        QUrl url(QString(getWebManagerURL() + "/api/server/start/" + profileToStart));
+        sendWebManagerCommand(url);
+    }
 }
 
 /*
@@ -1032,6 +1074,8 @@ void MainWindow::stopINDIServer()
 {
     QUrl url(QString(getWebManagerURL() + "/api/server/stop"));
     sendWebManagerCommand(url);
+
+    //DriverManager::Instance()->disconnectRemoteHost();
 }
 
 /*

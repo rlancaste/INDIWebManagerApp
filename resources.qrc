@@ -11,5 +11,9 @@
         <file>icons/red.png</file>
         <file>icons/edit-copy.svg</file>
         <file>icons/edit-copy-dark.svg</file>
+        <file>indidrivers.xml</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>indidrivers.xml</file>
     </qresource>
 </RCC>

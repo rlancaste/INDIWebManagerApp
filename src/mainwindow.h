@@ -20,6 +20,10 @@
 #include <QNetworkAccessManager>
 #include "Options.h"
 #include "version.h"
+#include "indi/driverinfo.h"
+#include "indi/guimanager.h"
+#include "basedevice.h"
+#include "indi/indilistener.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +36,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static MainWindow *Instance();
     void closeEvent(QCloseEvent *event) override;
     static QString getDefault(QString option);
     void updateIPAddressList();
@@ -79,6 +84,9 @@ private:
 
     QString managerLogFile;
 
+   static MainWindow *_MainWindow;
+   GUIManager *guiManager;
+
 private slots:
     void openWebManager();
     void showAndRaise();
@@ -93,6 +101,7 @@ private slots:
     void showPreferences();
     void setLogVisible(bool visible);
     void updateSettings();
+    void configureINDIServer();
 };
 
 #endif // MAINWINDOW_H

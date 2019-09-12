@@ -53,13 +53,24 @@ find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
-find_package(Qt5 5.5.1 REQUIRED COMPONENTS Widgets Network)
+find_package(INDI 1.7.1)
+if (INDI_FOUND)
+#MACRO_BOOL_TO_01(INDI_FOUND HAVE_INDI)
+#set_package_properties(INDI PROPERTIES DESCRIPTION "Astronomical instrumentation control" URL "http://www.indilib.org" TYPE OPTIONAL PURPOSE "Support for controlling astronomical devices on Linux with KStars.")
+include_directories(${INDI_INCLUDE_DIR})
+find_package(Nova REQUIRED)
+include_directories(${NOVA_INCLUDE_DIR})
+find_package(ZLIB REQUIRED)
+endif (INDI_FOUND)
+
+find_package(Qt5 5.5.1 REQUIRED COMPONENTS Widgets Network Sql)
 
 find_package(KF5 REQUIRED COMPONENTS
       Config
       KIO
       DocTools
       I18n
+      Notifications
     )
 
 # Are all of these needed?
@@ -73,8 +84,41 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 include(FeatureSummary)
 
+if (INDI_FOUND)
+
+set(indi_SRCS
+    src/indi/drivermanager.cpp
+    src/indi/servermanager.cpp
+    src/indi/clientmanager.cpp
+    src/indi/blobmanager.cpp
+    src/indi/guimanager.cpp
+    src/indi/driverinfo.cpp
+    src/indi/deviceinfo.cpp
+    src/indi/indidevice.cpp
+    src/indi/indigroup.cpp
+    src/indi/indiproperty.cpp
+    src/indi/indielement.cpp
+    src/indi/indistd.cpp
+    src/indi/indilistener.cpp
+    src/indi/inditelescope.cpp
+    src/indi/indiccd.cpp
+    src/indi/indifocuser.cpp
+    src/indi/indifilter.cpp
+    src/indi/indidome.cpp
+    src/indi/indiweather.cpp
+    src/indi/indicap.cpp
+    src/indi/indilightbox.cpp
+    src/indi/indidbus.cpp
+    src/indi/customdrivers.cpp
+    src/indi/indi_debug.cpp
+    src/indi/ksnotification.cpp
+)
+
+endif (INDI_FOUND)
+
 set (INDIWebManagerApp_SRCS
-    src/main.cpp 
+    ${indi_SRCS}
+    src/main.cpp
     src/mainwindow.cpp
     src/opsconfiguration.cpp
     src/opsmanager.cpp
@@ -111,6 +155,11 @@ target_link_libraries(INDIWebManagerApp
         KF5::KIOFileWidgets
         Qt5::Network
         Qt5::Widgets
+        Qt5::Sql
+        KF5::Notifications
+        ${INDI_CLIENT_LIBRARIES}
+        ${NOVA_LIBRARIES}
+        ${ZLIB_LIBRARIES}
 )
 
 install(TARGETS INDIWebManagerApp ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
