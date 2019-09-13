@@ -13,9 +13,9 @@
 #include "driverinfo.h"
 #include "indidevice.h"
 #include "Options.h"
+#include "ksnotification.h"
 
 #include <KActionCollection>
-#include "ksnotification.h"
 
 #include <QAction>
 
@@ -677,7 +677,7 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
         currentRA  = RAEle->value;
         currentDEC = DecEle->value;
 
-        //ScopeTarget->EquatorialToHorizontal(KStarsData::Instance()->lst(), KStarsData::Instance()->geo()->lat());
+        ScopeTarget->EquatorialToHorizontal(KStarsData::Instance()->lst(), KStarsData::Instance()->geo()->lat());
     }
 
     if (HorProp)
@@ -694,7 +694,7 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
     }
 
     /* Could not find either properties! */
-/**
+    /**
     if (EqProp == nullptr && HorProp == nullptr)
         return false;
 
@@ -733,6 +733,7 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
             return false;
         }
     }
+
     double maxrad = 1000.0 / Options::zoomFactor();
     currentObject = KStarsData::Instance()->skyComposite()->objectNearest(ScopeTarget, maxrad);
     if (currentObject)
@@ -771,8 +772,7 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
 
         emit newTarget(currentObject->name());
     }
-    **/
-/**
+
     if (EqProp)
     {
         dms ra, de;
@@ -811,7 +811,6 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
         RAEle->value  = currentRA;
         DecEle->value = currentDEC;
     }
-
     // Only send Horizontal Coord property if Equatorial is not available.
     else if (HorProp)
     {
@@ -824,8 +823,7 @@ bool Telescope::sendCoords(SkyPoint *ScopeTarget)
 
     return true;
 }
-**/
-/**
+
 bool Telescope::Slew(double ra, double dec)
 {
     SkyPoint target;

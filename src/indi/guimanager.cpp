@@ -13,10 +13,10 @@
 #include "deviceinfo.h"
 #include "indidevice.h"
 #include "Options.h"
+#include "ksnotification.h"
 
 #include <KActionCollection>
 #include <KMessageBox>
-#include "ksnotification.h"
 
 #include <QApplication>
 #include <QSplitter>
@@ -288,4 +288,15 @@ void GUIManager::buildDevice(DeviceInfo *di)
     updateStatus(false);
 
     GUIManager::Instance()->setVisible(false);
+}
+
+void GUIManager::displayDriver(QString label){
+    this->setVisible(true);
+    qDebug()<<label;
+    for(int i = 0 ; i< mainTabWidget->count(); i++)
+    {
+        QString text = mainTabWidget->tabText(i).remove("&");
+        if(text == label)
+            mainTabWidget->setCurrentIndex(i);
+    }
 }

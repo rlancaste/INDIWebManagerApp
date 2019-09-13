@@ -81,4 +81,5 @@ class GUIManager : public QWidget
         void clearLog();
         void buildDevice(DeviceInfo *di);
         void removeDevice(DeviceInfo *di);
+        void displayDriver(QString label);
 };

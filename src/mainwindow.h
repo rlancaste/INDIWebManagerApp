@@ -102,6 +102,7 @@ private slots:
     void setLogVisible(bool visible);
     void updateSettings();
     void configureINDIServer();
+    void openDriver();
 };
 
 #endif // MAINWINDOW_H

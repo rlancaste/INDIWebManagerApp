@@ -98,6 +98,7 @@ quint16 Weather::getUpdatePeriod()
 }
 }
 
+#ifndef KSTARS_LITE
 QDBusArgument &operator<<(QDBusArgument &argument, const ISD::Weather::Status &source)
 {
     argument.beginStructure();
@@ -115,3 +116,4 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, ISD::Weather::Sta
     dest = static_cast<ISD::Weather::Status>(a);
     return argument;
 }
+#endif

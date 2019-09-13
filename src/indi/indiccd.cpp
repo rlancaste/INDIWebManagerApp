@@ -1194,12 +1194,10 @@ void CCD::processSwitch(ISwitchVectorProperty *svp)
 /**
         if (dSwitch && dSwitch->s == ISS_ON && streamWindow.get() != nullptr)
         {
-
             streamWindow->enableStream(false);
             emit videoStreamToggled(false);
             streamWindow->close();
             streamWindow.reset();
-
         }
 **/
         //emit switchUpdated(svp);
@@ -1377,8 +1375,8 @@ void CCD::StreamWindowHidden()
         }
     }
 
-   // if (streamWindow.get() != nullptr)
-    //    streamWindow->disconnect();
+    if (streamWindow.get() != nullptr)
+        streamWindow->disconnect();
     **/
 }
 

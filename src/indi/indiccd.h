@@ -126,8 +126,9 @@ class CCDChip
         bool canAbort() const;
         void setCanAbort(bool value);
 
-        //FITSData *getImageData() const;
-        /**
+		/**
+        FITSData *getImageData() const;
+        
         void setImageData(FITSData *data)
         {
             imageData = data;
@@ -140,10 +141,12 @@ class CCDChip
         QStringList getISOList() const;
 
     private:
-        //QPointer<FITSView> normalImage, focusImage, guideImage, calibrationImage, alignImage;
-        //FITSData *imageData { nullptr };
-        //FITSMode captureMode { FITS_NORMAL };
-        //FITSScale captureFilter { FITS_NONE };
+    	/**
+        QPointer<FITSView> normalImage, focusImage, guideImage, calibrationImage, alignImage;
+        FITSData *imageData { nullptr };
+        FITSMode captureMode { FITS_NORMAL };
+        FITSScale captureFilter { FITS_NONE };
+        **/
         INDI::BaseDevice *baseDevice { nullptr };
         ClientManager *clientManager { nullptr };
         ChipType type;
@@ -350,6 +353,7 @@ class CCD : public DeviceDecorator
         QString seqPrefix;
         QString fitsDir;
         int nextSequenceID { 0 };
+        //std::unique_ptr<StreamWG> streamWindow;
         int streamW { 0 };
         int streamH { 0 };
         int normalTabID { -1 };

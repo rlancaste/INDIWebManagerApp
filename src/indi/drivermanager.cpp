@@ -69,8 +69,8 @@ DriverManager *DriverManager::Instance()
 {
     if (_DriverManager == nullptr)
     {
-        _DriverManager = new DriverManager(new QWidget());
-        INDIDBus *indiDBUS = new INDIDBus(new QWidget());
+        _DriverManager = new DriverManager(MainWindow::Instance());
+        INDIDBus *indiDBUS = new INDIDBus(MainWindow::Instance());
         Q_UNUSED(indiDBUS);
     }
 

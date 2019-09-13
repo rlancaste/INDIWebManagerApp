@@ -47,6 +47,7 @@ GenericDevice::GenericDevice(DeviceInfo &idv)
 
 void GenericDevice::registerDBusType()
 {
+#ifndef KSTARS_LITE
     static bool isRegistered = false;
 
     if (isRegistered == false)
@@ -55,6 +56,7 @@ void GenericDevice::registerDBusType()
         //qDBusRegisterMetaType<ISD::ParkStatus>();
         isRegistered = true;
     }
+#endif
 }
 
 const char *GenericDevice::getDeviceName()
@@ -282,7 +284,6 @@ void GenericDevice::processNumber(INumberVectorProperty *nvp)
             geo->setLat(lat);
         }
 
-
         qCInfo(KSTARS_INDI) << "Setting location from device:" << deviceName << "Longitude:" << lng.toDMSString() << "Latitude:" << lat.toDMSString();
 
         KStars::Instance()->data()->setLocation(*geo);
@@ -333,7 +334,7 @@ void GenericDevice::processText(ITextVectorProperty *tvp)
         indiDate.setDate(y, m, d);
         indiTime.setHMS(hour, min, sec);
 
-        //KStarsDateTime indiDateTime(QDateTime(indiDate, indiTime, Qt::UTC));
+        KStarsDateTime indiDateTime(QDateTime(indiDate, indiTime, Qt::UTC));
 
         tp = IUFindText(tvp, "OFFSET");
 
@@ -345,18 +346,18 @@ void GenericDevice::processText(ITextVectorProperty *tvp)
 
         sscanf(tp->text, "%f", &utcOffset);
 
-       // qCInfo(KSTARS_INDI) << "Setting UTC time from device:" << getDeviceName() << indiDateTime.toString();
+        qCInfo(KSTARS_INDI) << "Setting UTC time from device:" << getDeviceName() << indiDateTime.toString();
 
-        //KStars::Instance()->data()->changeDateTime(indiDateTime);
-       // KStars::Instance()->data()->syncLST();
+        KStars::Instance()->data()->changeDateTime(indiDateTime);
+        KStars::Instance()->data()->syncLST();
 
-       // GeoLocation *geo = KStars::Instance()->data()->geo();
-       // if (geo->tzrule())
-       //     utcOffset -= geo->tzrule()->deltaTZ();
+        GeoLocation *geo = KStars::Instance()->data()->geo();
+        if (geo->tzrule())
+            utcOffset -= geo->tzrule()->deltaTZ();
 
         // TZ0 is the timezone WTIHOUT any DST offsets. Above, we take INDI UTC Offset (with DST already included)
         // and subtract from it the deltaTZ from the current TZ rule.
-      //  geo->setTZ0(utcOffset);
+        geo->setTZ0(utcOffset);
     }
 
     emit textUpdated(tvp);
@@ -449,14 +450,14 @@ void GenericDevice::processBLOB(IBLOB *bp)
         {
             QUrl url(filename);
             url.setScheme("file");
-           // ImageViewer *iv = new ImageViewer(url, QString(), KStars::Instance());
-            //if (iv)
-            //    iv->show();
+            ImageViewer *iv = new ImageViewer(url, QString(), KStars::Instance());
+            if (iv)
+                iv->show();
         }
     }
 
-   // if (dataType == DATA_OTHER)
-  //      KStars::Instance()->statusBar()->showMessage(i18n("Data file saved to %1", filename), 0);
+    if (dataType == DATA_OTHER)
+        KStars::Instance()->statusBar()->showMessage(i18n("Data file saved to %1", filename), 0);
 
     emit BLOBUpdated(bp);
     **/
@@ -1301,6 +1302,7 @@ bool ST4::doPulse(GuideDirection dir, int msecs)
 }
 }
 
+#ifndef KSTARS_LITE
 QDBusArgument &operator<<(QDBusArgument &argument, const ISD::ParkStatus &source)
 {
     argument.beginStructure();
@@ -1318,3 +1320,4 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, ISD::ParkStatus &
     dest = static_cast<ISD::ParkStatus>(a);
     return argument;
 }
+#endif

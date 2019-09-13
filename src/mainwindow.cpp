@@ -152,6 +152,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->startINDIServer, &QPushButton::clicked, this, &MainWindow::startINDIServer);
     connect(ui->stopINDIServer, &QPushButton::clicked, this, &MainWindow::stopINDIServer);
     connect(ui->showLog, &QPushButton::toggled, this, &MainWindow::setLogVisible);
+    connect(ui->driversDisplay, &QListWidget::doubleClicked, this, &MainWindow::openDriver);
     connect(ui->actionAbout,&QAction::triggered, this, []()
     {
         QMessageBox about;
@@ -916,6 +917,10 @@ void MainWindow::setLogVisible(bool visible)
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 
+}
+
+void MainWindow::openDriver(){
+    GUIManager::Instance()->displayDriver(ui->driversDisplay->currentItem()->text());
 }
 
 

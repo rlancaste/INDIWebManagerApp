@@ -28,6 +28,7 @@
 #include <basedevice.h>
 #include "indi_debug.h"
 #include <KNotifications/KNotification>
+#include "mainwindow.h"
 
 #define NINDI_STD 35
 
@@ -75,7 +76,7 @@ INDIListener *INDIListener::Instance()
 {
     if (_INDIListener == nullptr)
     {
-        _INDIListener = new INDIListener(nullptr);
+        _INDIListener = new INDIListener(MainWindow::Instance());
 /**
         connect(_INDIListener, &INDIListener::newTelescope, [&]()
         {

@@ -163,7 +163,6 @@ void INDI_E::buildText(IText *itp)
             break;
     }
 
-
     guiProp->addLayout(EHBox);
     //pp->PVBox->addLayout(EHBox);
 }

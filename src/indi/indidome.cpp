@@ -123,10 +123,10 @@ void Dome::processSwitch(ISwitchVectorProperty *svp)
         {
             /**
             if (isConnected() == false && conSP->s == ISS_ON)
-                //KStars::Instance()->slotSetDomeEnabled(true);
+                KStars::Instance()->slotSetDomeEnabled(true);
             else if (isConnected() && conSP->s == ISS_OFF)
             {
-                //KStars::Instance()->slotSetDomeEnabled(false);
+                KStars::Instance()->slotSetDomeEnabled(false);
 
                 m_CanAbsMove = false;
                 m_CanPark = false;
@@ -182,7 +182,7 @@ void Dome::processSwitch(ISwitchVectorProperty *svp)
                 m_ParkStatus = PARK_PARKED;
                 KNotification::event(QLatin1String("DomeParked"), i18n("Dome parked"));
                 emit newParkStatus(m_ParkStatus);
-/**
+				/**
                 QAction *parkAction = KStars::Instance()->actionCollection()->action("dome_park");
                 if (parkAction)
                     parkAction->setEnabled(false);
@@ -202,7 +202,7 @@ void Dome::processSwitch(ISwitchVectorProperty *svp)
             {
                 m_ParkStatus = PARK_UNPARKED;
                 KNotification::event(QLatin1String("DomeUnparked"), i18n("Dome unparked"));
-/**
+					/**
                 QAction *parkAction = KStars::Instance()->actionCollection()->action("dome_park");
                 if (parkAction)
                     parkAction->setEnabled(true);

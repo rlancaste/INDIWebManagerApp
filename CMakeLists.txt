@@ -55,11 +55,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE
 
 find_package(INDI 1.7.1)
 if (INDI_FOUND)
-#MACRO_BOOL_TO_01(INDI_FOUND HAVE_INDI)
-#set_package_properties(INDI PROPERTIES DESCRIPTION "Astronomical instrumentation control" URL "http://www.indilib.org" TYPE OPTIONAL PURPOSE "Support for controlling astronomical devices on Linux with KStars.")
 include_directories(${INDI_INCLUDE_DIR})
-find_package(Nova REQUIRED)
-include_directories(${NOVA_INCLUDE_DIR})
 find_package(ZLIB REQUIRED)
 endif (INDI_FOUND)
 
@@ -158,7 +154,6 @@ target_link_libraries(INDIWebManagerApp
         Qt5::Sql
         KF5::Notifications
         ${INDI_CLIENT_LIBRARIES}
-        ${NOVA_LIBRARIES}
         ${ZLIB_LIBRARIES}
 )
 
