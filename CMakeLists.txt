@@ -53,6 +53,8 @@ find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
+find_package (Threads)
+
 find_package(INDI 1.7.1)
 if (INDI_FOUND)
 include_directories(${INDI_INCLUDE_DIR})
@@ -155,6 +157,7 @@ target_link_libraries(INDIWebManagerApp
         KF5::Notifications
         ${INDI_CLIENT_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
 )
 
 install(TARGETS INDIWebManagerApp ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

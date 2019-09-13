@@ -138,10 +138,10 @@
            </font>
           </property>
           <property name="toolTip">
-           <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="whatsThis">
-           <string>This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string>OPEN</string>
@@ -255,10 +255,10 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The currently running drivers on the INDI Server.  They are Red if the drivers are running but the devices are disconnected.  They are Green if the device is connected.  This is updated once per second.  You can double click on them to open that driver in the INDI Control Panel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="whatsThis">
-         <string>The currently running drivers on the INDI Server.  This is updated once per second.</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The currently running drivers on the INDI Server.  They are Red if the drivers are running but the devices are disconnected.  They are Green if the device is connected.  This is updated once per second.  You can double click on them to open that driver in the INDI Control Panel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
@@ -362,10 +362,10 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Control Panel if the INDI Server is running. This will let you configure your drivers, connect devices, and change settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="whatsThis">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Web Manager in your default browser using your chosen method of connection.  If you want to change what method is used, click the settings button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This will open the INDI Control Panel if the INDI Server is running.  This will let you configure your drivers, connect devices, and change settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string/>
@@ -803,26 +803,26 @@
      <x>0</x>
      <y>0</y>
      <width>770</width>
-     <height>22</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuINDIWebMangerApp">
     <property name="title">
-     <string>INDIWebMangerApp</string>
+     <string>&amp;INDIWebMangerApp</string>
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="actionMain_Window"/>
     <addaction name="actionHIde_Window"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>He&amp;lp</string>
     </property>
     <addaction name="actionWhat_s_This_2"/>
     <addaction name="separator"/>
@@ -838,22 +838,22 @@
   </widget>
   <action name="actionMain_Window">
    <property name="text">
-    <string>Show Window</string>
+    <string>&amp;Show Window</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences</string>
+    <string>&amp;Preferences</string>
    </property>
   </action>
   <action name="actionHIde_Window">
    <property name="text">
-    <string>HIde Window</string>
+    <string>&amp;HIde Window</string>
    </property>
   </action>
   <action name="actionShow_Log">
@@ -868,32 +868,32 @@
   </action>
   <action name="actionINDI_Details">
    <property name="text">
-    <string>INDI Details</string>
+    <string>&amp;INDI Details</string>
    </property>
   </action>
   <action name="actionINDI_Forum">
    <property name="text">
-    <string>INDI Forum -- Get Help</string>
+    <string>INDI &amp;Forum -- Get Help</string>
    </property>
   </action>
   <action name="actionINDI_Web_Details">
    <property name="text">
-    <string>INDI Web Details</string>
+    <string>INDI Web &amp;Details</string>
    </property>
   </action>
   <action name="actionOS_X_Build_Script">
    <property name="text">
-    <string>OS X Build Script</string>
+    <string>&amp;OS X Build Script</string>
    </property>
   </action>
   <action name="actionINDI_Clients">
    <property name="text">
-    <string>INDI Clients for this app</string>
+    <string>INDI &amp;Clients for this app</string>
    </property>
   </action>
   <action name="actionWhat_s_This_2">
    <property name="text">
-    <string>What's This?</string>
+    <string>&amp;What's This?</string>
    </property>
   </action>
  </widget>
