@@ -23,9 +23,11 @@
 
 #include <basedevice.h>
 
+#ifndef KSTARS_LITE
 #include <KMessageBox>
 #include <KActionCollection>
 #include <KNotifications/KNotification>
+#endif
 
 #include <QTcpServer>
 #include "indi_debug.h"
@@ -109,9 +111,9 @@ DriverManager::DriverManager(QWidget *parent) : QDialog(parent)
     connect(ui->localTreeWidget, SIGNAL(expanded(QModelIndex)), this, SLOT(resizeDeviceColumn()));
 
     // Do not use KSPaths here, this is for INDI
-   // if (Options::iNDIDriversPath().isEmpty())
-   //     Options::setIndiDriversDir(
-   //         QStandardPaths::locate(QStandardPaths::GenericDataLocation, "indi", QStandardPaths::LocateDirectory));
+    //if (Options::indiDriversDir().isEmpty())
+    //    Options::setIndiDriversDir(
+    //        QStandardPaths::locate(QStandardPaths::GenericDataLocation, "indi", QStandardPaths::LocateDirectory));
 
     readXMLDrivers();
 
@@ -624,6 +626,8 @@ void DriverManager::processClientTermination(ClientManager *client)
     GUIManager::Instance()->removeClient(client);
     INDIListener::Instance()->removeClient(client);
 
+//Note that I removed this from INDI because in INDI Web Manager App, a disconnection is fine since that will mostly be handled by remote clients
+//There is no need for a warning that it was disconnected
     //KSNotification::error(i18n("Connection to INDI host at %1 on port %2 lost. Server disconnected.", client->getHost(),
     //                           client->getPort()));
 

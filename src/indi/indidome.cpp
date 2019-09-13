@@ -53,28 +53,28 @@ void Dome::registerProperty(INDI::Property *prop)
                     m_ParkStatus = PARK_PARKED;
                     m_Status = DOME_PARKED;
                     emit newParkStatus(m_ParkStatus);
-/**
+					/**
                     QAction *parkAction = KStars::Instance()->actionCollection()->action("dome_park");
                     if (parkAction)
                         parkAction->setEnabled(false);
                     QAction *unParkAction = KStars::Instance()->actionCollection()->action("dome_unpark");
                     if (unParkAction)
                         unParkAction->setEnabled(true);
-                        **/
+                	**/
                 }
                 else if ((sp->s == ISS_OFF) && svp->s == IPS_OK)
                 {
                     m_ParkStatus = PARK_UNPARKED;
                     m_Status = DOME_IDLE;
                     emit newParkStatus(m_ParkStatus);
-/**
+					/**
                     QAction *parkAction = KStars::Instance()->actionCollection()->action("dome_park");
                     if (parkAction)
                         parkAction->setEnabled(true);
                     QAction *unParkAction = KStars::Instance()->actionCollection()->action("dome_unpark");
                     if (unParkAction)
                         unParkAction->setEnabled(false);
-                        **/
+                    **/
                 }
             }
         }

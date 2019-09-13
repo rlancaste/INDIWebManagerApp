@@ -32,7 +32,7 @@ GUIManager *GUIManager::_GUIManager = nullptr;
 GUIManager *GUIManager::Instance()
 {
     if (_GUIManager == nullptr)
-        _GUIManager = new GUIManager(nullptr);
+        _GUIManager = new GUIManager(MainWindow::Instance());
 
     return _GUIManager;
 }

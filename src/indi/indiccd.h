@@ -128,7 +128,6 @@ class CCDChip
 
 		/**
         FITSData *getImageData() const;
-        
         void setImageData(FITSData *data)
         {
             imageData = data;
