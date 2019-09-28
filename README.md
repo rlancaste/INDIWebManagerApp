@@ -117,6 +117,7 @@ The Build requirements include:
  - libindi-dev (>= 1.6.1)
  - indi-bin (>= 1.6.1)
  - python3-pip
+ - gettext
  
  Steps to build on Ubuntu:
  
