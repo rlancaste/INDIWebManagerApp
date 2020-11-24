@@ -841,7 +841,12 @@ void MainWindow::updateDisplaysforShutDown()
  */
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if(QMessageBox::question(nullptr, "Message", i18n("Do you really want to quit (Yes), or just hide the window (No)?")) == QMessageBox::Yes)
+    QMessageBox closeOptionsBox;
+    closeOptionsBox.setText(i18n("Do you really want to quit, or just hide the window?"));
+    QPushButton *quitButton = closeOptionsBox.addButton(tr("Quit"), QMessageBox::YesRole);
+    closeOptionsBox.addButton(tr("Hide"), QMessageBox::NoRole);
+    int response = closeOptionsBox.exec();
+    if(closeOptionsBox.clickedButton() == quitButton)
     {
         if(webManagerRunning)
             stopWebManager();
