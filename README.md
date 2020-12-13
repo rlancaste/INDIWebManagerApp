@@ -109,7 +109,7 @@ The Build requirements include:
  - cmake (>= 2.8.12)
  - pkg-config
  - extra-cmake-modules (>= 1.7.0)
- - kio-dev
+ - kio-dev or libkf5kio-dev
  - qtbase5-dev
  - kdoctools-dev
  - libkf5config-dev
@@ -125,6 +125,7 @@ The Build requirements include:
 sudo apt -y install python3-pip
 pip3 install indiweb    			(NOTE: Not as root!)
 mkdir -p ~/AstroRoot/
+cd ~/AstroRoot/
 git clone https://github.com/rlancaste/INDIWebManagerApp.git
 mkdir -p ~/AstroRoot/INDIWebManagerApp-build
 cd ~/AstroRoot/INDIWebManagerApp-build
