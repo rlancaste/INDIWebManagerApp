@@ -12,9 +12,9 @@ project(INDIWebManagerApp)
 # Timestamp build
 string(TIMESTAMP INDI_WEB_MANAGER_APP_BUILD_TS UTC)
 
-# INDI Web Manager App Version 1.7
+# INDI Web Manager App Version 1.8
 set (INDIWebManagerApp_VERSION_MAJOR 1)
-set (INDIWebManagerApp_VERSION_MINOR 7)
+set (INDIWebManagerApp_VERSION_MINOR 8)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.cmake
@@ -115,5 +115,4 @@ target_link_libraries(INDIWebManagerApp
 
 install(TARGETS INDIWebManagerApp ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############
-#install(PROGRAMS org.kde.kstars.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES INDIWebManagerApp.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})

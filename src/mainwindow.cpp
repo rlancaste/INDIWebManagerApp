@@ -337,8 +337,7 @@ QString MainWindow::getDefault(QString option)
     if (option == "INDIServerPath")
     {
     #ifdef Q_OS_OSX
-        QString appPath = QCoreApplication::applicationDirPath();
-        return QDir(appPath + "/indi").absolutePath();
+        return QDir(QCoreApplication::applicationDirPath()).absolutePath();
     #endif
         if (flat.isEmpty() == false)
             return flat + "/bin/";
