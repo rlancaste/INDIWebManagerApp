@@ -20,7 +20,7 @@ OpsManager::OpsManager(MainWindow *parent) : QWidget(parent)
    ui = new Ui::OpsManager;
    ui->setupUi(this);
 
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
    startupFilePath = QDir::homePath() + "/Library/LaunchAgents/" + "com.INDIWebManager.LaunchAgent.plist";
 #else
    startupFilePath = "/etc/systemd/system/indiwebmanagerapp.service";
@@ -78,7 +78,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
     {
         QString fileText = "";
 
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         fileText = "" \
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" \
         "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" \
@@ -101,7 +101,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         if ( file.open(QIODevice::ReadWrite) )
         {
             QTextStream stream( &file );
-            stream << fileText << endl;
+            stream << fileText << Qt::endl;
         }
 
     #else
@@ -164,7 +164,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
     }
     else
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         QFile::remove(startupFilePath);
     #else
         bool ok;

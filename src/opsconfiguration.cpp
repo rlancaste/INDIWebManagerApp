@@ -215,7 +215,7 @@ void OpsConfiguration::slotInstallRequirements()
         return;
     }
 
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
 
     if(brewInstalled() && parent->pythonInstalled() && parent->pipInstalled() && parent->indiWebInstalled())
     {
@@ -333,7 +333,7 @@ void OpsConfiguration::slotInstallRequirements()
  */
 void OpsConfiguration::slotInstallGSC()
 {
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
     if(Options::gSCPath() != ui->kcfg_GSCPath->text())
     {
         QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the GSC path before installing."));

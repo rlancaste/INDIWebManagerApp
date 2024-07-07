@@ -24,8 +24,6 @@ configure_file(
 cmake_minimum_required (VERSION 2.8.12)
 set (CMAKE_CXX_STANDARD 11)
 
-
-
 # Fetch translations with -DFETCH_TRANSLATIONS=ON
 option(FETCH_TRANSLATIONS "Fetch Translations" OFF)
 
@@ -53,14 +51,27 @@ find_package(ECM 1.7.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
-find_package(Qt5 5.5.1 REQUIRED COMPONENTS Widgets Network)
+# Option to choose between Qt5 and Qt6
+option(USE_QT5 "Use Qt5" ON)
 
-find_package(KF5 REQUIRED COMPONENTS
+if(USE_QT5)
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Widgets Network)
+    find_package(KF5 REQUIRED COMPONENTS
       Config
       KIO
       DocTools
       I18n
     )
+else(USE_QT5)
+    find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
+    find_package(KF6 REQUIRED COMPONENTS
+      Config
+      ConfigWidgets
+      KIO
+      DocTools
+      I18n
+    )
+endif(USE_QT5)
 
 # Are all of these needed?
 include(ExternalProject)
@@ -98,20 +109,33 @@ ecm_add_app_icon(INDIWebManagerApp_SRCS ICONS
        ${CMAKE_CURRENT_SOURCE_DIR}/icons/128-indi_logo.png
 )
 
-qt5_add_resources(INDIWebManagerApp_SRCS resources.qrc)
+qt_add_resources(INDIWebManagerApp_SRCS resources.qrc)
 
 kconfig_add_kcfg_files(INDIWebManagerApp_SRCS Options.kcfgc)
 
 add_executable(INDIWebManagerApp ${INDIWebManagerApp_ICON} ${INDIWebManagerApp_SRCS})
 
 target_link_libraries(INDIWebManagerApp
+        Qt::Network
+        Qt::Widgets
+)
+
+if(USE_QT5)
+target_link_libraries(INDIWebManagerApp
         KF5::I18n
         KF5::ConfigCore
         KF5::ConfigGui
         KF5::KIOFileWidgets
-        Qt5::Network
-        Qt5::Widgets
 )
+else(USE_QT5)
+target_link_libraries(INDIWebManagerApp
+        KF6::I18n
+        KF6::ConfigWidgets
+        KF6::ConfigCore
+        KF6::ConfigGui
+        KF6::KIOFileWidgets
+)
+endif(USE_QT5)
 
 install(TARGETS INDIWebManagerApp ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############

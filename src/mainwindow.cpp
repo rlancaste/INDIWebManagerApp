@@ -91,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
     p.setColor(QPalette::ColorRole::ToolTipBase, Qt::black);
     p.setColor(QPalette::ColorRole::ToolTipText, Qt::yellow);
     //This is strange that the button text color didn't come through!
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         p.setColor(QPalette::ColorRole::ButtonText,QApplication::palette().text().color());
     #endif
     qApp->setPalette(p);
@@ -258,7 +258,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
         QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \n\nHomebrew, Python, and INDIWeb need to be installed and configured to use this program.  \n\nJust click the installer button in the Preferences Dialog to get started."));
 #else
         QMessageBox::information(nullptr, "message", i18n("Please configure the INDI Web Manager.  The Preferences Dialog will now open. \n\nPython, Pip, and INDIWeb need to be installed and configured to use this program.  \n\nINDIWeb can be installed on Linux using the installer button in the Preferences Dialog, but python and pip must be installed from the command line."));
@@ -292,7 +292,7 @@ QString MainWindow::getDefault(QString option)
     //This is the folder that python is installed or symlinked to.
     if (option == "PythonExecFolder")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         //Note this is the Path where python3 gets symlinked by homebrew.
         return "/usr/local/opt/python/libexec/bin";
     #endif
@@ -305,7 +305,7 @@ QString MainWindow::getDefault(QString option)
     //This is the Path to the indiweb executable.  It is where indi-web is installed, typically in the Python Base User Directory.
     else if (option == "indiwebPath")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         return "/usr/local/bin/indi-web";
     #endif
         return QDir::homePath() + "/.local/bin/indi-web";
@@ -314,7 +314,7 @@ QString MainWindow::getDefault(QString option)
     //This is the Path to the GSC data folder.  It includes gsc at the end.
     else if (option == "GSCPath")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         return QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString(), QStandardPaths::LocateDirectory) + "INDIWebManagerApp/gsc";
     #endif
         if (flat.isEmpty() == false)
@@ -326,7 +326,7 @@ QString MainWindow::getDefault(QString option)
     //This is the path to the INDI Prefix.  This is the App bundle loction on OS X
     if (option == "INDIPrefix")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../../").absolutePath();
     #endif
@@ -336,7 +336,7 @@ QString MainWindow::getDefault(QString option)
     //This is the path to the folder indiserver is present in, not the indiserver itself.
     if (option == "INDIServerPath")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         return QDir(QCoreApplication::applicationDirPath()).absolutePath();
     #endif
         if (flat.isEmpty() == false)
@@ -348,7 +348,7 @@ QString MainWindow::getDefault(QString option)
     //This is the folder of the indi drivers and xml files.
     else if (option == "INDIDriversPath")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../Resources/DriverSupport").absolutePath();
     #elif defined(Q_OS_LINUX)
@@ -368,7 +368,7 @@ QString MainWindow::getDefault(QString option)
     //This is the path to the folder indiserver is present in, not the indiserver itself.
     if (option == "GPhotoIOLIBS")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../Resources/DriverSupport/gphoto/IOLIBS").absolutePath();
     #endif
@@ -378,7 +378,7 @@ QString MainWindow::getDefault(QString option)
     //This is the path to the folder indiserver is present in, not the indiserver itself.
     if (option == "GPhotoCAMLIBS")
     {
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         QString appPath = QCoreApplication::applicationDirPath();
         return QDir(appPath + "/../Resources/DriverSupport/gphoto/CAMLIBS").absolutePath();
     #endif
@@ -423,7 +423,7 @@ void MainWindow::updateIPAddressList()
         QListWidgetItem *hostItem = new QListWidgetItem();
         hostItem->setText(QHostInfo::localHostName());
         hostItem->setToolTip("Local Hostname");
-        hostItem->setTextColor(Qt::green);
+        hostItem->setForeground(QBrush(Qt::green));
         ui->ipListDisplay->addItem(hostItem);
         for (const QNetworkInterface &interface: QNetworkInterface::allInterfaces()) {
                 QList<QNetworkAddressEntry> addressEntries = interface.addressEntries();
@@ -476,9 +476,9 @@ void MainWindow::updateIPAddressList()
                             newItem->setToolTip(interface.name() + ", " + type);
                             QString firstOctet = address.ip().toString().split(".").first();
                             if(!address.ip().isLoopback() || firstOctet == "172" || firstOctet == "192")
-                                newItem->setTextColor(Qt::green);
+                                newItem->setForeground(QBrush(Qt::green));
                             else {
-                                newItem->setTextColor(Qt::blue);
+                                newItem->setForeground(QBrush(Qt::blue));
                             }
                             ui->ipListDisplay->addItem(newItem);
 
@@ -494,7 +494,7 @@ void MainWindow::updateIPAddressList()
             QListWidgetItem *customItem = new QListWidgetItem();
             customItem->setText(Options::customHostNameOrIP());
             customItem->setToolTip("Custom Host/IP");
-            customItem->setTextColor(Qt::blue);
+            customItem->setForeground(QBrush(Qt::blue));
             ui->ipListDisplay->addItem(customItem);
         }
 
@@ -676,7 +676,7 @@ void MainWindow::configureEnvironmentVariables()
 
     //Note that these environment variables only make sense on OS X.
     //If they are blank, they are not to be set
-    #ifdef Q_OS_OSX
+    #ifdef Q_OS_MACOS
         if(Options::iNDIPrefix() != "")
             insertEnvironmentPath("INDIPREFIX", Options::iNDIPrefix());
         if(Options::gPhotoIOLIBS() != "")
@@ -798,7 +798,7 @@ void MainWindow::appendManagerLogEntry(QString entry)
         if(logFile.open(QIODevice::ReadWrite | QIODevice::Append))
         {
             QTextStream out(&logFile);
-            out<<entry<<endl;
+            out<<entry<<Qt::endl;
             logFile.close();
         }
     }
