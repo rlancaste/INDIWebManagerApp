@@ -132,7 +132,7 @@ void OpsManager::setLaunchAtStartup(bool launchAtStart)
         if ( file2.open(QIODevice::ReadWrite) )
         {
             QTextStream stream( &file2 );
-            stream << fileText << endl;
+            stream << fileText << Qt::endl;
         }
         ok = false;
         QString password = QInputDialog::getText(nullptr, "Get Password",
