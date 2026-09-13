@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     a.setApplicationVersion(INDIWebManagerApp_VERSION);
+    KLocalizedString::setApplicationDomain("kstars");
 
     //This checks to see if you are root and warns you if you are.
     QString name = qgetenv("USER");

@@ -35,10 +35,10 @@ private:
     Ui::OpsConfiguration *ui;
 
 private slots:
-    void slotInstallRequirements();
-    bool brewInstalled();
+    void slotPathExists();
+    void slotSetupINDIWeb();
     bool gscInstalled();
-    void updatePythonAndIndiwebInstallationStatus();
+    void updateIndiwebInstallationStatus();
     void updateGSCInstallationStatus();
     void slotGSCInstallerFinished();
     void slotInstallGSC();

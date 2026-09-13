@@ -5,29 +5,29 @@
    <include>src/mainwindow.h</include>
 
     <group name="PythonAndGSCOptions">
-        <entry name="PythonExecFolderDefault" type="Bool">
-            <label>Use the default Python executable folder.</label>
-            <tooltip>This option determines whether to use the default path for your system or a user specified path.</tooltip>
-            <whatsthis>This option determines whether to use the default path for your system or a user specified path.</whatsthis>
+        <entry name="SystemPythonFDefault" type="Bool">
+            <label>Use the default System Python executable on your system.</label>
+            <tooltip>This option determines whether to use the default path for your system or a user specified path to Python.</tooltip>
+            <whatsthis>This option determines whether to use the default path for your system or a user specified path to Python.</whatsthis>
             <default>true</default>
         </entry>
-        <entry name="PythonExecFolder" type="String">
-            <label>Path to the python executable folder.</label>
-            <tooltip>This is the path to the folder the python executables are in, such as /usr/bin/ it will be added to the PATH.</tooltip>
-            <whatsthis>This is the path to the folder the python executables are in, such as /usr/bin/ it will be added to the PATH.</whatsthis>
-            <default code="true">MainWindow::getDefault("PythonExecFolder")</default>
+        <entry name="SystemPython" type="String">
+            <label>Path to the System Python executable.</label>
+            <tooltip>This is the path to the System Python Executable, such as /usr/bin/.  It is used to create the Virtual Enviroment for INDI Web Manager.</tooltip>
+            <whatsthis>This is the path to the System Python Executable, such as /usr/bin/.  It is used to create the Virtual Enviroment for INDI Web Manager.</whatsthis>
+            <default code="true">MainWindow::getDefault("SystemPython")</default>
         </entry>
-        <entry name="indiwebPathDefault" type="Bool">
-            <label>Use the default path to the indiweb executable.</label>
-            <tooltip>This option determines whether to use the default path to INDIWeb on your system or a custom path.</tooltip>
-            <whatsthis>This option determines whether to use the default path to INDIWeb on your system or a custom path.</whatsthis>
+        <entry name="INDIWebVENVPathDefault" type="Bool">
+            <label>Use the default path to the INDI Web Manager Virtual Environment Folder.</label>
+            <tooltip>This option determines whether to use the default path to INDI Web Manager Virtual Environment Folder on your system or a custom path that you decide.</tooltip>
+            <whatsthis>This option determines whether to use the default path to INDI Web Manager Virtual Environment Folder on your system or a custom path that you decide.</whatsthis>
             <default>true</default>
         </entry>
-        <entry name="indiwebPath" type="String">
-            <label>Path to the indiweb executable.</label>
-            <tooltip>This is the path to the indi-web executable, which is typically installed in the Python User Base Directory.</tooltip>
-            <whatsthis>This is the path to the indi-web executable, which is typically installed in the Python User Base Directory.</whatsthis>
-            <default code="true">MainWindow::getDefault("indiwebPath")</default>
+        <entry name="INDIWebVENVPath" type="String">
+            <label>Path to the INDI Web Manager Virtual Environment Folder.</label>
+            <tooltip>This is the path to the root folder of the Virtual Environment Folder you set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</tooltip>
+            <whatsthis>This is the path to the root folder of the Virtual Environment Folder you set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</whatsthis>
+            <default code="true">MainWindow::getDefault("INDIWebVENVPath")</default>
         </entry>
         <entry name="GSCPathDefault" type="Bool">
             <label>Use the default path to the GSC Data Folder.</label>

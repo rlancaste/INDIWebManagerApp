@@ -27,17 +27,27 @@ OpsConfiguration::OpsConfiguration(MainWindow *parent)
     ui->setupUi(this);
 
     //This updates the status so that the user knows if they are installed when it opens.
-    updatePythonAndIndiwebInstallationStatus();
+    updateIndiwebInstallationStatus();
     updateGSCInstallationStatus();
 
     //Connects install buttons to their methods
-    connect(ui->installRequirements, &QAbstractButton::clicked, this, &OpsConfiguration::slotInstallRequirements);
+    connect(ui->installRequirements, &QAbstractButton::clicked, this, &OpsConfiguration::slotSetupINDIWeb);
     connect(ui->installGSC, &QAbstractButton::clicked, this, &OpsConfiguration::slotInstallGSC);
 
     //Connects the line edits to the update status methods so the user can see in real time if the path is right.
     connect(ui->kcfg_GSCPath, &QLineEdit::textChanged, this, &OpsConfiguration::updateGSCInstallationStatus);
-    connect(ui->kcfg_indiwebPath, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
-    connect(ui->kcfg_PythonExecFolder, &QLineEdit::textChanged, this, &OpsConfiguration::updatePythonAndIndiwebInstallationStatus);
+    connect(ui->kcfg_INDIWebVENVPath, &QLineEdit::textChanged, this, &OpsConfiguration::updateIndiwebInstallationStatus);
+
+    //Connects all the line edits to the slot PathExists method so the user can see in real time if the path exists.
+    connect(ui->kcfg_SystemPython, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_INDIWebVENVPath, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_GSCPath, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_INDIPrefix, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_INDIServerPath, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_INDIDriversPath, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_INDIConfigPath, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_GPhotoCAMLIBS, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
+    connect(ui->kcfg_GPhotoIOLIBS, &QLineEdit::textChanged, this, &OpsConfiguration::slotPathExists);
 
     //Hides the installation displays for GSC since it is not currently running
     ui->gscInstallCancel->setVisible(false);
@@ -75,8 +85,8 @@ OpsConfiguration::~OpsConfiguration()
  */
 void OpsConfiguration::updateFromCheckBoxes()
 {
-    ui->kcfg_PythonExecFolder->setReadOnly(ui->kcfg_PythonExecFolderDefault->isChecked());
-    ui->kcfg_indiwebPath->setReadOnly(ui->kcfg_indiwebPathDefault->isChecked());
+    ui->kcfg_SystemPython->setReadOnly(ui->kcfg_SystemPythonDefault->isChecked());
+    ui->kcfg_INDIWebVENVPath->setReadOnly(ui->kcfg_INDIWebVENVPathDefault->isChecked());
     ui->kcfg_GSCPath->setReadOnly(ui->kcfg_GSCPathDefault->isChecked());
     ui->kcfg_INDIPrefix->setReadOnly(ui->kcfg_INDIPrefixDefault->isChecked());
     ui->kcfg_INDIServerPath->setReadOnly(ui->kcfg_INDIServerDefault->isChecked());
@@ -85,15 +95,15 @@ void OpsConfiguration::updateFromCheckBoxes()
     ui->kcfg_GPhotoIOLIBS->setReadOnly(ui->kcfg_GPhotoIOLIBSDefault->isChecked());
     ui->kcfg_GPhotoCAMLIBS->setReadOnly(ui->kcfg_GPhotoCAMLIBSDefault->isChecked());
 
-    if(ui->kcfg_PythonExecFolderDefault->isChecked())
-         ui->kcfg_PythonExecFolder->setText(parent->getDefault("PythonExecFolder"));
+    if(ui->kcfg_SystemPythonDefault->isChecked())
+         ui->kcfg_SystemPython->setText(parent->getDefault("SystemPython"));
     else
-         ui->kcfg_PythonExecFolder->setText(Options::pythonExecFolder());
+         ui->kcfg_SystemPython->setText(Options::systemPython());
 
-    if(ui->kcfg_indiwebPathDefault->isChecked())
-         ui->kcfg_indiwebPath->setText(parent->getDefault("indiwebPath"));
+    if(ui->kcfg_INDIWebVENVPathDefault->isChecked())
+         ui->kcfg_INDIWebVENVPath->setText(parent->getDefault("INDIWebVENVPath"));
     else
-         ui->kcfg_indiwebPath->setText(Options::indiwebPath());
+         ui->kcfg_INDIWebVENVPath->setText(Options::iNDIWebVENVPath());
 
     if(ui->kcfg_GSCPathDefault->isChecked())
          ui->kcfg_GSCPath->setText(parent->getDefault("GSCPath"));
@@ -131,8 +141,17 @@ void OpsConfiguration::updateFromCheckBoxes()
              ui->kcfg_GPhotoCAMLIBS->setText(Options::gPhotoCAMLIBS());
 }
 
+void OpsConfiguration::slotPathExists()
+{
+    QLineEdit *line = qobject_cast<QLineEdit*>(sender());
+    if(QFileInfo(line->text()).exists())
+        line->setStyleSheet("QLineEdit {color: green;}");
+    else
+        line->setStyleSheet("QLineEdit {color: white;}");
+}
+
 /*
- * This method displays whether Homebrew, Python3, and indi-web are properly installed.
+ * This method displays whether indi-web is properly installed in a Virtual Environment.
  */
 void OpsConfiguration::displayInstallationStatus(bool installed)
 {
@@ -168,9 +187,9 @@ void OpsConfiguration::displayGSCInstallationStatus(bool installed)
 /*
  * This method detects whether Python3 and indi-web are properly installed and updates the status.
  */
-void OpsConfiguration::updatePythonAndIndiwebInstallationStatus()
+void OpsConfiguration::updateIndiwebInstallationStatus()
 {
-    bool installed = parent->pythonInstalled(ui->kcfg_PythonExecFolder->text()) && parent->indiWebInstalled(ui->kcfg_indiwebPath->text());
+    bool installed = parent->indiWebVENVPathValid(ui->kcfg_INDIWebVENVPath->text());
     displayInstallationStatus(installed);
 }
 
@@ -181,14 +200,6 @@ void OpsConfiguration::updateGSCInstallationStatus()
 {
     bool gscInstall = gscInstalled();
     displayGSCInstallationStatus(gscInstall);
-}
-
-/*
- * This method detects whether homebrew is installed.
- */
-bool OpsConfiguration::brewInstalled()
-{
-    return QFileInfo("/usr/local/bin/brew").exists();
 }
 
 /*
@@ -203,85 +214,34 @@ bool OpsConfiguration::gscInstalled()
 }
 
 /*
- * This is the installer method for homebrew, python, and indi-web.
+ * This is the installer method that sets up a virtual environment for indi-web and then installs it.
  * It runs when you click the button.
  */
-void OpsConfiguration::slotInstallRequirements()
+void OpsConfiguration::slotSetupINDIWeb()
 {
+    if(parent->indiWebInstalled())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("INDI Web is already installed in the Selected Virtual Environment."));
+        return;
+    }
+
     //This check is performed to make sure the path in the text box matches the current option setting.
-    if(Options::pythonExecFolder() != ui->kcfg_PythonExecFolder->text())
+    if(Options::systemPython() != ui->kcfg_SystemPython->text())
     {
-        QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the Python Exec path before installing."));
+        QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the System Python Path before installing."));
         return;
     }
 
-    #ifdef Q_OS_MACOS
-
-    if(brewInstalled() && parent->pythonInstalled() && parent->pipInstalled() && parent->indiWebInstalled())
+    //This check is performed to make sure the path in the text box matches the current option setting.
+    if(Options::iNDIWebVENVPath() != ui->kcfg_INDIWebVENVPath->text())
     {
-        QMessageBox::information(nullptr, "Message", i18n("Homebrew, python, pip, and indiweb are already installed"));
+        QMessageBox::information(nullptr, "Message", i18n("Please click apply after changing the INDI Web Manager VENV Path before installing."));
         return;
     }
 
-    if (QMessageBox::question(nullptr, "Message", i18n("This installer will install the following requirements for astrometry.net if they are not installed:\nHomebrew -an OS X Unix Program Package Manager\nPython3 -A Powerful Scripting Language \nindiweb -Python Modules for Astronomy \n Do you wish to continue?")) == QMessageBox::Yes)
+    if( !parent->systemPythonInstalled())
     {
-        QProcess* install = new QProcess(this);
-        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-        QString path            = env.value("PATH", "");
-        env.insert("PATH", "/usr/local/opt/python/libexec/bin:/usr/local/bin:" + path);
-        install->setProcessEnvironment(env);
-
-        if(!brewInstalled())
-        {
-            QMessageBox::information(nullptr, "Message", i18n("Homebrew is not installed.  \nA Terminal window will pop up for you to install Homebrew.  \n When you are all done, then you can close the Terminal and click the setup button again."));
-            QStringList installArgs;
-            QString homebrewInstallScript =
-                    "tell application \"Terminal\"\n"
-                    "    do script \"/usr/bin/ruby -e \\\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\\\"\"\n"
-                    "end tell\n";
-            QString bringToFront =
-                    "tell application \"Terminal\"\n"
-                    "    activate\n"
-                    "end tell\n";
-
-            QStringList processArguments;
-            processArguments << "-l" << "AppleScript";
-            install->start("/usr/bin/osascript", processArguments);
-            install->write(homebrewInstallScript.toUtf8());
-            install->write(bringToFront.toUtf8());
-            install->closeWriteChannel();
-            install->waitForFinished();
-            return;
-        }
-        if(!parent->pythonInstalled())
-        {
-            QMessageBox::information(nullptr, "Message", i18n("Homebrew installed \nPython3 will install when you click Ok \nindiweb waiting . . . \n (Note: this might take a few minutes, please be patient.)"));
-            install->start("/usr/local/bin/brew" , QStringList() << "install" << "python3");
-            install->waitForFinished();
-            if(!parent->pythonInstalled())
-            {
-                QMessageBox::information(nullptr,  "Message", i18n("Python install failure"));
-                return;
-            }
-        }
-        if(!parent->indiWebInstalled())
-        {
-           QMessageBox::information(nullptr, "Message", i18n("Homebrew installed \nPython3 installed \nindiweb will install when you click Ok \n (Note: this might take a few minutes, please be patient.)"));
-            install->start("/usr/local/bin/pip3" , QStringList() << "install" << "indiweb");
-            install->waitForFinished();
-            if(!parent->indiWebInstalled())
-            {
-                QMessageBox::information(nullptr, "Message", i18n("indiweb install failure"));
-                return;
-            }
-        }
-        QMessageBox::information(nullptr, "Message", i18n("All installations are complete and ready to use."));
-        updatePythonAndIndiwebInstallationStatus();
-    }
-#else
-    if( !parent->pythonInstalled() || !parent->pipInstalled() )
-    {
-        QMessageBox::information(nullptr, "Message", i18n("Python and Pip both need to be installed in your selected python exec folder in order to run indiweb.  Please either install these or change your exec folder to one that includes them."));
+        QMessageBox::information(nullptr, "Message", i18n("Your system needs to have Python installed.  Please install python using your system package manager, an official Python Installer, or homebrew, and update the System Python Setting above."));
         return;
     }
     if(parent->indiWebInstalled())
@@ -291,30 +251,28 @@ void OpsConfiguration::slotInstallRequirements()
     }
 
     QProcess install;
-    QString pathToPip="";
 
-    //Try multiple options since python and pip can be in different places and have different names.
-    //Start with the user's desired python exec folder and prefer pip3 over pip over pip2.
+    install.start(Options::systemPython(), QStringList() << "-m" << "venv" << Options::iNDIWebVENVPath());
+    install.waitForFinished();
 
-    if(QFileInfo(Options::pythonExecFolder() +"/pip3").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip3";
-    else if(QFileInfo(Options::pythonExecFolder() +"/pip").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip";
-    else if(QFileInfo(Options::pythonExecFolder() +"/pip2").exists())
-        pathToPip = Options::pythonExecFolder() +"/pip2";
-    else if(QFileInfo("/usr/local/bin/pip3").exists())
-        pathToPip = "/usr/local/bin/pip3";
-    else if(QFileInfo("/usr/local/bin/pip").exists())
-        pathToPip = "/usr/local/bin/pip";
-    else if(QFileInfo("/usr/local/bin/pip2").exists())
-        pathToPip = "/usr/local/bin/pip2";
-    else
+    if(!parent->pythonVENVExists())
     {
-        QMessageBox::information(nullptr, "Message", i18n("Cannot find pip in your Python Exec Directory. Please install pip, put a symlink to pip in there, or change your Python Exec Directory."));
+        QMessageBox::information(nullptr, "Message", i18n("The installation of the Virtual Environment for INDI WebManager has failed.  Here is the error information: "));
+        QMessageBox::warning(nullptr, "Message", install.errorString());
         return;
     }
 
-    install.start(pathToPip, QStringList() << "install" << "indiweb");
+    // This folder now exists if it did not before.
+    ui->kcfg_INDIWebVENVPath->setStyleSheet("QLineEdit {color: green;}");
+
+
+    if(!parent->pipInstalledInVENV())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("Cannot find pip in your INDIWeb Manager VENV Directory. Please install pip, or put a symlink to pip in there."));
+        return;
+    }
+
+    install.start(Options::iNDIWebVENVPath() + "/bin/pip", QStringList() << "install" << "indiweb");
     install.waitForFinished();
 
     if(!parent->indiWebInstalled())
@@ -322,9 +280,8 @@ void OpsConfiguration::slotInstallRequirements()
         QMessageBox::information(nullptr, "Message", i18n("indiweb install failure"));
         return;
     }
-    QMessageBox::information(nullptr, "Message", i18n("INDIWeb is installed and ready to use."));
-    updatePythonAndIndiwebInstallationStatus();
-#endif
+
+    updateIndiwebInstallationStatus();
 }
 
 /*

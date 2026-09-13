@@ -21,7 +21,7 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/version.h
 )
 
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.5)
 set (CMAKE_CXX_STANDARD 11)
 
 # Fetch translations with -DFETCH_TRANSLATIONS=ON
@@ -52,7 +52,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
 # Option to choose between Qt5 and Qt6
-option(USE_QT5 "Use Qt5" ON)
+option(USE_QT5 "Use Qt5" OFF)
 
 if(USE_QT5)
     find_package(Qt5 5.15 REQUIRED COMPONENTS Widgets Network)

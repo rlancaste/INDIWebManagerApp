@@ -37,11 +37,11 @@ public:
     void updateIPAddressList();
     QString getWebManagerURL();
     QString getINDIServerURL(QString port);
-    bool pythonInstalled(QString pythonExecFolder);
-    bool pythonInstalled();
-    bool pipInstalled();
-    bool indiWebInstalled(QString indiWebPath);
+    bool systemPythonInstalled();
+    bool pythonVENVExists();
+    bool pipInstalledInVENV();
     bool indiWebInstalled();
+    bool indiWebVENVPathValid(QString indiWebVENVPath);
 
 private:
 

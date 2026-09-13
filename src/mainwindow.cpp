@@ -250,7 +250,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
      //This will finish setting up the Web Manager and launch it if the requirements are installed and auto launch is selected.
-    if(pythonInstalled() && indiWebInstalled())
+    if(systemPythonInstalled() && indiWebInstalled())
     {
         updateSettings();
         if(Options::autoLaunchManager())
@@ -280,6 +280,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// This is a helper method to check if a path exists with a shorter command.
+bool pathExists(QString path)
+{
+    return QFileInfo::exists(path);
+}
+
+// This is a helper fucntion to check multiple versions to see which one is valid such as python or python3
+QString checkForVersions(QString basePath)
+{
+    if(pathExists(basePath))
+        return basePath;
+    for(int i = 3; i > 0; i--)
+    {
+        if(pathExists(basePath + QString::number(i)))
+            return basePath + QString::number(i);
+    }
+    return "";
+}
+
 /*
  * This method is used to get the default values for the INDI Web Server settings on different systems.
  * It also is used to get automatically generated values.
@@ -290,25 +309,36 @@ QString MainWindow::getDefault(QString option)
     QString flat = QProcessEnvironment::systemEnvironment().value("FLATPAK_DEST");
 
     //This is the folder that python is installed or symlinked to.
-    if (option == "PythonExecFolder")
+    if (option == "SystemPython")
     {
-    #ifdef Q_OS_MACOS
-        //Note this is the Path where python3 gets symlinked by homebrew.
-        return "/usr/local/opt/python/libexec/bin";
-    #endif
+        QString path;
+        // This is the Path where python gets intsalled by homebrew on Apple Silicon.
+        path = checkForVersions("/opt/homebrew/bin/python");
+        if(!path.isEmpty())
+            return path;
+        // This is the user's python on many Linux Machines and Intel Macs.
+        path = checkForVersions("/usr/local/bin/python");
+        if(!path.isEmpty())
+            return path;
+        // This is where python gets installed by Macs when installed from the Official Python Distribution
+        path = checkForVersions("/Library/Frameworks/Python.framework/Versions/Current/bin/python");
+        if(!path.isEmpty())
+            return path;
+        // This is the System Python on many Linux Machines
+        path = checkForVersions("/usr/bin/python");
+        if(!path.isEmpty())
+            return path;
+        // As a last resort, if you installed python in a snap or flatpak
         if (flat.isEmpty() == false)
-            return flat + "/bin/";
+            return flat + "/bin/python3";
         else
-            return snap + "/usr/bin/";
+            return snap + "/usr/bin/python3";
     }
 
-    //This is the Path to the indiweb executable.  It is where indi-web is installed, typically in the Python Base User Directory.
-    else if (option == "indiwebPath")
+    // This is the location to set up the Virtual Environment for INDI Web Manager.  Many Computers today do not let you install packages like indi-web in the system python.
+    else if (option == "INDIWebVENVPath")
     {
-    #ifdef Q_OS_MACOS
-        return "/usr/local/bin/indi-web";
-    #endif
-        return QDir::homePath() + "/.local/bin/indi-web";
+        return QDir::homePath() + "/indiwebmanager";
     }
 
     //This is the Path to the GSC data folder.  It includes gsc at the end.
@@ -541,37 +571,39 @@ QString MainWindow::getINDIServerURL(QString port)
 /*
  * This method detects whether python is installed.
  */
-bool MainWindow::pythonInstalled(QString pythonExecFolder)
+bool MainWindow::systemPythonInstalled()
 {
 
-    return QFileInfo(pythonExecFolder + "/python").exists() || QFileInfo(pythonExecFolder + "/python2").exists() || QFileInfo(pythonExecFolder + "/python3").exists();
-}
-
-bool MainWindow::pythonInstalled()
-{
-    return(pythonInstalled(Options::pythonExecFolder()));
+    return pathExists(Options::systemPython());
 }
 
 /*
- * This method detects whether pip is installed.
+ * This method checks if the VENV is set up for INDI Web Manager
  */
-bool MainWindow::pipInstalled()
+bool MainWindow::pythonVENVExists()
 {
-    //Note, I had to add the last set for /usr/local because some people have python installed in /usr/bin and pip installed in /usr/local/bin
-    return QFileInfo(Options::pythonExecFolder() + "/pip").exists() || QFileInfo(Options::pythonExecFolder() + "/pip2").exists() || QFileInfo(Options::pythonExecFolder() + "/pip3").exists() || QFileInfo("/usr/local/bin/pip").exists() || QFileInfo("/usr/local/bin/pip2").exists() || QFileInfo("/usr/local/bin/pip3").exists();
+    return pathExists(Options::iNDIWebVENVPath() + "/bin/python");
 }
 
 /*
- * This method detects whether indi-web is installed in either python2 or python3.
+ * This method detects whether pip is installed in the VENV.
  */
-bool MainWindow::indiWebInstalled(QString indiWebPath)
+bool MainWindow::pipInstalledInVENV()
 {
-    return QFileInfo(indiWebPath).exists() && indiWebPath.endsWith("indi-web");
+    return pathExists(Options::iNDIWebVENVPath() + "/bin/pip");
 }
 
+/*
+ * This method detects whether indi-web is installed in the VENV
+ */
 bool MainWindow::indiWebInstalled()
 {
-    return indiWebInstalled(Options::indiwebPath());
+    return pathExists(Options::iNDIWebVENVPath() + "/bin/indi-web");
+}
+
+bool MainWindow::indiWebVENVPathValid(QString indiWebVENVPath)
+{
+    return pathExists(indiWebVENVPath + "/bin/indi-web");
 }
 
 /*
@@ -671,7 +703,7 @@ void MainWindow::configureEnvironmentVariables()
     if(Options::gPhotoCAMLIBSDefault())
         Options::setGPhotoCAMLIBS(getDefault("GPhotoCAMLIBS"));
 
-    QString newPATH = Options::pythonExecFolder() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    QString newPATH = Options::systemPython() + ":" + Options::iNDIServerPath() + ':' + Options::iNDIDriversPath() + ":/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
     insertEnvironmentVariable("PATH", newPATH);
 
     //Note that these environment variables only make sense on OS X.
@@ -706,7 +738,7 @@ void MainWindow::insertEnvironmentVariable(QString variable, QString value)
  */
 void MainWindow::insertEnvironmentPath(QString variable, QString filePath)
 {
-    if (QFileInfo::exists(filePath))
+    if (pathExists(filePath))
         insertEnvironmentVariable(variable, filePath);
     else
         createManagerLogEntry(i18n("The Path for the %1 environment variable does not exist on this system.  Please check your settings.  The stated path was: ").arg(variable) + filePath);
@@ -737,8 +769,8 @@ void MainWindow::startWebManager()
         processArguments << "--port" << Options::managerPortNumber();
     if(!Options::iNDIConfigPathDefault())
         processArguments << "--conf" << Options::iNDIConfigPath();
-    createManagerLogEntry(Options::indiwebPath() + " " + processArguments.join(" "));
-    webManager->start(Options::indiwebPath(), processArguments);
+    createManagerLogEntry(Options::iNDIWebVENVPath() + "/bin/indi-web" + " " + processArguments.join(" "));
+    webManager->start(Options::iNDIWebVENVPath() + "/bin/indi-web", processArguments);
     displayManagerStatusOnline(true);
 
     serverMonitor.start();
