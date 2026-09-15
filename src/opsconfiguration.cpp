@@ -219,11 +219,6 @@ bool OpsConfiguration::gscInstalled()
  */
 void OpsConfiguration::slotSetupINDIWeb()
 {
-    if(parent->indiWebInstalled())
-    {
-        QMessageBox::information(nullptr, "Message", i18n("INDI Web is already installed in the Selected Virtual Environment."));
-        return;
-    }
 
     //This check is performed to make sure the path in the text box matches the current option setting.
     if(Options::systemPython() != ui->kcfg_SystemPython->text())
@@ -239,14 +234,15 @@ void OpsConfiguration::slotSetupINDIWeb()
         return;
     }
 
+    if(parent->indiWebInstalled())
+    {
+        QMessageBox::information(nullptr, "Message", i18n("INDI Web is already installed in the Selected Virtual Environment."));
+        return;
+    }
+
     if( !parent->systemPythonInstalled())
     {
         QMessageBox::information(nullptr, "Message", i18n("Your system needs to have Python installed.  Please install python using your system package manager, an official Python Installer, or homebrew, and update the System Python Setting above."));
-        return;
-    }
-    if(parent->indiWebInstalled())
-    {
-        QMessageBox::information(nullptr, "Message", i18n("indiweb is already installed"));
         return;
     }
 

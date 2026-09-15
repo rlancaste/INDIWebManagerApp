@@ -238,16 +238,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //This will check if another Web Manager is running on this computer, and kill it if desired.
     if(isWebManagerOnline())
-    {
-        if(QMessageBox::question(nullptr, "Message", i18n("Alert, an INDI Webmanager is already running on this computer.  Do you want to quit it?")) == QMessageBox::Yes)
-        {
-            QProcess killWebManager;
-            QStringList killParams;
-            killParams << "Python" << "indi-web" << "indiserver";
-            killWebManager.start("/usr/bin/killall", killParams);
-            killWebManager.waitForFinished(300);
-        }
-    }
+        stopWebManager();
 
      //This will finish setting up the Web Manager and launch it if the requirements are installed and auto launch is selected.
     if(systemPythonInstalled() && indiWebInstalled())
@@ -649,7 +640,7 @@ void MainWindow::showPreferences()
 void MainWindow::updateSettings()
 {
     bool webManagerWasRunning = webManagerRunning;
-    if(webManagerRunning)
+    if(webManagerRunning || isWebManagerOnline())
         stopWebManager();
 
     updateIPAddressList();
@@ -749,7 +740,7 @@ void MainWindow::insertEnvironmentPath(QString variable, QString filePath)
  */
 void MainWindow::startWebManager()
 {
-    if(webManagerRunning)
+    if(webManagerRunning || isWebManagerOnline())
     {
         stopWebManager();
         webManager.clear();
@@ -783,17 +774,36 @@ void MainWindow::startWebManager()
  */
 void MainWindow::stopWebManager()
 {
-    if(!webManager.isNull())
-    {
-        disconnect(webManager, SIGNAL(finished(int)), this, SLOT(managerClosed(int)));
-        webManager->kill();
-    }
-    webManagerRunning  = false;
+    bool killProcesses = false;
 
-    QProcess killINDIServer;
-    killINDIServer.start("/usr/bin/killall", QStringList()<<"indiserver");
-    killINDIServer.waitForFinished(300);
-    createManagerLogEntry(i18n("INDI Web Manager Shut down successfully."));
+    if(webManagerRunning)
+    {
+        if(!webManager.isNull())
+        {
+            disconnect(webManager, SIGNAL(finished(int)), this, SLOT(managerClosed(int)));
+            webManager->kill();
+        }
+        killProcesses = true;
+        webManagerRunning  = false;
+    }
+    else
+    {
+        if(QMessageBox::question(nullptr, "Message", i18n("Alert, an INDI Webmanager is already running on this computer.  Do you want to quit it?")) == QMessageBox::Yes)
+            killProcesses = true;
+        else
+            killProcesses = false;
+    }
+
+    if(killProcesses)
+    {
+        QProcess killProcess;
+        QStringList killParams;
+        killParams << "Python" << "indi-web" << "indiserver";
+        killProcess.start("/usr/bin/killall", killParams);
+        killProcess.waitForFinished(300);
+        createManagerLogEntry(i18n("INDI Web Manager Shut down successfully."));
+    }
+
     updateDisplaysforShutDown();
 }
 
@@ -879,7 +889,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     int response = closeOptionsBox.exec();
     if(closeOptionsBox.clickedButton() == quitButton)
     {
-        if(webManagerRunning)
+        if(webManagerRunning || isWebManagerOnline())
             stopWebManager();
         webManager->waitForFinished(300);
         event->accept();
