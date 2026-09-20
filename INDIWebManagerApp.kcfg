@@ -13,8 +13,8 @@
         </entry>
         <entry name="SystemPython" type="String">
             <label>Path to the System Python executable.</label>
-            <tooltip>This is the path to the System Python Executable, such as /usr/bin/.  It is used to create the Virtual Enviroment for INDI Web Manager.</tooltip>
-            <whatsthis>This is the path to the System Python Executable, such as /usr/bin/.  It is used to create the Virtual Enviroment for INDI Web Manager.</whatsthis>
+            <tooltip>This is the path to the System Python Executable, such as /usr/bin/python3.  This python path is used to create the Virtual Python Enviroment for INDI Web Manager.</tooltip>
+            <whatsthis>This is the path to the System Python Executable, such as /usr/bin/python3.  This python path is used to create the Virtual Python Enviroment for INDI Web Manager.</whatsthis>
             <default code="true">MainWindow::getDefault("SystemPython")</default>
         </entry>
         <entry name="INDIWebVENVPathDefault" type="Bool">
@@ -25,8 +25,8 @@
         </entry>
         <entry name="INDIWebVENVPath" type="String">
             <label>Path to the INDI Web Manager Virtual Environment Folder.</label>
-            <tooltip>This is the path to the root folder of the Virtual Environment Folder you set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</tooltip>
-            <whatsthis>This is the path to the root folder of the Virtual Environment Folder you set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</whatsthis>
+            <tooltip>This is the path to the root folder of the Virtual Environment you want to set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</tooltip>
+            <whatsthis>This is the path to the root folder of the Virtual Environment you want to set up for the INDI Web Manager.  Python on many systems now requires a virtual environment to install and run programs like indi-web.</whatsthis>
             <default code="true">MainWindow::getDefault("INDIWebVENVPath")</default>
         </entry>
         <entry name="GSCPathDefault" type="Bool">

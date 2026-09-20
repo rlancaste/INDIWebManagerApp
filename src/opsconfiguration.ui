@@ -204,10 +204,10 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="installationStatusDisplay">
        <property name="toolTip">
-        <string>Checks whether indi-web is installed and has what it needs to run.  It checks for python to be in the Exec Folder and the indi-web executable to be at the selected path.  If the paths are incorrect, you can edit them and this check will automatically update.  If you don't have them installed, you can install from the command line or try to use the install button.</string>
+        <string>Checks whether the indi-web package is installed in the selected virtual environment folder.  If the paths are incorrect, you can edit them and this check will automatically update.  You can click the install button to set up the virtual environment in the selected folder and install indi-web.</string>
        </property>
        <property name="whatsThis">
-        <string>Checks whether indi-web is installed and has what it needs to run.  It checks for python to be in the Exec Folder and the indi-web executable to be at the selected path.  If the paths are incorrect, you can edit them and this check will automatically update.  If you don't have them installed, you can install from the command line or try to use the install button.</string>
+        <string>Checks whether the indi-web package is installed in the selected virtual environment folder.  If the paths are incorrect, you can edit them and this check will automatically update.  You can click the install button to set up the virtual environment in the selected folder and install indi-web.</string>
        </property>
       </widget>
      </item>
@@ -234,10 +234,10 @@
      <item row="2" column="2">
       <widget class="QPushButton" name="installRequirements">
        <property name="toolTip">
-        <string>This install button is meant to install indiweb to your system so that this program can run.  You can also install indiweb via the command line.  On Linux, this button can only install indiweb.  On Mac OS X, this button will install homebrew, python3, and indiweb.  </string>
+        <string>This install button is meant to set up the python virtual environment in the selected folder and install indi-web in that environment so that this program can run.  </string>
        </property>
        <property name="whatsThis">
-        <string>This install button is meant to install indiweb to your system so that this program can run.  You can also install indiweb via the command line.  On Linux, this button can only install indiweb.  On Mac OS X, this button will install homebrew, python3, and indiweb.  </string>
+        <string>This install button is meant to set up the python virtual environment in the selected folder and install indi-web in that environment so that this program can run.  </string>
        </property>
        <property name="text">
         <string>Install</string>
